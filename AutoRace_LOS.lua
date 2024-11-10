@@ -3,8 +3,8 @@ local Window = OrionLib:MakeWindow({Name = "Demonnic Hub X Karamelo | LOS ⚡", 
 
 
 local Tab = Window:MakeTab({
-	Name = "Scripts | LOS",
-	Icon = "rbxassetid://84177443381946",
+	Name = "Scripts LOS",
+	Icon = "rbxassetid://78744214847458",
 	PremiumOnly = false
 })
 
@@ -12,7 +12,7 @@ local Section = Tab:AddSection({
 	Name = "Auto Race"
 })
 
-Tab:AddParagraph("All credits for this script go to @KaramelodeCianuro, he is responsible for all of them, thank you!")
+Tab:AddParagraph("All credits for this script go to @KaramelodeCianuro,\nhe is responsible for all of them, thank you!")
 CoolParagraph:Set("Paragraph New!", "New Paragraph Content!")
 
 OrionLib:Init()
