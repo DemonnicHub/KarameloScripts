@@ -12,7 +12,7 @@ local Section = Tab:AddSection({
 	Name = "Auto Race"
 })
 
-Tab:AddParagraph("Paragraph","Paragraph Content")
-CoolParagraph:Set("All credits for this script go to @KaramelodeCianuro, he is responsible for all of them, thank you!")
+Tab:AddParagraph("All credits for this script go to @KaramelodeCianuro, he is responsible for all of them, thank you!")
+CoolParagraph:Set("Paragraph New!", "New Paragraph Content!")
 
 OrionLib:Init()
