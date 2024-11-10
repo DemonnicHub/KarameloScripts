@@ -9,7 +9,7 @@ local Tab = Window:MakeTab({
 })
 
 Tab:AddParagraph("ATTENTION!","All credits for the scripts below go to @KaramelodeCianuro,\nthe person responsible for all of them!")
-
+})
 
 local Tab = Window:MakeTab({
 	Name = "Scripts LOS",
