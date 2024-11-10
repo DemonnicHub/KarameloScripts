@@ -8,8 +8,10 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-Tab:AddParagraph("ATTENTION!","All credits for the scripts below go to @KaramelodeCianuro,\nthe person responsible for all of them!")
+Tab:AddParagraph("ATTENTION!《  ENGLISH - US  》","All credits for the scripts below go to @KaramelodeCianuro,\nthe person responsible for all of them!")
 
+
+Tab:AddParagraph("ATTENTION!《  PORTUGUÊS - PT  》","Todos os créditos pelos scripts abaixo vão para @KaramelodeCianuro,\no responsável por todos eles!")
 
 local Tab = Window:MakeTab({
 	Name = "Scripts LOS",
