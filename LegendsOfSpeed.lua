@@ -69,5 +69,30 @@ Tab:AddButton({
     end    
 })
 
+local Tab = Window:MakeTab({
+	Name = "Extra",
+	Icon = "rbxassetid://89185070084837",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "Auto Farm Android (Glitch Pets)"
+})
+
+Tab:AddToggle({
+    Name = "Red Orb (Magma)",  -- Nome do toggle
+    Default = false,  -- Estado inicial do toggle (desmarcado)
+    Callback = function(Value)
+        -- Quando o toggle for alterado, verifica se foi ativado (Value será true ou false)
+        if Value then
+            -- Se o toggle estiver ativado, executa o script
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoFarmAndroid.lua"))()
+        else
+            -- Se o toggle for desmarcado, você pode adicionar qualquer lógica para parar ou fazer algo.
+            print("AutoFarm desativado")  -- Apenas um exemplo de mensagem
+        end
+    end    
+})
+
 
 OrionLib:Init()
