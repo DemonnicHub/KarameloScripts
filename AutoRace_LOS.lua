@@ -39,7 +39,7 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddButton({
-    Name = "Karamelo - LOS ⚡",  -- Nome do botão
+    Name = "Karamelo - Auto Race ⚡",  -- Nome do botão
     Callback = function() 
         -- Quando o botão for pressionado, o script será executado
         loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoRaceKaramelo.lua"))()
@@ -54,6 +54,18 @@ Tab:AddButton({
         while wait() do
             game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
         end
+    end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Auto Farm (Glitch Pets)"
+})
+
+Tab:AddButton({
+    Name = "Karamelo - Auto Farm ⚡",  -- Nome do botão
+    Callback = function() 
+        -- Quando o botão for pressionado, o script será executado
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoFarmKaramelo.lua"))()
     end    
 })
 
