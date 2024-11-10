@@ -26,10 +26,10 @@ local Section = Tab:AddSection({
 	Name = "Español - XX"
 })
 
-Tab:AddParagraph("ATENCIÓN!","Todos los créditos de los guiones a continuación son para @KaramelodeCianuro, responsable de todos ellos!")
+Tab:AddParagraph("ATENCIÓN!","Todos los créditos de los guiones a continuación son para @KaramelodeCianuro, \nresponsable de todos ellos!")
 
 local Tab = Window:MakeTab({
-	Name = "Scripts LOS",
+	Name = "Scripts",
 	Icon = "rbxassetid://78744214847458",
 	PremiumOnly = false
 })
