@@ -1,3 +1,16 @@
+-- Functions --
+
+local function AntiKick()
+    local vu = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:Connect(function()
+        vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+        wait(1)
+        vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end)
+end
+
+
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub X Karamelo | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
@@ -58,7 +71,7 @@ Tab:AddButton({
 })
 
 local Section = Tab:AddSection({
-	Name = "Auto Farm (Glitch Pets)"
+	Name = "Auto Farm AndroidxPc (Glitch Pets)"
 })
 
 Tab:AddButton({
@@ -76,7 +89,7 @@ local Tab = Window:MakeTab({
 })
 
 local Section = Tab:AddSection({
-	Name = "Auto Farm Android (Glitch Pets)"
+	Name = "Auto Farm Android Only (Glitch Pets)"
 })
 
 Tab:AddToggle({
@@ -91,6 +104,18 @@ Tab:AddToggle({
             -- Se o toggle for desmarcado, você pode adicionar qualquer lógica para parar ou fazer algo.
             print("AutoFarm desativado")  -- Apenas um exemplo de mensagem
         end
+    end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Extra"
+})
+
+Tab:AddButton({
+    Name = "Anti-Kick",
+    Callback = function()
+        AntiKick()
+        print("O script AntiKick foi ativado.")
     end    
 })
 
