@@ -13,6 +13,5 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddParagraph("All credits for this script go to @KaramelodeCianuro,\nhe is responsible for all of them, thank you!")
-CoolParagraph:Set("Paragraph New!", "New Paragraph Content!")
 
 OrionLib:Init()
