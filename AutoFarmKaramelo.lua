@@ -461,7 +461,7 @@ function window:AddDropdown(options, callback)
 end
 
 local example = library:CreateWindow({
-  text = "Main"
+  text = "Karamelo - Auto Farm ⚡"
 })
 
 
