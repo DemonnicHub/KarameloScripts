@@ -3,6 +3,15 @@ local Window = OrionLib:MakeWindow({Name = "Demonnic Hub X Karamelo | LOS ⚡", 
 
 
 local Tab = Window:MakeTab({
+	Name = "Main",
+	Icon = "rbxassetid://100789040568622",
+	PremiumOnly = false
+})
+
+Tab:AddParagraph("ATTENTION!","All credits for the scripts below go to @KaramelodeCianuro,\nthe person responsible for all of them!")
+CoolParagraph:Set("Diga la", "Teste??")
+
+local Tab = Window:MakeTab({
 	Name = "Scripts LOS",
 	Icon = "rbxassetid://78744214847458",
 	PremiumOnly = false
@@ -20,6 +29,16 @@ Tab:AddButton({
     end    
 })
 
-Tab:AddParagraph("All credits for this script go to @KaramelodeCianuro,\nhe is responsible for all of them, thank you!")
+Tab:AddButton({
+    Name = "Auto Fill Race (Fixed)",  -- Nome do botão
+    Callback = function() 
+        -- Quando o botão for pressionado, o script será executado
+        -- Aqui, estamos adicionando o código diretamente no callback
+        while wait() do
+            game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
+        end
+    end    
+})
+
 
 OrionLib:Init()
