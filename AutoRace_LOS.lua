@@ -1,4 +1,4 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/RayfieldUI.lua'))()
 
 local Window = Rayfield:CreateWindow({
    Name = "Prime",
