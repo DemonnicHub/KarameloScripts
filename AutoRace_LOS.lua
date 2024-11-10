@@ -12,7 +12,7 @@ local Section = Tab:AddSection({
 	Name = "Auto Race"
 })
 
-Tab:AddParagraph("ATTENTION!","All credits for this script go to @KaramelodeCianuro,\nhe is responsible for all of them, thank you!")
+Tab:AddParagraph("ATTENTION!","All credits for this script go to @KaramelodeCianuro, he is responsible for all of them, thank you!")
 
 
 OrionLib:Init()
