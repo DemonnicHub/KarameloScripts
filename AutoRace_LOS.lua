@@ -8,10 +8,25 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-Tab:AddParagraph("ATTENTION!《  ENGLISH - US  》","All credits for the scripts below go to @KaramelodeCianuro,\nthe person responsible for all of them!")
+local Section = Tab:AddSection({
+	Name = "English - US"
+})
+
+Tab:AddParagraph("ATTENTION!","All credits for the scripts below go to @KaramelodeCianuro,\nthe person responsible for all of them!")
 
 
-Tab:AddParagraph("ATTENTION!《  PORTUGUÊS - PT  》","Todos os créditos pelos scripts abaixo vão para @KaramelodeCianuro,\no responsável por todos eles!")
+local Section = Tab:AddSection({
+	Name = "Português - BR"
+})
+
+Tab:AddParagraph("ATENÇÃO!","Todos os créditos pelos scripts abaixo vão para @KaramelodeCianuro,\no responsável por todos eles!")
+
+
+local Section = Tab:AddSection({
+	Name = "Español - XX"
+})
+
+Tab:AddParagraph("ATENCIÓN!","Todos los créditos de los guiones a continuación son para @KaramelodeCianuro, responsable de todos ellos!")
 
 local Tab = Window:MakeTab({
 	Name = "Scripts LOS",
