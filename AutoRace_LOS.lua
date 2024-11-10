@@ -1,5 +1,5 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
-local Window = OrionLib:MakeWindow({Name = "Demonic Hub X Karamelo | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Window = OrionLib:MakeWindow({Name = "Demonnic Hub X Karamelo | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 
 local Tab = Window:MakeTab({
@@ -9,7 +9,7 @@ local Tab = Window:MakeTab({
 })
 
 Tab:AddParagraph("ATTENTION!","All credits for the scripts below go to @KaramelodeCianuro,\nthe person responsible for all of them!")
-})
+
 
 local Tab = Window:MakeTab({
 	Name = "Scripts LOS",
