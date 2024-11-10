@@ -3,7 +3,7 @@ local Window = OrionLib:MakeWindow({Name = "Demonnic Hub X Karamelo | LOS ⚡", 
 
 
 local Tab = Window:MakeTab({
-	Name = "Scripts | LOS",
+	Name = "Scripts LOS",
 	Icon = "rbxassetid://84177443381946",
 	PremiumOnly = false
 })
