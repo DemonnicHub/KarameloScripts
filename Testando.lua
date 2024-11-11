@@ -496,7 +496,7 @@ example:AddToggle("Red Orb x1000 (City)",function(state)
 	_G.Farmz = (state and true or false)
 	wait()
 	while _G.Farmz == true do
-		wait(0)
+		wait(1)
 		
 game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","City")
 		game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","City")
@@ -1179,7 +1179,7 @@ example:AddToggle("Red Orb x1000 (Magma)",function(state)
 	_G.Farmz = (state and true or false)
 	wait()
 	while _G.Farmz == true do
-		wait(0)
+		wait(1)
 
 			game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 		game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
@@ -1857,11 +1857,11 @@ game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma
              end
 	end)
 
-example2:AddToggle("Karamelo (Auto Rebirth)",function(state)
+example2:AddToggle("Karamelor (Auto Rebirth)",function(state)
 	_G.Farmzlol = (state and true or false)
 	wait()
 	while _G.Farmzlol == true do
-		wait(0)
+		wait(1)
 game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer("rebirthRequest")
     end
 end)
