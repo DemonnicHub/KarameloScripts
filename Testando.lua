@@ -476,7 +476,7 @@ local example2 = library:CreateWindow({
 
 local credits= library:CreateWindow({text='Credits'})
 credits:AddLabel("By: @KaramelodeCianuro")
-credits:AddLabel("Edited:@Demonnic_Alexg")
+credits:AddLabel("Edited: @Demonnic_Alexg")
 
 example:AddToggle("Auto Race (Not Working)",function(state)
 	_G.Farm = (state and true or false)
