@@ -131,6 +131,14 @@ local Section = Tab:AddSection({
 
 Tab:AddParagraph("ABOUT DEMONNIC","The base of the Demonnic script was created by @Demonnic_Alexg (Alexg78909), join our community on Discord:")
 
+
+local Section = Tab:AddSection({
+	Name = "Collaborators"
+})
+
+Tab:AddParagraph("THANK YOU!","Collaboration by @Demonnic_Fast (ericklopes16)")
+
+
 Tab:AddButton({
     Name = "Don't click here",  -- Nome do botão
     Callback = function()
@@ -144,7 +152,7 @@ Tab:AddButton({
         textLabel.Parent = screenGui
         textLabel.Size = UDim2.new(0, 1000, 0, 200)  -- Tamanho grande para o texto
         textLabel.Position = UDim2.new(0.5, -500, 0.5, -100)  -- Centraliza na tela
-        textLabel.Text = "Demonnic Hub: TROLLED LOOOLL"  -- Mensagem de trolagem
+        textLabel.Text = "Demonnic Hub: TROLLED LOOL"  -- Mensagem de trolagem
         textLabel.TextSize = 60  -- Tamanho gigante do texto
         textLabel.Font = Enum.Font.SourceSansBold  -- Texto em negrito
         textLabel.TextColor3 = Color3.fromRGB(255, 0, 0)  -- Cor vermelha para destacar
@@ -157,6 +165,9 @@ Tab:AddButton({
         textLabel.AnchorPoint = Vector2.new(0.5, 0.5)  -- Centraliza o texto
         textLabel.BorderRadius = UDim.new(0, 30)  -- Bordas bem arredondadas
 
+        -- Ajuste para garantir que o texto ficará bem centralizado
+        textLabel.Position = UDim2.new(0.5, -textLabel.Size.X.Offset / 2, 0.5, -textLabel.Size.Y.Offset / 2)
+
         -- Timer para remover a mensagem após 5 segundos
         delay(5, function()
             screenGui:Destroy()  -- Remove a interface após 5 segundos
@@ -164,11 +175,6 @@ Tab:AddButton({
     end    
 })
 
-local Section = Tab:AddSection({
-	Name = "Collaborators"
-})
-
-Tab:AddParagraph("THANK YOU!","Collaboration by @Demonnic_Fast (ericklopes16)")
 
 
 
