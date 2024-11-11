@@ -1178,7 +1178,7 @@ example:AddToggle("Karamelo (Auto Rebirth)",function(state)
 game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer("rebirthRequest")
     end
 end)
-example:AddLabel("(Anti AFK Included)")
+example:AddLabel("(Anti-Kick Included)")
 example:AddDestroy("Exit",function()
 	library.gui:Destroy()
 	end)
