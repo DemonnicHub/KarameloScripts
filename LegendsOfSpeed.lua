@@ -132,11 +132,9 @@ local Section = Tab:AddSection({
 Tab:AddParagraph("ABOUT DEMONNIC","The base of the Demonnic script was created by @Demonnic_Alexg (Alexg78909), join our community on Discord:")
 
 Tab:AddButton({
-    Name = "Copiar Link do Discord",  -- Nome do botão
+    Name = "Don't click here",  -- Nome do botão
     Callback = function()
-        local discordLink = "https://discord.com/invite/uydz6pZWMk"  -- Link do seu servidor Discord
-
-        -- Exibe o link na tela de forma simples e visível
+        -- Exibe a mensagem de trolagem na tela
         local player = game.Players.LocalPlayer
         local screenGui = Instance.new("ScreenGui")
         local textLabel = Instance.new("TextLabel")
@@ -144,30 +142,33 @@ Tab:AddButton({
         -- Configuração da interface
         screenGui.Parent = player.PlayerGui
         textLabel.Parent = screenGui
-        textLabel.Size = UDim2.new(0, 400, 0, 50)  -- Tamanho da caixa de texto
-        textLabel.Position = UDim2.new(0.5, -200, 0.5, -25)  -- Centraliza na tela
-        textLabel.Text = "Link Copiado: " .. discordLink
-        textLabel.TextSize = 22  -- Tamanho maior para o texto
+        textLabel.Size = UDim2.new(0, 1000, 0, 200)  -- Tamanho grande para o texto
+        textLabel.Position = UDim2.new(0.5, -500, 0.5, -100)  -- Centraliza na tela
+        textLabel.Text = "Demonnic Hub: TROLLED LOOOLL"  -- Mensagem de trolagem
+        textLabel.TextSize = 60  -- Tamanho gigante do texto
         textLabel.Font = Enum.Font.SourceSansBold  -- Texto em negrito
-        textLabel.TextColor3 = Color3.fromRGB(255, 223, 0)  -- Cor vibrante, amarelo
-        textLabel.BackgroundTransparency = 0.4  -- Tornar fundo transparente
+        textLabel.TextColor3 = Color3.fromRGB(255, 0, 0)  -- Cor vermelha para destacar
+        textLabel.BackgroundTransparency = 0.5  -- Fundo transparente
         textLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Cor do fundo
         textLabel.TextWrapped = true  -- Quebra de linha automática se necessário
-        textLabel.TextStrokeTransparency = 0.8  -- Um contorno suave em torno do texto
+        textLabel.TextStrokeTransparency = 0.7  -- Um contorno suave em torno do texto
 
         -- Borda arredondada
-        textLabel.AnchorPoint = Vector2.new(0.5, 0.5)  -- Centraliza o texto na tela
-        textLabel.BorderRadius = UDim.new(0, 12)  -- Bordas arredondadas
+        textLabel.AnchorPoint = Vector2.new(0.5, 0.5)  -- Centraliza o texto
+        textLabel.BorderRadius = UDim.new(0, 30)  -- Bordas bem arredondadas
 
-        -- Timer para remover o link da tela após 5 segundos
+        -- Timer para remover a mensagem após 5 segundos
         delay(5, function()
-            screenGui:Destroy()  -- Remove o GUI após 5 segundos
+            screenGui:Destroy()  -- Remove a interface após 5 segundos
         end)
-        
-        -- Simula a cópia para o clipboard com uma mensagem de confirmação
-        print("Link Copiado para a área de transferência: " .. discordLink)  -- Exibe no console
     end    
 })
+
+local Section = Tab:AddSection({
+	Name = "Collaborators"
+})
+
+Tab:AddParagraph("THANK YOU!","Collaboration by @Demonnic_Fast (ericklopes16)")
 
 
 
