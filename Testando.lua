@@ -476,6 +476,7 @@ local example2 = library:CreateWindow({
 
 local credits= library:CreateWindow({text='Credits'})
 credits:AddLabel("By: @KaramelodeCianuro")
+credits:AddLabel("Edited:@Demonnic_Alexg")
 
 example:AddToggle("Auto Race (Not Working)",function(state)
 	_G.Farm = (state and true or false)
@@ -1857,7 +1858,7 @@ game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma
              end
 	end)
 
-example2:AddToggle("Karamelor (Auto Rebirth)",function(state)
+example2:AddToggle("Karamelo (Auto Rebirth)",function(state)
 	_G.Farmzlol = (state and true or false)
 	wait()
 	while _G.Farmzlol == true do
