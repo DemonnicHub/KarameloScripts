@@ -492,11 +492,11 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331
 
 end
 end)
-example:AddToggle("Red Orb x1000 (Magma)",function(state)
+example:AddToggle("Red Orb x1000 (City)",function(state)
 	_G.Farmz = (state and true or false)
 	wait()
 	while _G.Farmz == true do
-		wait(1)
+		wait(0)
 		
 game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","City")
 		game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","City")
@@ -1175,11 +1175,11 @@ game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","City"
 	end)
 
 
-example:AddToggle("Red Orb x1000 (City)",function(state)
+example:AddToggle("Red Orb x1000 (Magma)",function(state)
 	_G.Farmz = (state and true or false)
 	wait()
 	while _G.Farmz == true do
-		wait(1)
+		wait(0)
 
 			game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 		game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
