@@ -485,7 +485,7 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331
 
 end
 end)
-example:AddToggle("Red Orb (Magma)",function(state)
+example:AddToggle("Red Orb x1000 (Magma)",function(state)
 	_G.Farmz = (state and true or false)
 	wait()
 	while _G.Farmz == true do
