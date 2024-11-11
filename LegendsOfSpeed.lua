@@ -129,14 +129,28 @@ local Section = Tab:AddSection({
 	Name = "Info"
 })
 
-Tab:AddParagraph("About Demonnic","The base of the Demonnic script was created by @Demonnic_Alexg (Alexg78909), \njoin our community on Discord:")
+Tab:AddParagraph("About Demonnic","The base of the Demonnic script was created by @Demonnic_Alexg (Alexg78909), join our community on Discord:")
 
 Tab:AddButton({
-    Name = "Demonnic - Discord (Paste into your browser)",  -- Nome do botão
+    Name = "Mostrar Link do Discord",  -- Nome do botão
     Callback = function()
-        -- Quando o botão for pressionado, exibe o link
         local discordLink = "https://discord.com/invite/uydz6pZWMk"  -- Link do seu servidor Discord
-        print("Link do Discord: " .. discordLink)  -- Exibe o link no console
+        
+        -- Exibe o link na tela, de forma simples e visível
+        local player = game.Players.LocalPlayer
+        local screenGui = Instance.new("ScreenGui")
+        local textLabel = Instance.new("TextLabel")
+
+        screenGui.Parent = player.PlayerGui
+        textLabel.Parent = screenGui
+        textLabel.Size = UDim2.new(0, 400, 0, 50)
+        textLabel.Position = UDim2.new(0.5, -200, 0.5, -25)  -- Centraliza na tela
+        textLabel.Text = "Link do Discord: " .. discordLink
+        textLabel.TextSize = 20
+        textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        textLabel.BackgroundTransparency = 0.5
+        textLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        textLabel.TextWrapped = true
     end    
 })
 
