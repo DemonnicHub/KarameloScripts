@@ -153,5 +153,20 @@ local Section = Tab:AddSection({
 
 Tab:AddParagraph("THANK YOU!","Collaboration by @Demonnic_Fast (ericklopes16)")
 
+OrionLib:MakeNotification({
+	Name = "Demonnic",
+	Content = "discord.gg/uydz6pZWMk",
+	Image = "rbxassetid://101951842185056",
+	Time = 20
+})
+
+OrionLib:MakeNotification({
+	Name = "Bypass",
+	Content = "Bypass activated... ✅",
+	Image = "rbxassetid://71506531582407",
+	Time = 18
+})
+
+
 
 OrionLib:Init()
