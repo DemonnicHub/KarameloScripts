@@ -119,5 +119,27 @@ Tab:AddButton({
     end    
 })
 
+local Tab = Window:MakeTab({
+	Name = "Credits",
+	Icon = "rbxassetid://96062201354965",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "Info"
+})
+
+Tab:AddParagraph("About Demonnic","The base of the Demonnic script was created by @Demonnic_Alexg (Alexg78909), \njoin our community on Discord:")
+
+Tab:AddButton({
+    Name = "Demonnic - Discord (Paste into your browser)",  -- Nome do botão
+    Callback = function()
+        -- Quando o botão for pressionado, exibe o link
+        local discordLink = "https://discord.com/invite/uydz6pZWMk"  -- Link do seu servidor Discord
+        print("Link do Discord: " .. discordLink)  -- Exibe o link no console
+    end    
+})
+
+
 
 OrionLib:Init()
