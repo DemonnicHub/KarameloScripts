@@ -70,25 +70,6 @@ Tab:AddButton({
     end    
 })
 
-Tab:AddToggle({
-    Name = "Auto Fill Race2 (Fixed)",  -- Nome do toggle
-    Default = false,  -- O toggle começa desmarcado
-    Callback = function(Value)
-        -- Variável para controlar o estado do loop
-        if Value then
-            -- Se o toggle for ativado, iniciar o loop
-            while wait() do
-                -- Executa o comando apenas se o toggle estiver ativado
-                game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
-            end
-        else
-            -- Se o toggle for desmarcado, parar o loop (se necessário)
-            -- Não tem uma forma direta de parar o loop, mas podemos colocar a lógica para "parar" ou ignorar quando o toggle for desmarcado
-            print("Auto Fill Race desativado")  -- Apenas uma mensagem para exemplo, você pode fazer algo mais específico aqui.
-        end
-    end    
-})
-
 local Section = Tab:AddSection({
 	Name = "Auto Farm Android X Pc (Glitch Pets)"
 })
