@@ -112,7 +112,7 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddButton({
-    Name = "Anti-Kick",
+    Name = "Anti-Kick (Required)",
     Callback = function()
         AntiKick()
         print("O script AntiKick foi ativado.")
@@ -126,7 +126,7 @@ local Tab = Window:MakeTab({
 })
 
 local Section = Tab:AddSection({
-	Name = "Info"
+	Name = "Information"
 })
 
 Tab:AddParagraph("ABOUT DEMONNIC","The base of the Demonnic script was created by @Demonnic_Alexg (Alexg78909), join our community on Discord:")
@@ -137,45 +137,6 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddParagraph("THANK YOU!","Collaboration by @Demonnic_Fast (ericklopes16)")
-
-
-Tab:AddButton({
-    Name = "Don't click here",  -- Nome do botão
-    Callback = function()
-        -- Exibe a mensagem de trolagem na tela
-        local player = game.Players.LocalPlayer
-        local screenGui = Instance.new("ScreenGui")
-        local textLabel = Instance.new("TextLabel")
-
-        -- Configuração da interface
-        screenGui.Parent = player.PlayerGui
-        textLabel.Parent = screenGui
-        textLabel.Size = UDim2.new(0, 1000, 0, 200)  -- Tamanho grande para o texto
-        textLabel.Position = UDim2.new(0.5, -500, 0.5, -100)  -- Centraliza na tela
-        textLabel.Text = "Demonnic Hub: TROLLED LOOL"  -- Mensagem de trolagem
-        textLabel.TextSize = 60  -- Tamanho gigante do texto
-        textLabel.Font = Enum.Font.SourceSansBold  -- Texto em negrito
-        textLabel.TextColor3 = Color3.fromRGB(255, 0, 0)  -- Cor vermelha para destacar
-        textLabel.BackgroundTransparency = 0.5  -- Fundo transparente
-        textLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Cor do fundo
-        textLabel.TextWrapped = true  -- Quebra de linha automática se necessário
-        textLabel.TextStrokeTransparency = 0.7  -- Um contorno suave em torno do texto
-
-        -- Borda arredondada
-        textLabel.AnchorPoint = Vector2.new(0.5, 0.5)  -- Centraliza o texto
-        textLabel.BorderRadius = UDim.new(0, 30)  -- Bordas bem arredondadas
-
-        -- Ajuste para garantir que o texto ficará bem centralizado
-        textLabel.Position = UDim2.new(0.5, -textLabel.Size.X.Offset / 2, 0.5, -textLabel.Size.Y.Offset / 2)
-
-        -- Timer para remover a mensagem após 5 segundos
-        delay(5, function()
-            screenGui:Destroy()  -- Remove a interface após 5 segundos
-        end)
-    end    
-})
-
-
 
 
 OrionLib:Init()
