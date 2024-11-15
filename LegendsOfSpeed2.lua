@@ -1,47 +1,5 @@
 --// Functions \\--
 
--- Function Auto Race --
-local AutoRaceToggle = false
-
-game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
-    if AutoRaceToggle then  -- Se o AutoRace estiver ativado
-        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
-            -- Envia o comando para o servidor se a corrida estiver em progresso
-            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")
-            print("Entrando na corrida automaticamente...")
-        end
-    end
-end)
-
--- Função para ajustar a posição do jogador quando a corrida começar
-game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
-    if AutoRaceToggle then  -- Se o AutoRace estiver ativado
-        if game:GetService('ReplicatedStorage').raceStarted.Value == true then
-            -- Ajusta a posição do jogador para o ponto de término
-            for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
-                local OldFinishPosition = v.finishPart.CFrame
-                -- Posiciona o ponto de chegada na posição do jogador
-                v.finishPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                wait(0.5)  -- Espera para garantir que o movimento foi aplicado
-                -- Restaura a posição original do ponto de chegada
-                v.finishPart.CFrame = OldFinishPosition
-                print("Posição ajustada para a linha de chegada...")
-            end
-        end
-    end
-end)
-
--- Monitorar o estado de "raceEnded" para desabilitar a corrida automática ao final
-game:GetService('ReplicatedStorage').raceEnded.Changed:Connect(function()
-    if AutoRaceToggle then  -- Se o AutoRace estiver ativado
-        if game:GetService('ReplicatedStorage').raceEnded.Value == true then
-            -- Desativa o AutoRace automaticamente quando a corrida terminar
-            AutoRaceToggle = false
-            print("Corrida terminou. Auto Race desativado.")
-        end
-    end
-end)
-
 -- Função para expandir o torso --
 local function ExpandTorso()
     local player = game.Players.LocalPlayer
@@ -198,7 +156,7 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Races",  -- Nome do toggle
+    Name = "Auto Race",  -- Nome do toggle
     Default = false,     -- Valor inicial do toggle (desativado por padrão)
     Callback = function(Value)
         AutoRaceToggle = Value  -- Atualiza o estado do AutoRace com o valor do toggle
