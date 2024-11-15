@@ -243,6 +243,28 @@ local function deleteBarrier()
     end)
 end
 
+-- Funtion Leaderstats --
+local function UpdateStats()
+    local player = game.Players.LocalPlayer
+    local leaderstats = player:WaitForChild("leaderstats")
+
+    local steps = leaderstats:WaitForChild("Steps").Value
+    local rebirths = leaderstats:WaitForChild("Rebirths").Value
+    local hoops = leaderstats:WaitForChild("Hoops").Value
+    local races = leaderstats:WaitForChild("Races").Value
+
+    -- Atualizar os Labels com os valores
+    StepsLabel:Set("Steps: " .. steps)
+    RebirthsLabel:Set("Rebirths: " .. rebirths)
+    HoopsLabel:Set("Hoops: " .. hoops)
+    RacesLabel:Set("Races: " .. races)
+end
+
+-- Atualizar as estatísticas a cada 1 segundo
+game:GetService("RunService").Heartbeat:Connect(function()
+    UpdateStats()
+end)
+
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -447,35 +469,35 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local StepsSection = Tab:AddSection({ Name = "Steps" })
-local RebirthsSection = Tab:AddSection({ Name = "Rebirths" })
-local HoopsSection = Tab:AddSection({ Name = "Hoops" })
-local RacesSection = Tab:AddSection({ Name = "Races" })
+local StatsSection = Tab:AddSection({
+    Name = "Player Stats"
+})
 
--- Criando os labels
-local StepsLabel = StepsSection:AddLabel("Steps: 0")
-local RebirthsLabel = RebirthsSection:AddLabel("Rebirths: 0")
-local HoopsLabel = HoopsSection:AddLabel("Hoops: 0")
-local RacesLabel = RacesSection:AddLabel("Races: 0")
+local StepsLabel = Tab:AddLabel("Steps: 0")
+local RebirthsLabel = Tab:AddLabel("Rebirths: 0")
+local HoopsLabel = Tab:AddLabel("Hoops: 0")
+local RacesLabel = Tab:AddLabel("Races: 0")
 
--- Função para atualizar os labels com os valores em tempo real
-game.Players.LocalPlayer:WaitForChild("leaderstats")
-local leaderstats = game.Players.LocalPlayer.leaderstats
+-- Função para atualizar os valores das estatísticas
+local function UpdateStats()
+    local player = game.Players.LocalPlayer
+    local leaderstats = player:WaitForChild("leaderstats")
 
-leaderstats.Steps.Changed:Connect(function()
-    StepsLabel:Set("Steps: " .. leaderstats.Steps.Value)
-end)
+    local steps = leaderstats:WaitForChild("Steps").Value
+    local rebirths = leaderstats:WaitForChild("Rebirths").Value
+    local hoops = leaderstats:WaitForChild("Hoops").Value
+    local races = leaderstats:WaitForChild("Races").Value
 
-leaderstats.Rebirths.Changed:Connect(function()
-    RebirthsLabel:Set("Rebirths: " .. leaderstats.Rebirths.Value)
-end)
+    -- Atualizar os Labels com os valores
+    StepsLabel:Set("Steps: " .. steps)
+    RebirthsLabel:Set("Rebirths: " .. rebirths)
+    HoopsLabel:Set("Hoops: " .. hoops)
+    RacesLabel:Set("Races: " .. races)
+end
 
-leaderstats.Hoops.Changed:Connect(function()
-    HoopsLabel:Set("Hoops: " .. leaderstats.Hoops.Value)
-end)
-
-leaderstats.Races.Changed:Connect(function()
-    RacesLabel:Set("Races: " .. leaderstats.Races.Value)
+-- Atualizar as estatísticas a cada 1 segundo
+game:GetService("RunService").Heartbeat:Connect(function()
+    UpdateStats()
 end)
 
 local Tab = Window:MakeTab({
