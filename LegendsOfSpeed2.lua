@@ -1,5 +1,18 @@
 --// Functions \\--
 
+-- Função para expandir o torso
+local function ExpandTorso()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local torso = character:WaitForChild("UpperTorso") -- ou "LowerTorso", depende da estrutura do modelo
+
+    -- Definindo a taxa de expansão
+    local expansionRate = Vector3.new(1, 0.2, 0.5)  -- Ajuste conforme necessário
+
+    -- Expande o torso
+    torso.Size = torso.Size + expansionRate
+end
+
 -- Function Low Graphics
 local function optimizeFpsPing()
     for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
@@ -104,6 +117,14 @@ Tab:AddToggle({
     end    
 })
 
+Tab:AddButton({
+    Name = "Expandir Torso",  -- Nome do botão que aparece na UI
+    Callback = function()
+        ExpandTorso()  -- Chama a função que expande o torso
+        print("O torso foi expandido.")
+    end    
+})
+
 local Section = Tab:AddSection({
 	Name = "Auto Farm Android X Pc (Glitch Pets)"
 })
@@ -117,13 +138,13 @@ Tab:AddButton({
 })
 
 local Tab = Window:MakeTab({
-	Name = "Teleport",
+	Name = "Teleports",
 	Icon = "rbxassetid://103168823763561",
 	PremiumOnly = false
 })
 
 local Section = Tab:AddSection({
-	Name = "Teleport"
+	Name = "Teleports"
 })
 
 
@@ -134,6 +155,12 @@ Tab:AddDropdown({
 	Callback = function(Value)
 		SelectCity(Value)
 	end    
+})
+
+local Tab = Window:MakeTab({
+	Name = "Auto Farm",
+	Icon = "rbxassetid://78744214847458",
+	PremiumOnly = false
 })
 
 local Tab = Window:MakeTab({
