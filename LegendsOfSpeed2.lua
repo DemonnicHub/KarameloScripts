@@ -75,7 +75,7 @@ local function ResetCharacter()
     character:BreakJoints()
 
     -- O Roblox vai automaticamente gerar um novo personagem, retornando ao seu estado inicial
-    print("O personagem foi resetado ao seu estado original!")
+    print("The character has been reset to its original state!")
 end
 
 -- Function Teleports --
@@ -171,19 +171,19 @@ local Tab = Window:MakeTab({
 })
 
 local StepsSection = Tab:AddSection({
-    Name = "Passos"
+    Name = "Steps"
 })
 
 local RebirthsSection = Tab:AddSection({
-    Name = "Renascimentos"
+    Name = "Rebirths"
 })
 
 local RingsSection = Tab:AddSection({
-    Name = "Aros"
+    Name = "Hoops"
 })
 
 local RacesSection = Tab:AddSection({
-    Name = "Corridas"
+    Name = "Races"
 })
 
 -- Criar as Labels para exibir os status dentro de suas respectivas sections
