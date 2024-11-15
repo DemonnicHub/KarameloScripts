@@ -243,7 +243,7 @@ local function deleteBarrier()
     end)
 end
 
--- Funtion Leaderstats --
+-- Função para atualizar os valores das estatísticas
 local function UpdateStats()
     local player = game.Players.LocalPlayer
     local leaderstats = player:WaitForChild("leaderstats")
@@ -470,35 +470,34 @@ local Tab = Window:MakeTab({
 })
 
 local StatsSection = Tab:AddSection({
-    Name = "Player Stats"
+    Name = "Steps"
+})
+
+local StepsLabel = Tab:AddLabel("Steps: 0")
+
+
+
+local StatsSection = Tab:AddSection({
+    Name = "Rebirths"
 })
 
 local RebirthsLabel = Tab:AddLabel("Rebirths: 0")
-local StepsLabel = Tab:AddLabel("Steps: 0")
+
+
+
+local StatsSection = Tab:AddSection({
+    Name = "Hoops"
+})
+
 local HoopsLabel = Tab:AddLabel("Hoops: 0")
+
+
+
+local StatsSection = Tab:AddSection({
+    Name = "Races"
+})
+
 local RacesLabel = Tab:AddLabel("Races: 0")
-
--- Função para atualizar os valores das estatísticas
-local function UpdateStats()
-    local player = game.Players.LocalPlayer
-    local leaderstats = player:WaitForChild("leaderstats")
-
-    local rebirths = leaderstats:WaitForChild("Rebirths").Value
-    local steps = leaderstats:WaitForChild("Steps").Value
-    local hoops = leaderstats:WaitForChild("Hoops").Value
-    local races = leaderstats:WaitForChild("Races").Value
-
-    -- Atualizar os Labels com os valores
-    RebirthsLabel:Set("Rebirths: " .. rebirths)
-    StepsLabel:Set("Steps: " .. steps)
-    HoopsLabel:Set("Hoops: " .. hoops)
-    RacesLabel:Set("Races: " .. races)
-end
-
--- Atualizar as estatísticas a cada 1 segundo
-game:GetService("RunService").Heartbeat:Connect(function()
-    UpdateStats()
-end)
 
 local Tab = Window:MakeTab({
 	Name = "Auto Rebirth",
