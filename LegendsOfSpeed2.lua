@@ -98,21 +98,6 @@ local function setHipHeight(value)
     humanoid.HipHeight = value
 end
 
--- Function WalkSpeed e JumpPower --
-local function setPlayerStats(walkSpeed, jumpPower)
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-    
-    -- Ajusta a velocidade
-    humanoid.WalkSpeed = walkSpeed
-    print("Velocidade ajustada para: " .. walkSpeed)
-    
-    -- Ajusta o poder de pulo
-    humanoid.JumpPower = jumpPower
-    print("Poder de Pulo ajustado para: " .. jumpPower)
-end
-
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -141,43 +126,6 @@ Tab:AddButton({
     Callback = function()
         ResetCharacter()  -- Chama a função para resetar o personagem
         print("The character has been reset to normal size!")
-    end    
-})
-
-local Section = Tab:AddSection({
-	Name = "Player Settings"
-})
-
-WalkSpeedTextbox = Tab:AddTextbox({
-    Name = "WalkSpeed",  -- Nome antes do valor
-    Default = "50",  -- valor inicial da caixa
-    TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
-    Callback = function(value)
-        -- Verifica se o valor inserido é um número válido
-        local newWalkSpeed = tonumber(value)
-        if newWalkSpeed then
-            local currentJumpPower = game.Players.LocalPlayer.Character.Humanoid.JumpPower
-            setPlayerStats(newWalkSpeed, currentJumpPower)
-        else
-            print("Invalid value for WalkSpeed.")
-        end
-    end    
-})
-
--- Adicionar um Textbox para digitar o JumpPower
-JumpPowerTextbox = Tab:AddTextbox({
-    Name = "JumpPower",  -- Nome antes do valor
-    Default = "50",  -- valor inicial da caixa
-    TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
-    Callback = function(value)
-        -- Verifica se o valor inserido é um número válido
-        local newJumpPower = tonumber(value)
-        if newJumpPower then
-            local currentWalkSpeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
-            setPlayerStats(currentWalkSpeed, newJumpPower)
-        else
-            print("Invalid value for JumpPower.")
-        end
     end    
 })
 
