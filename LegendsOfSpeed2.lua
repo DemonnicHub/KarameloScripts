@@ -39,21 +39,11 @@ local function SelectCity(City)
 end
 
 -- Function Teleport Maps --
-local function teleportTo(location)
+local function SelectLocation(location)
     if location == "Desert" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
-            2508.94995, 14.74121, 4353.5166, 
-            -0.0638562664, 7.44120214e-08, 0.997959077, 
-            -5.29291349e-08, 1, -7.79509719e-08, 
-            -0.997959077, -5.7798772e-08, -0.0638562664
-        )
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2508.94995, 14.74121, 4353.5166, -0.0638562664, 7.44120214e-08, 0.997959077, -5.29291349e-08, 1, -7.79509719e-08, -0.997959077, -5.7798772e-08, -0.0638562664)
     elseif location == "Space" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
-            -331.823395, 3.84380865, 581.689331, 
-            0.345898926, 0, 0.938271761, 
-            0, 1, 0, 
-            -0.938271761, 0, 0.345898926
-        )
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.823395, 3.84380865, 581.689331, 0.345898926, 0, 0.938271761, 0, 1, 0, -0.938271761, 0, 0.345898926)
     end
 end
 
@@ -409,11 +399,11 @@ Tab:AddDropdown({
 })
 
 Tab:AddDropdown({
-    Name = "Selecione o local",
-    Default = "Deserto",
-    Options = {"Deserto", "Espaço"},
+    Name = "Select Map",
+    Default = "None",
+    Options = {"None","Desert", "Space"},
     Callback = function(Value)
-        teleportTo(Value) -- Teletransporta para o local selecionado
+        SelectLocation(Value) -- Teletransporta para o local selecionado
     end    
 })
 
