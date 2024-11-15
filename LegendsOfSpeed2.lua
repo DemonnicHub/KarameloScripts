@@ -25,7 +25,7 @@ local function TeleportToChestAndCollect(City)
 
     -- Verificar se o RemoteEvent existe no ReplicatedStorage
     local replicatedStorage = game:GetService("ReplicatedStorage")
-    local collectChestRemote = replicatedStorage:WaitForChild("REvents"):WaitForChild("collectCourseChestRemote")
+    local collectChestRemote = replicatedStorage:WaitForChild("rEvents"):WaitForChild("collectCourseChestRemote")
 
     -- Enviar o RemoteEvent para o servidor para "coletar" o baú
     if collectChestRemote then
