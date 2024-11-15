@@ -180,8 +180,8 @@ local Section = Tab:AddSection({
 	Name = "Auto Race"
 })
 
-FarmTab:AddToggle({
-    Name = "Auto Racer",
+Tab:AddToggle({
+    Name = "Auto Races",
     Default = false,
     Callback = function(Value)
         ToggleAutoRaces(Value)
