@@ -1,58 +1,5 @@
 --// Functions \\--
 
--- Função para atualizar as labels com os valores das leaderstats
-local function UpdateStats()
-    local player = game.Players.LocalPlayer
-    local stats = player:WaitForChild("leaderstats")  -- Aguardar leaderstats
-
-    -- Verifica se as leaderstats existem e pega os valores
-    local steps = stats and stats:FindFirstChild("Steps") and stats.Steps.Value or 0
-    local rebirths = stats and stats:FindFirstChild("Rebirths") and stats.Rebirths.Value or 0
-    local rings = stats and stats:FindFirstChild("Rings") and stats.Rings.Value or 0
-    local races = stats and stats:FindFirstChild("Races") and stats.Races.Value or 0
-
-    -- Atualiza as labels com os valores
-    StepsLabel:Set("Passos: " .. tostring(steps))
-    RebirthsLabel:Set("Renascimentos: " .. tostring(rebirths))
-    RingsLabel:Set("Aros: " .. tostring(rings))
-    RacesLabel:Set("Corridas: " .. tostring(races))
-end
-
--- Conectar o evento 'Changed' de cada leaderstat para atualizar os valores imediatamente
-local function ConnectStatChangeEvents()
-    local player = game.Players.LocalPlayer
-    local stats = player:WaitForChild("leaderstats")
-
-    -- Atualiza assim que qualquer valor nas leaderstats mudar
-    local steps = stats:WaitForChild("Steps")
-    local rebirths = stats:WaitForChild("Rebirths")
-    local rings = stats:WaitForChild("Rings")
-    local races = stats:WaitForChild("Races")
-
-    -- Conectar os eventos de mudança
-    steps.Changed:Connect(function()
-        UpdateStats()  -- Atualiza a interface quando o valor de "Steps" mudar
-    end)
-
-    rebirths.Changed:Connect(function()
-        UpdateStats()  -- Atualiza a interface quando o valor de "Rebirths" mudar
-    end)
-
-    rings.Changed:Connect(function()
-        UpdateStats()  -- Atualiza a interface quando o valor de "Rings" mudar
-    end)
-
-    races.Changed:Connect(function()
-        UpdateStats()  -- Atualiza a interface quando o valor de "Races" mudar
-    end)
-end
-
--- Inicializa a interface e conecta os eventos
-local function InitStatsDisplay()
-    ConnectStatChangeEvents()  -- Conecta os eventos de mudança
-    UpdateStats()  -- Atualiza imediatamente ao iniciar
-end
-
 -- Função para expandir o torso --
 local function ExpandTorso()
     local player = game.Players.LocalPlayer
@@ -170,31 +117,37 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local StepsSection = Tab:AddSection({
-    Name = "Steps"
+local Tab = Window:MakeTab({
+	Name = "Stats",
+	Icon = "rbxassetid://113927674495690",
+	PremiumOnly = false
 })
 
-local RebirthsSection = Tab:AddSection({
-    Name = "Rebirths"
+local Tab = Window:MakeTab({
+	Name = "Auto Rebirth",
+	Icon = "rbxassetid://121663556703347",
+	PremiumOnly = false
 })
 
-local RingsSection = Tab:AddSection({
-    Name = "Hoops"
+local Section = Tab:AddSection({
+	Name = "Rebirth Stopping Point"
 })
 
-local RacesSection = Tab:AddSection({
-    Name = "Races"
+Tab:AddToggle({
+	Name = "Auto Rebirth",
+	Default = false,
+	Callback = function(Value)
+		getgenv().AutoRebirth = Value
+        while AutoRebirth do
+            Rebirth()
+            task.wait()
+        end
+	end    
 })
-
--- Criar as Labels para exibir os status dentro de suas respectivas sections
-local StepsLabel = StepsSection:AddLabel("Passos: 0")
-local RebirthsLabel = RebirthsSection:AddLabel("Renascimentos: 0")
-local RingsLabel = RingsSection:AddLabel("Aros: 0")
-local RacesLabel = RacesSection:AddLabel("Corridas: 0")
 
 local Tab = Window:MakeTab({
 	Name = "Scripts",
-	Icon = "rbxassetid://78744214847458",
+	Icon = "rbxassetid://113927674495690",
 	PremiumOnly = false
 })
 
