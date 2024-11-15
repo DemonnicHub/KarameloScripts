@@ -38,6 +38,28 @@ local function SelectCity(City)
     end
 end
 
+-- Function Teleports Races --
+local function teleportToMap(map)
+    local targetTeleport
+    
+    -- Definindo os teleportes para os mapas
+    if map == "Grassland" then
+        targetTeleport = game:GetService("Workspace").raceMaps.Grassland.Teleport
+    elseif map == "Desert" then
+        targetTeleport = game:GetService("Workspace").raceMaps.Desert.Teleport
+    elseif map == "Magma" then
+        targetTeleport = game:GetService("Workspace").raceMaps.Magma.Teleport
+    end
+
+    -- Se o teleporte for encontrado, teleportar o jogador
+    if targetTeleport then
+        game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = targetTeleport.CFrame
+        print("Teleporting to: " .. map)
+    else
+        print("Error: Teleport not found!")
+    end
+end
+
 -- Function Anti-Kick --
 local function AntiKick()
     local vu = game:GetService("VirtualUser")
@@ -333,6 +355,19 @@ Tab:AddDropdown({
 	Callback = function(Value)
 		SelectCity(Value)
 	end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Race Maps"
+})
+
+Tab:AddDropdown({
+    Name = "Select Map",
+    Default = "Grassland",  -- Valor padrão, caso não seja selecionado nada
+    Options = {"Grassland", "Desert", "Magma"},  -- Opções de mapas disponíveis
+    Callback = function(selectedMap)
+        teleportToMap(selectedMap)  -- Chama a função para teleportar para o mapa selecionado
+    end    
 })
 
 local Tab = Window:MakeTab({
