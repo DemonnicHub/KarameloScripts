@@ -58,10 +58,10 @@ local function SelectChest(chest)
     end
 end
 
--- Function Auto Race V1 --
+-- Função para teletransportar-se entre mapas, com opção de escolher o mapa
 _G.Farm = false
 
--- Função para teletransportar-se entre mapas
+-- Função para teletransportar-se para os 3 mapas (exemplo original)
 local function teleportToMaps()
     while _G.Farm do
         pcall(function()
@@ -73,6 +73,20 @@ local function teleportToMaps()
             wait(0.1)
             -- Teleporte para Desert
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)
+            wait(0.1)
+        end)
+    end
+end
+
+-- Função para teletransportar-se para o Space
+local function teleportToSpace()
+    while _G.Farm do
+        pcall(function()
+            -- Teleporte para o ponto de início do Space
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 36.0000916, -4805.07861, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            wait(0.1)
+            -- Teleporte para o ponto de vitória do Space
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4945.31689, 36.0000916, -4805.07861, 0, 0, 1, 0, 1, -0, -1, 0, 0)
             wait(0.1)
         end)
     end
@@ -106,7 +120,13 @@ local function toggleAutoRaces(state)
                 wait(0.1)
             end
         end)
-        teleportToMaps() -- Inicia o teleporte entre os mapas simultaneamente
+        
+        -- Chama o teleporte conforme o mapa selecionado
+        if _G.SelectedTeleport == "Space" then
+            teleportToSpace() -- Teleporte para o Space
+        elseif _G.SelectedTeleport == "Multiple Maps" then
+            teleportToMaps() -- Teleporte para os 3 mapas originais
+        end
     else
         stopAutoFarm()
     end
@@ -579,11 +599,21 @@ local Section = Tab:AddSection({
 	Name = "Auto Race"
 })
 
+local Dropdown = Tab:AddDropdown({
+    Name = "Select Map",
+    Default = "None",
+    Options = {"None","Multiple Maps", "Space"},
+    Callback = function(selectedOption)
+        _G.SelectedTeleport = selectedOption
+        print("Selected Teleport: " .. selectedOption)
+    end
+})
+
 Tab:AddToggle({
     Name = "Auto Race V1",
     Default = false,
-    Callback = function(state)
-        toggleAutoRaces(state)
+    Callback = function(Value)
+        toggleAutoRaces(Value)
     end
 })
 
