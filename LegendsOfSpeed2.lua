@@ -3,7 +3,7 @@
 -- Função para atualizar as labels com os valores das leaderstats
 local function UpdateStats()
     local player = game.Players.LocalPlayer
-    local stats = player:WaitForChild("leaderstats")  -- Supondo que os dados do jogador estão em leaderstats
+    local stats = player:WaitForChild("leaderstats")  -- Aguardar leaderstats
 
     -- Verifica se as leaderstats existem e pega os valores
     local steps = stats and stats:FindFirstChild("Steps") and stats.Steps.Value or 0
@@ -24,10 +24,27 @@ local function ConnectStatChangeEvents()
     local stats = player:WaitForChild("leaderstats")
 
     -- Atualiza assim que qualquer valor nas leaderstats mudar
-    stats:WaitForChild("Steps").Changed:Connect(UpdateStats)
-    stats:WaitForChild("Rebirths").Changed:Connect(UpdateStats)
-    stats:WaitForChild("Rings").Changed:Connect(UpdateStats)
-    stats:WaitForChild("Races").Changed:Connect(UpdateStats)
+    local steps = stats:WaitForChild("Steps")
+    local rebirths = stats:WaitForChild("Rebirths")
+    local rings = stats:WaitForChild("Rings")
+    local races = stats:WaitForChild("Races")
+
+    -- Conectar os eventos de mudança
+    steps.Changed:Connect(function()
+        UpdateStats()  -- Atualiza a interface quando o valor de "Steps" mudar
+    end)
+
+    rebirths.Changed:Connect(function()
+        UpdateStats()  -- Atualiza a interface quando o valor de "Rebirths" mudar
+    end)
+
+    rings.Changed:Connect(function()
+        UpdateStats()  -- Atualiza a interface quando o valor de "Rings" mudar
+    end)
+
+    races.Changed:Connect(function()
+        UpdateStats()  -- Atualiza a interface quando o valor de "Races" mudar
+    end)
 end
 
 -- Inicializa a interface e conecta os eventos
@@ -153,13 +170,27 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-Tab:AddLabel("Passos: 0")
+local StepsSection = Tab:AddSection({
+    Name = "Passos"
+})
 
-Tab:AddLabel("Renascimentos: 0")
+local RebirthsSection = Tab:AddSection({
+    Name = "Renascimentos"
+})
 
-Tab:AddLabel("Aros: 0")
+local RingsSection = Tab:AddSection({
+    Name = "Aros"
+})
 
-Tab:AddLabel("Corridas: 0")
+local RacesSection = Tab:AddSection({
+    Name = "Corridas"
+})
+
+-- Criar as Labels para exibir os status dentro de suas respectivas sections
+local StepsLabel = StepsSection:AddLabel("Passos: 0")
+local RebirthsLabel = RebirthsSection:AddLabel("Renascimentos: 0")
+local RingsLabel = RingsSection:AddLabel("Aros: 0")
+local RacesLabel = RacesSection:AddLabel("Corridas: 0")
 
 local Tab = Window:MakeTab({
 	Name = "Scripts",
