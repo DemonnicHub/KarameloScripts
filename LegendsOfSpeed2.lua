@@ -56,10 +56,10 @@ end
 local function startAutoRace()
     _G.Farm = true
     while _G.Farm do
-        wait(0.6)
+        wait()
         -- Enviar evento de entrar na corrida
         game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
-        wait(0.6)
+        wait()
         -- Teleporta para o local correspondente ao mapa selecionado
         teleportToMap(selectedMap)
     end
@@ -449,13 +449,13 @@ Tab:AddDropdown({
     Options = {"City", "Space", "Desert"},  -- Opções disponíveis
     Callback = function(selected)
         selectedMap = selected  -- Atualiza a variável selectedMap com o mapa escolhido
-        print("Mapa selecionado: " .. selectedMap)
+        print("Selected map: " .. selectedMap)
     end    
 })
 
 -- Adicionar o Toggle para iniciar/parar a corrida automática
 Tab:AddToggle({
-    Name = "Auto Race Teleport",
+    Name = "Auto Race V1",
     Default = false,
     Callback = function(state)
         if state then
@@ -467,7 +467,7 @@ Tab:AddToggle({
 })
 
 Tab:AddToggle({
-    Name = "Auto Race",
+    Name = "Auto Race V2",
     Default = false,
     Callback = function(Value)
         ToggleAutoRaces(Value)
