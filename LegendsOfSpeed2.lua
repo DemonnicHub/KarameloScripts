@@ -428,8 +428,8 @@ local Section = Tab:AddSection({
 
 Tab:AddDropdown({
     Name = "Select Chest",
-    Default = "Main City Chest",
-    Options = {"Main City Chest", "Snow City Chest", "Magma City Chest"},
+    Default = "None",
+    Options = {"None","Main City Chest", "Snow City Chest", "Magma City Chest"},
     Callback = function(Value)
         SelectChest(Value) -- Teletransporta para o baú selecionado
     end    
