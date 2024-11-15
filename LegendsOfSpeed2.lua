@@ -30,7 +30,7 @@ local function SelectCity(city)
     if city == "Main City" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9686.27148, 58.9799881, 3110.75903, -0.993164003, 2.12365538e-08, -0.116727315, 2.63954707e-08, 1, -4.26504876e-08, 0.116727315, -4.54400002e-08, -0.993164003)
     elseif city == "Snow City" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9676.13867, 74.8522873, 3782.69385, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9672.77832, 58.9799881, 3768.75171, 0.991323948, -1.89020124e-08, -0.131441399, 1.31006459e-08, 1, -4.50012685e-08, 0.131441399, 4.28888676e-08, 0.991323948)
     elseif city == "Magma City" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11051.4258, 216.940002, 4886.27832, 0.987576485, 3.03587235e-08, -0.157139242, -3.89276664e-08, 1, -5.14532452e-08, 0.157139242, 5.69310785e-08, 0.987576485)
     elseif city == "Legends Highway" then
@@ -243,6 +243,28 @@ local function deleteBarrier()
     end)
 end
 
+-- Funtion Leaderstats --
+local function UpdateStats()
+    local player = game.Players.LocalPlayer
+    local leaderstats = player:WaitForChild("leaderstats")
+
+    local rebirths = leaderstats:WaitForChild("Rebirths").Value
+    local steps = leaderstats:WaitForChild("Steps").Value
+    local hoops = leaderstats:WaitForChild("Hoops").Value
+    local races = leaderstats:WaitForChild("Races").Value
+
+    -- Atualizar os Labels com os valores
+    RebirthsLabel:Set("Rebirths: " .. rebirths)
+    StepsLabel:Set("Steps: " .. steps)
+    HoopsLabel:Set("Hoops: " .. hoops)
+    RacesLabel:Set("Races: " .. races)
+end
+
+-- Atualizar as estatísticas a cada 1 segundo
+game:GetService("RunService").Heartbeat:Connect(function()
+    UpdateStats()
+end)
+
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -446,6 +468,37 @@ local Tab = Window:MakeTab({
 	Icon = "rbxassetid://113927674495690",
 	PremiumOnly = false
 })
+
+local StatsSection = Tab:AddSection({
+    Name = "Player Stats"
+})
+
+local RebirthsLabel = Tab:AddLabel("Rebirths: 0")
+local StepsLabel = Tab:AddLabel("Steps: 0")
+local HoopsLabel = Tab:AddLabel("Hoops: 0")
+local RacesLabel = Tab:AddLabel("Races: 0")
+
+-- Função para atualizar os valores das estatísticas
+local function UpdateStats()
+    local player = game.Players.LocalPlayer
+    local leaderstats = player:WaitForChild("leaderstats")
+
+    local rebirths = leaderstats:WaitForChild("Rebirths").Value
+    local steps = leaderstats:WaitForChild("Steps").Value
+    local hoops = leaderstats:WaitForChild("Hoops").Value
+    local races = leaderstats:WaitForChild("Races").Value
+
+    -- Atualizar os Labels com os valores
+    RebirthsLabel:Set("Rebirths: " .. rebirths)
+    StepsLabel:Set("Steps: " .. steps)
+    HoopsLabel:Set("Hoops: " .. hoops)
+    RacesLabel:Set("Races: " .. races)
+end
+
+-- Atualizar as estatísticas a cada 1 segundo
+game:GetService("RunService").Heartbeat:Connect(function()
+    UpdateStats()
+end)
 
 local Tab = Window:MakeTab({
 	Name = "Auto Rebirth",
