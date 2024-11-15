@@ -38,6 +38,38 @@ local function SelectCity(City)
     end
 end
 
+-- Function AutoRace Teleport Map --
+local selectedMap = "City"  -- Padrão para "City"
+
+-- Função para teleportar o jogador dependendo do mapa escolhido
+local function teleportToMap(map)
+    if map == "City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453)
+    elseif map == "Space" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634)
+    elseif map == "Desert" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)
+    end
+end
+
+-- Função para iniciar a corrida automática
+local function startAutoRace()
+    _G.Farm = true
+    while _G.Farm do
+        wait(0.6)
+        -- Enviar evento de entrar na corrida
+        game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
+        wait(0.6)
+        -- Teleporta para o local correspondente ao mapa selecionado
+        teleportToMap(selectedMap)
+    end
+end
+
+-- Função para parar a corrida automática
+local function stopAutoRace()
+    _G.Farm = false
+end
+
 -- Function Anti-Kick --
 local function AntiKick()
     local vu = game:GetService("VirtualUser")
@@ -409,6 +441,29 @@ local Tab = Window:MakeTab({
 
 local Section = Tab:AddSection({
 	Name = "Auto Race"
+})
+
+Tab:AddDropdown({
+    Name = "Select Map",
+    Default = "City",  -- Valor padrão
+    Options = {"City", "Space", "Desert"},  -- Opções disponíveis
+    Callback = function(selected)
+        selectedMap = selected  -- Atualiza a variável selectedMap com o mapa escolhido
+        print("Mapa selecionado: " .. selectedMap)
+    end    
+})
+
+-- Adicionar o Toggle para iniciar/parar a corrida automática
+Tab:AddToggle({
+    Name = "Auto Race Teleport",
+    Default = false,
+    Callback = function(state)
+        if state then
+            startAutoRace()  -- Inicia a corrida automática
+        else
+            stopAutoRace()  -- Para a corrida automática
+        end
+    end    
 })
 
 Tab:AddToggle({
