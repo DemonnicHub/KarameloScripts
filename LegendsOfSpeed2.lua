@@ -316,6 +316,16 @@ local function sendChatMessage(message)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "All")
 end
 
+local function clickAndTeleport()
+	-- Simula um clique (substitua pelo evento do seu jogo, se necessário)
+	pcall(function()
+		game:GetService("ReplicatedStorage").ClickEvent:FireServer() -- Ajuste o evento, se necessário
+	end)
+	-- Teletransporte o jogador (substitua pelas coordenadas desejadas)
+	local targetPosition = CFrame.new(-100, 50, 200) -- Modifique para a posição desejada
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPosition
+end
+
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -797,7 +807,32 @@ local Tab = Window:MakeTab({
 })
 
 local Section = Tab:AddSection({
-	Name = "Extra"
+	Name = "Misc"
+})
+
+Tab:AddButton({
+	Name = "Click + Teleport (Button)",
+	Callback = function()
+		clickAndTeleport()
+	end    
+})
+
+-- **Toggle para ativar/desativar o click + teleport repetidamente**
+local isClickTPActive = false
+Tab:AddToggle({
+	Name = "Enable Auto Click + Teleport",
+	Default = false,
+	Callback = function(state)
+		isClickTPActive = state
+		if isClickTPActive then
+			spawn(function()
+				while isClickTPActive do
+					clickAndTeleport()
+					wait(1) -- Intervalo entre execuções (1 segundo por padrão)
+				end
+			end)
+		end
+	end
 })
 
 local Tab = Window:MakeTab({
