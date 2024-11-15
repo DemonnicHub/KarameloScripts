@@ -160,8 +160,8 @@ local AutoAdjustToggle = Tab:AddToggle({
             local humanoid = character:WaitForChild("Humanoid")
             humanoid:GetPropertyChangedSignal("HipHeight"):Connect(function()
                 -- Ajusta para 2 sempre que o valor for menor que 2
-                if humanoid.HipHeight 3 then
-                    humanoid.HipHeight = 3
+                if humanoid.HipHeight 2 then
+                    humanoid.HipHeight = 2
                     print("HipHeight automatically adjusted to 2.")
                 end
             end)
@@ -174,22 +174,6 @@ local AutoAdjustToggle = Tab:AddToggle({
 
 local Section = Tab:AddSection({
 	Name = "Game Options"
-})
-
-Tab:AddButton({
-    Name = "Anti-Kick (Required)",
-    Callback = function()
-        AntiKick()
-        print("Anti-kick activated!")
-    end    
-})
-
-Tab:AddButton({
-    Name = "Low Graphics (50%)",
-    Callback = function()
-        optimizeFpsPing()  -- Chama a função de otimização
-        print("Optimized graphics for better performance!")
-    end    
 })
 
 Tab:AddButton({
@@ -267,7 +251,7 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Corridas",
+    Name = "Auto Race",
     Default = false,
     Callback = function(Value)
         ToggleAutoRaces(Value)
@@ -341,6 +325,22 @@ local Tab = Window:MakeTab({
 
 local Section = Tab:AddSection({
 	Name = "Extra"
+})
+
+Tab:AddButton({
+    Name = "Anti-Kick (Required)",
+    Callback = function()
+        AntiKick()
+        print("Anti-kick activated!")
+    end    
+})
+
+Tab:AddButton({
+    Name = "Low Graphics (50%)",
+    Callback = function()
+        optimizeFpsPing()  -- Chama a função de otimização
+        print("Optimized graphics for better performance!")
+    end    
 })
 
 local Tab = Window:MakeTab({
