@@ -692,13 +692,13 @@ Tab:AddButton({
 
 local Tab = Window:MakeTab({
 	Name = "Auto Buy Pets",
-	Icon = "rbxassetid://71506531582407",
+	Icon = "rbxassetid://109705500469104",
 	PremiumOnly = false
 })
 
 local Tab = Window:MakeTab({
-	Name = "Scripts PC",
-	Icon = "rbxassetid://131944028525380",
+	Name = "Scripts Pc",
+	Icon = "rbxassetid://92103740798042",
 	PremiumOnly = false
 })
 
@@ -707,7 +707,7 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddButton({
-    Name = "Karamelo - Auto Race ⚡",  -- Nome do botão
+    Name = "Auto Race - Script",  -- Nome do botão
     Callback = function() 
         -- Quando o botão for pressionado, o script será executado
         loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoRaceKaramelo.lua"))()
@@ -715,11 +715,11 @@ Tab:AddButton({
 })
 
 local Section = Tab:AddSection({
-	Name = "Auto Farm Android X Pc (Glitch Pets)"
+	Name = "Auto Farm"
 })
 
 Tab:AddButton({
-    Name = "Karamelo - Auto Farm ⚡",  -- Nome do botão
+    Name = "Auto Farm - Script",  -- Nome do botão
     Callback = function() 
         -- Quando o botão for pressionado, o script será executado
         loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoFarmKaramelo.lua"))()
@@ -728,7 +728,7 @@ Tab:AddButton({
 
 local Tab = Window:MakeTab({
 	Name = "Chat Spam",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://112552741196505",
 	PremiumOnly = false
 })
 
