@@ -25,7 +25,7 @@ local function ResetCharacter()
     print("The character has been reset to its original state!")
 end
 
--- Function Teleports --
+-- Function City Teleports --
 local function SelectCity(City)
     if City == "Main City" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
@@ -38,12 +38,23 @@ local function SelectCity(City)
     end
 end
 
--- Function Teleport Maps --
+-- Function Maps Teleports --
 local function SelectLocation(location)
     if location == "Desert" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2508.94995, 14.74121, 4353.5166, -0.0638562664, 7.44120214e-08, 0.997959077, -5.29291349e-08, 1, -7.79509719e-08, -0.997959077, -5.7798772e-08, -0.0638562664)
     elseif location == "Space" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.823395, 3.84380865, 581.689331, 0.345898926, 0, 0.938271761, 0, 1, 0, -0.938271761, 0, 0.345898926)
+    end
+end
+
+-- Function Chest Teleports --
+local function SelectChest(chest)
+    if chest == "Main City Chest" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-668.435242, 64.7499619, -263.600342, -0.588192225, -6.5145052e-08, -0.808721185, 4.4101709e-09, 1, -8.37607317e-08, 0.808721185, -5.28340109e-08, -0.588192225)
+    elseif chest == "Snow City Chest" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-591.912415, 72.749939, 2143.3291, -0.99671495, 7.0440322e-08, -0.080989778, 7.61660246e-08, 1, -6.76071892e-08, 0.080989778, -7.3553764e-08, -0.99671495)
+    elseif chest == "Magma City Chest" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2482.57764, 68.8001709, 3992.08301, -0.688194096, 3.17123816e-09, 0.725526631, 2.77723515e-08, 1, 2.19723582e-08, -0.725526631, 3.52708263e-08, -0.688194096)
     end
 end
 
@@ -386,7 +397,7 @@ local Tab = Window:MakeTab({
 })
 
 local Section = Tab:AddSection({
-	Name = "Teleports"
+	Name = "City Teleports"
 })
 
 Tab:AddDropdown({
@@ -398,12 +409,29 @@ Tab:AddDropdown({
 	end    
 })
 
+local Section = Tab:AddSection({
+	Name = "Maps Teleports"
+})
+
 Tab:AddDropdown({
     Name = "Select Map",
     Default = "None",
     Options = {"None","Desert", "Space"},
     Callback = function(Value)
         SelectLocation(Value) -- Teletransporta para o local selecionado
+    end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Chest Teleports"
+})
+
+Tab:AddDropdown({
+    Name = "Select Chest",
+    Default = "Main City Chest",
+    Options = {"Main City Chest", "Snow City Chest", "Magma City Chest"},
+    Callback = function(Value)
+        SelectChest(Value) -- Teletransporta para o baú selecionado
     end    
 })
 
