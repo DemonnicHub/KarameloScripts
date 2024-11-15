@@ -1,37 +1,55 @@
 --// Functions \\--
 
--- Função para expandir o torso de forma extrema
-local function ExpandTorsoGigante()
+-- Função para expandir o torso --
+local function ExpandTorso()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
-    
-    -- Espera o personagem carregar completamente
-    local torso = character:WaitForChild("UpperTorso")  -- Ajuste o nome do torso se necessário
-    local lowerTorso = character:WaitForChild("LowerTorso")  -- Caso queira expandir também o lower torso
+    local torso = character:WaitForChild("UpperTorso") -- ou "LowerTorso", depende da estrutura do modelo
 
-    -- Definindo o fator de expansão (triplicar o tamanho)
-    local expansionFactor = 3  -- Triplicar o tamanho do torso
+    -- Definindo a taxa de expansão
+    local expansionRate = Vector3.new(1, 0.2, 0.5)  -- Ajuste conforme necessário
 
-    -- Expande o tamanho do torso de forma extrema
-    torso.Size = torso.Size * expansionFactor
-    lowerTorso.Size = lowerTorso.Size * expansionFactor
-
-    -- Posicionando o torso expandido (para evitar que ele "fure" o resto do corpo)
-    torso.Position = torso.Position + Vector3.new(0, torso.Size.Y / 2, 0)  -- Ajusta a posição do torso para cima
-    lowerTorso.Position = lowerTorso.Position + Vector3.new(0, lowerTorso.Size.Y / 2, 0)  -- Ajusta o lower torso
-
-    -- Pode adicionar outras partes do corpo se necessário, como braços e cabeça
+    -- Expande o torso
+    torso.Size = torso.Size + expansionRate
 end
 
--- Function Low Graphics
-local function optimizeFpsPing()
-    for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
-        if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
-            v.Material = Enum.Material.SmoothPlastic
-            if v:IsA("Texture") then
-                v:Destroy()
-            end
-        end
+-- Função para resetar o personagem
+local function ResetCharacter()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    -- Espera as partes do corpo do personagem
+    local torso = character:WaitForChild("UpperTorso")  -- Ajuste o nome do torso se necessário
+    local lowerTorso = character:WaitForChild("LowerTorso")  -- Caso queira resetar o lower torso também
+
+    -- Resetando o tamanho original do torso
+    local originalSize = Vector3.new(2, 2, 1)  -- Tamanho padrão do torso, ajuste conforme necessário
+    local originalLowerSize = Vector3.new(2, 1, 1)  -- Tamanho padrão do lower torso, ajuste conforme necessário
+
+    torso.Size = originalSize
+    lowerTorso.Size = originalLowerSize
+
+    -- Resetando a posição (se necessário)
+    torso.Position = character.HumanoidRootPart.Position + Vector3.new(0, torso.Size.Y / 2, 0)  -- Ajuste a posição para ficar no lugar correto
+    lowerTorso.Position = character.HumanoidRootPart.Position - Vector3.new(0, lowerTorso.Size.Y / 2, 0)  -- Ajuste a posição do lower torso
+
+    -- Resetando outras partes do corpo, se necessário (braços, cabeça, etc.)
+    -- Aqui você pode adicionar outras partes que quiser resetar, como os braços ou cabeça, conforme o modelo do personagem.
+
+    -- Restaurando o personagem para o estado inicial
+    print("O personagem foi resetado!")
+end
+
+-- Function Teleports --
+local function SelectCity(City)
+    if City == "Main City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
+    elseif City == "Snow City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9676.13867, 74.8522873, 3782.69385, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    elseif City == "Magma City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11054.9688, 232.791656, 4898.62842, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
+    elseif City == "Legends Highway" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13098.8711, 232.791656, 5907.62793, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
     end
 end
 
@@ -45,16 +63,15 @@ local function AntiKick()
     end)
 end
 
--- Function Teleport --
-local function SelectCity(City)
-    if City == "Main City" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
-    elseif City == "Snow City" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9676.13867, 74.8522873, 3782.69385, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-    elseif City == "Magma City" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11054.9688, 232.791656, 4898.62842, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
-    elseif City == "Legends Highway" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13098.8711, 232.791656, 5907.62793, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
+-- Function Low Graphics --
+local function optimizeFpsPing()
+    for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+        if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
+            v.Material = Enum.Material.SmoothPlastic
+            if v:IsA("Texture") then
+                v:Destroy()
+            end
+        end
     end
 end
 
@@ -128,10 +145,18 @@ Tab:AddToggle({
 })
 
 Tab:AddButton({
-    Name = "Expandir Torso Gigante",  -- Nome do botão que aparece na UI
+    Name = "Expand Torso",  -- Nome do botão que aparece na UI
     Callback = function()
         ExpandTorsoGigante()  -- Chama a função para expandir o torso
         print("O torso foi expandido para tamanho gigante!")
+    end    
+})
+
+Tab:AddButton({
+    Name = "Suicid",  -- Nome do botão que aparece na UI
+    Callback = function()
+        ResetCharacter()  -- Chama a função para resetar o personagem
+        print("O personagem foi resetado ao seu tamanho normal.")
     end    
 })
 
