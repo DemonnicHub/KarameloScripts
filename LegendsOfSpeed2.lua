@@ -1,29 +1,12 @@
 --// Functions \\--
 
 local function optimizeFpsPing()
-    -- Loop por todos os objetos na Workspace
     for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
-        -- Otimiza as partes normais
         if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
-            v.Material = Enum.Material.SmoothPlastic  -- Define o material para algo simples e leve
+            v.Material = Enum.Material.SmoothPlastic
             if v:IsA("Texture") then
-                v:Destroy()  -- Remove texturas para melhorar o desempenho
+                v:Destroy()
             end
-        end
-
-        -- Remove acessórios e efeitos dos jogadores para melhorar o FPS
-        if v:IsA("Accessory") then
-            v:Destroy()  -- Remove qualquer acessório, como chapéus, cabelos, etc.
-        end
-
-        -- Remover qualquer partícula (efeitos visuais) que possam estar presentes nos jogadores
-        if v:IsA("ParticleEmitter") or v:IsA("Smoke") or v:IsA("Fire") then
-            v:Destroy()  -- Remove partículas ou efeitos de fogo, fumaça, etc.
-        end
-
-        -- Remover texturas do corpo do jogador
-        if v:IsA("Decal") and v.Parent:IsA("Character") then
-            v:Destroy()  -- Remove as decals (texturas) dos personagens
         end
     end
 end
@@ -54,7 +37,7 @@ end
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
-local Window = OrionLib:MakeWindow({Name = "Demonnic Hu | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 
 local Tab = Window:MakeTab({
@@ -108,6 +91,25 @@ Tab:AddButton({
         -- Aqui, estamos adicionando o código diretamente no callback
         while wait() do
             game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
+        end
+    end    
+})
+
+Tab:AddToggle({
+    Name = "Auto Fill Race (Fixed2)",  -- Nome do botão
+    Callback = function(value) 
+        -- A variável 'value' recebe o estado atual do toggle (true ou false)
+        autoFillRaceActive = value  -- Atualiza o estado de ativação do toggle
+        
+        -- Se o toggle for ativado, começa a executar a função
+        if autoFillRaceActive then
+            -- Inicia a ação de preencher a corrida
+            spawn(function()
+                while autoFillRaceActive do  -- O loop continua enquanto o toggle estiver ativado
+                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
+                    wait(0.1)  -- Intervalo entre as tentativas para evitar sobrecarregar o servidor
+                end
+            end)
         end
     end    
 })
