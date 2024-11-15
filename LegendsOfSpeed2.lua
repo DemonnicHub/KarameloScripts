@@ -1,30 +1,37 @@
 --// Functions \\--
 
--- Função para alternar o estado de AutoRaces--
+-- Function Auto Race --
+local AutoRaces = false  -- Variável para controlar o estado da corrida
+
 local function ToggleAutoRaces(Value)
     AutoRaces = Value
     if AutoRaces then
+        -- Se o toggle for ativado, começa a corrida
         spawn(function()
             while AutoRaces do
                 pcall(function()
-                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
-                    task.wait()
-                    local part = Players.LocalPlayer.Character.HumanoidRootPart
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")  -- Envia o pedido para entrar na corrida
+                    task.wait()  -- Espera um ciclo de tempo
+                    local part = Players.LocalPlayer.Character.HumanoidRootPart  -- Obtém a parte principal do personagem
+
+                    -- Percorre os mapas de corrida e verifica os decals
                     for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
                         if v.Name == "Decal" and v.Parent then
-                            firetouchinterest(part, v.Parent, 0)
-                            wait()
-                            firetouchinterest(part, v.Parent, 1)
+                            firetouchinterest(part, v.Parent, 0)  -- Simula o toque no decal
+                            wait()  -- Aguarda um pouco
+                            firetouchinterest(part, v.Parent, 1)  -- Simula o toque de volta no decal
                         end
                     end
                 end)
-                task.wait()
+                task.wait()  -- Espera um pouco antes de tentar novamente
             end
         end)
+    else
+        -- Se o toggle for desativado, interrompe o ciclo de corridas
+        -- Aqui você pode adicionar qualquer lógica necessária para parar as corridas
+        print("Auto Race Disable!")  -- Exemplo de feedback no console
     end
 end
-
-local AutoRaces = false
 
 -- Função para expandir o torso --
 local function ExpandTorso()
@@ -182,8 +189,8 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Race",
-    Default = false,
+    Name = "Auto Races",  
+    Default = false,  
     Callback = function(Value)
         ToggleAutoRaces(Value)
     end    
