@@ -1,5 +1,24 @@
 -- Functions --
 
+-- Função para ativar gráficos baixos
+local function ativarLowGraphics()
+    for _, objeto in pairs(workspace:GetDescendants()) do
+        if objeto:IsA("BasePart") then
+            objeto.Color = Color3.fromRGB(128, 128, 128)  -- Cor simples
+            objeto.Material = Enum.Material.SmoothPlastic  -- Material simples
+            objeto.Transparency = 0.5  -- Transparência reduzida
+        end
+        -- Desativa as luzes para reduzir o impacto visual
+        if objeto:IsA("PointLight") or objeto:IsA("SpotLight") or objeto:IsA("SurfaceLight") then
+            objeto.Enabled = false
+        end
+    end
+    -- Ajuste na iluminação global
+    game.Lighting.GlobalShadows = false
+    game.Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+    game.Lighting.Ambient = Color3.fromRGB(128, 128, 128)
+end
+
 -- Function Anti-Kick --
 local function AntiKick()
     local vu = game:GetService("VirtualUser")
@@ -131,6 +150,14 @@ Tab:AddButton({
     Callback = function()
         AntiKick()
         print("O script AntiKick foi ativado.")
+    end    
+})
+
+Tab:AddButton({
+    Name = "Low Graphics",
+    Callback = function()
+        ativarLowGraphics()
+        print("Gráficos baixos ativados.")
     end    
 })
 
