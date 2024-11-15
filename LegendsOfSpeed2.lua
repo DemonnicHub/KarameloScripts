@@ -1,22 +1,15 @@
--- Functions --
+--// Functions \\--
 
--- Função para ativar gráficos baixos
-local function ativarLowGraphics()
-    for _, objeto in pairs(workspace:GetDescendants()) do
-        if objeto:IsA("BasePart") then
-            objeto.Color = Color3.fromRGB(128, 128, 128)  -- Cor simples
-            objeto.Material = Enum.Material.SmoothPlastic  -- Material simples
-            objeto.Transparency = 0.5  -- Transparência reduzida
-        end
-        -- Desativa as luzes para reduzir o impacto visual
-        if objeto:IsA("PointLight") or objeto:IsA("SpotLight") or objeto:IsA("SurfaceLight") then
-            objeto.Enabled = false
+-- Função para otimizar os gráficos (reduzindo FPS e ping)
+local function optimizeFpsPing()
+    for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+        if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
+            v.Material = Enum.Material.SmoothPlastic  -- Define o material para SmoothPlastic (mais leve)
+            if v:IsA("Texture") then
+                v:Destroy()  -- Remove as texturas para melhorar o desempenho
+            end
         end
     end
-    -- Ajuste na iluminação global
-    game.Lighting.GlobalShadows = false
-    game.Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-    game.Lighting.Ambient = Color3.fromRGB(128, 128, 128)
 end
 
 -- Function Anti-Kick --
@@ -43,9 +36,9 @@ local function SelectCity(City)
 end
 
 
--- Demonnic Hub UI --
+--// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
-local Window = OrionLib:MakeWindow({Name = "Demonnic Hub X Karamelo | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | LOS ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 
 local Tab = Window:MakeTab({
@@ -156,8 +149,8 @@ Tab:AddButton({
 Tab:AddButton({
     Name = "Low Graphics",
     Callback = function()
-        ativarLowGraphics()
-        print("Gráficos baixos ativados.")
+        optimizeFpsPing()  -- Chama a função de otimização
+        print("Gráficos otimizados para melhor desempenho.")
     end    
 })
 
