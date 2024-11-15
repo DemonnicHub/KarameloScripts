@@ -1,5 +1,31 @@
 --// Functions \\--
 
+-- Função para alternar o estado de AutoRaces--
+local function ToggleAutoRaces(Value)
+    AutoRaces = Value
+    if AutoRaces then
+        spawn(function()
+            while AutoRaces do
+                pcall(function()
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
+                    task.wait()
+                    local part = Players.LocalPlayer.Character.HumanoidRootPart
+                    for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
+                        if v.Name == "Decal" and v.Parent then
+                            firetouchinterest(part, v.Parent, 0)
+                            wait()
+                            firetouchinterest(part, v.Parent, 1)
+                        end
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+
+local AutoRaces = false
+
 -- Função para expandir o torso --
 local function ExpandTorso()
     local player = game.Players.LocalPlayer
@@ -13,7 +39,7 @@ local function ExpandTorso()
     torso.Size = torso.Size + expansionRate
 end
 
--- Função para resetar o personagem de forma segura
+-- Função para resetar o personagem de forma segura --
 local function ResetCharacter()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
@@ -125,7 +151,7 @@ local Tab = Window:MakeTab({
 
 local Tab = Window:MakeTab({
 	Name = "Auto Rebirth",
-	Icon = "rbxassetid://121663556703347",
+	Icon = "rbxassetid://124658295933505",
 	PremiumOnly = false
 })
 
@@ -146,8 +172,8 @@ Tab:AddToggle({
 })
 
 local Tab = Window:MakeTab({
-	Name = "Scripts",
-	Icon = "rbxassetid://113927674495690",
+	Name = "Auto Race",
+	Icon = "rbxassetid://97860628277392",
 	PremiumOnly = false
 })
 
@@ -155,11 +181,11 @@ local Section = Tab:AddSection({
 	Name = "Auto Race"
 })
 
-Tab:AddButton({
-    Name = "Karamelo - Auto Race ⚡",  -- Nome do botão
-    Callback = function() 
-        -- Quando o botão for pressionado, o script será executado
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoRaceKaramelo.lua"))()
+Tab:AddToggle({
+    Name = "Auto Race",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRaces(Value)
     end    
 })
 
@@ -179,6 +205,30 @@ Tab:AddToggle({
                 end
             end)
         end
+    end    
+})
+
+local Tab = Window:MakeTab({
+	Name = "Auto Buy Pets",
+	Icon = "rbxassetid://71506531582407",
+	PremiumOnly = false
+})
+
+local Tab = Window:MakeTab({
+	Name = "Scripts",
+	Icon = "rbxassetid://113927674495690",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "Auto Race"
+})
+
+Tab:AddButton({
+    Name = "Karamelo - Auto Race ⚡",  -- Nome do botão
+    Callback = function() 
+        -- Quando o botão for pressionado, o script será executado
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoRaceKaramelo.lua"))()
     end    
 })
 
