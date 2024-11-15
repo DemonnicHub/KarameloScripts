@@ -474,6 +474,11 @@ local StatsSection = Tab:AddSection({
 })
 
 local StepsLabel = Tab:AddLabel("Steps: 0")
+
+local StatsSection = Tab:AddSection({
+    Name = "Rebirths"
+})
+
 local RebirthsLabel = Tab:AddLabel("Rebirths: 0")
 local HoopsLabel = Tab:AddLabel("Hoops: 0")
 local RacesLabel = Tab:AddLabel("Races: 0")
