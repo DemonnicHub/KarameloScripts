@@ -1,33 +1,39 @@
 --// Functions \\--
 
--- Função para Teleportar para o Baú e Simular Tocar
+-- Função para Teleportar para o Baú Específico e Coletar o Baú com RemoteEvent
 local function TeleportToChestAndCollect(City)
+    local chestCoordinates = nil
+    local chestName = nil
+
+    -- Definir coordenadas e nome do baú baseado na cidade
     if City == "Main City Chest" then
-        local chest = game.Workspace:FindFirstChild("MainCityChest")  -- Nome do baú no Workspace
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394)  -- Coordenadas do baú
-        if chest then
-            -- Simula o toque no baú
-            local touchEvent = chest.Touched
-            touchEvent:Fire(game.Players.LocalPlayer.Character.HumanoidRootPart)  -- Simula o toque
-        end
+        chestCoordinates = CFrame.new(-9682.98828, 74.8522873, 3099.03394)
+        chestName = "MainCityChest"
     elseif City == "Snow City Chest" then
-        local chest = game.Workspace:FindFirstChild("SnowCityChest")
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9676.13867, 74.8522873, 3782.69385)
-        if chest then
-            chest.Touched:Fire(game.Players.LocalPlayer.Character.HumanoidRootPart)  -- Simula o toque
-        end
+        chestCoordinates = CFrame.new(-9676.13867, 74.8522873, 3782.69385)
+        chestName = "SnowCityChest"
     elseif City == "Magma City Chest" then
-        local chest = game.Workspace:FindFirstChild("MagmaCityChest")
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11054.9688, 232.791656, 4898.62842)
-        if chest then
-            chest.Touched:Fire(game.Players.LocalPlayer.Character.HumanoidRootPart)  -- Simula o toque
-        end
+        chestCoordinates = CFrame.new(-11054.9688, 232.791656, 4898.62842)
+        chestName = "MagmaCityChest"
     elseif City == "Legends Highway Chest" then
-        local chest = game.Workspace:FindFirstChild("LegendsHighwayChest")
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13098.8711, 232.791656, 5907.62793)
-        if chest then
-            chest.Touched:Fire(game.Players.LocalPlayer.Character.HumanoidRootPart)  -- Simula o toque
-        end
+        chestCoordinates = CFrame.new(-13098.8711, 232.791656, 5907.62793)
+        chestName = "LegendsHighwayChest"
+    end
+
+    -- Teleportando para as coordenadas do baú
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chestCoordinates
+
+    -- Verificar se o RemoteEvent existe no ReplicatedStorage
+    local replicatedStorage = game:GetService("ReplicatedStorage")
+    local collectChestRemote = replicatedStorage:WaitForChild("REvents"):WaitForChild("collectCourseChestRemote")
+
+    -- Enviar o RemoteEvent para o servidor para "coletar" o baú
+    if collectChestRemote then
+        -- Disparando o RemoteEvent para o servidor com as informações do baú
+        collectChestRemote:FireServer(chestName)  -- Envia o nome do baú para o servidor
+        print("Coletando o baú: " .. chestName)
+    else
+        warn("RemoteEvent 'collectCourseChestRemote' não encontrado!")
     end
 end
 
@@ -136,7 +142,7 @@ Tab:AddToggle({
 })
 
 Tab:AddDropdown({
-    Name = "Select Chest",  -- Nome do Dropdown
+    Name = "Select Chest12",  -- Nome do Dropdown
     Default = "1",  -- Valor padrão do Dropdown
     Options = {"Main City Chest", "Snow City Chest", "Magma City Chest", "Legends Highway Chest"},  -- Opções dos baús
     Callback = function(Value)
