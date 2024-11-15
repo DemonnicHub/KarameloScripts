@@ -96,7 +96,7 @@ Tab:AddButton({
 })
 
 Tab:AddToggle({
-    Name = "Auto Fill Race (Fixed2)",  -- Nome do botão
+    Name = "Auto Fill Race",  -- Nome do botão
     Callback = function(value) 
         -- A variável 'value' recebe o estado atual do toggle (true ou false)
         autoFillRaceActive = value  -- Atualiza o estado de ativação do toggle
@@ -107,7 +107,7 @@ Tab:AddToggle({
             spawn(function()
                 while autoFillRaceActive do  -- O loop continua enquanto o toggle estiver ativado
                     game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
-                    wait(0.1)  -- Intervalo entre as tentativas para evitar sobrecarregar o servidor
+                    wait()  -- Intervalo entre as tentativas para evitar sobrecarregar o servidor
                 end
             end)
         end
