@@ -38,39 +38,22 @@ local function SelectCity(City)
     end
 end
 
--- Function AutoRace Teleport Map --
-local selectedMap = "None"  -- Padrão para "None"
-
--- Função para teleportar o jogador dependendo do mapa escolhido
-local function teleportToMap(map)
-    if map == "City" then
-        -- Corrida da Cidade
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453)  -- Corrida na Cidade
-    elseif map == "Space" then
-        -- Corrida no Espaço
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634)  -- Corrida no Espaço
-    elseif map == "Desert" then
-        -- Corrida no Deserto
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)  -- Corrida no Deserto
-    end
-end
-
--- Função para iniciar a corrida automática
-local function startAutoRace()
-    _G.Farm = true
+-- Auto Race V1 --
+local function teleportToMaps()
     while _G.Farm do
-        wait(0.6)  -- Tempo de espera ajustado para 0.1 segundo
-        -- Enviar evento de entrar na corrida
-        game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
-        wait(0.6)  -- Tempo de espera ajustado para 0.1 segundo
-        -- Teleporta para o local correspondente ao mapa selecionado
-        if selectedMap ~= "None" then
-            teleportToMap(selectedMap)
-        end
+        -- Teleporte para Grassland
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453)
+        wait(0.1)  -- Atraso entre os teletransportes
+        -- Teleporte para Magma
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634)
+        wait(0.1)  -- Atraso entre os teletransportes
+        -- Teleporte para Desert
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)
+        wait(0.1)  -- Atraso entre os teletransportes
     end
 end
 
--- Função para parar a corrida automática
+-- Função para parar o auto race
 local function stopAutoRace()
     _G.Farm = false
 end
@@ -448,13 +431,16 @@ local Section = Tab:AddSection({
 	Name = "Auto Race"
 })
 
-Tab:AddDropdown({
-    Name = "Escolha o Mapa",
-    Default = "None",  -- Valor padrão agora é "None"
-    Options = {"None", "City", "Space", "Desert"},  -- Opções disponíveis incluindo "None"
-    Callback = function(selected)
-        selectedMap = selected  -- Atualiza a variável selectedMap com o mapa escolhido
-        print("Mapa selecionado: " .. selectedMap)
+Tab:AddToggle({
+    Name = "Auto Race V1",
+    Default = false,
+    Callback = function(state)
+        if state then
+            _G.Farm = true
+            teleportToMaps()  -- Inicia o teleporte simultâneo para os 3 mapas
+        else
+            stopAutoRace()  -- Para o teleporte
+        end
     end    
 })
 
