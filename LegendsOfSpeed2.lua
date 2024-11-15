@@ -1,37 +1,29 @@
 --// Functions \\--
 
--- Function Auto Race --
-local AutoRaces = false  -- Variável para controlar o estado da corrida
+-- Function Auto RAce
+local AutoRaceToggle = false
 
-local function ToggleAutoRaces(Value)
-    AutoRaces = Value
-    if AutoRaces then
-        -- Se o toggle for ativado, começa a corrida
-        spawn(function()
-            while AutoRaces do
-                pcall(function()
-                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")  -- Envia o pedido para entrar na corrida
-                    task.wait()  -- Espera um ciclo de tempo
-                    local part = Players.LocalPlayer.Character.HumanoidRootPart  -- Obtém a parte principal do personagem
-
-                    -- Percorre os mapas de corrida e verifica os decals
-                    for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
-                        if v.Name == "Decal" and v.Parent then
-                            firetouchinterest(part, v.Parent, 0)  -- Simula o toque no decal
-                            wait()  -- Aguarda um pouco
-                            firetouchinterest(part, v.Parent, 1)  -- Simula o toque de volta no decal
-                        end
-                    end
-                end)
-                task.wait()  -- Espera um pouco antes de tentar novamente
-            end
-        end)
-    else
-        -- Se o toggle for desativado, interrompe o ciclo de corridas
-        -- Aqui você pode adicionar qualquer lógica necessária para parar as corridas
-        print("Auto Race Disable!")  -- Exemplo de feedback no console
+game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
+    if AutoRaceToggle == true then  -- Se o AutoRace estiver ativado
+        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
+            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Entra na corrida
+        end
     end
-end
+end)
+
+-- Conectar ao evento `raceStarted` para ajustar a posição do jogador quando a corrida começa
+game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
+    if AutoRaceToggle == true then  -- Se o AutoRace estiver ativado
+        if game:GetService('ReplicatedStorage').raceStarted.Value == true then
+            for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
+                local OldFinishPosition = v.finishPart.CFrame
+                v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame  -- Posiciona o finishPoint no jogador
+                wait()
+                v.finishPart.CFrame = OldFinishPosition  -- Restaura o finishPoint
+            end
+        end
+    end
+end)
 
 -- Função para expandir o torso --
 local function ExpandTorso()
@@ -189,11 +181,12 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Races",  
-    Default = false,  
+    Name = "Auto Race",  
+    Default = false,     
     Callback = function(Value)
-        ToggleAutoRaces(Value)
-    end    
+        AutoRaceToggle = Value 
+        print("Auto Race is now: " .. tostring(AutoRaceToggle))  
+    end
 })
 
 Tab:AddToggle({
