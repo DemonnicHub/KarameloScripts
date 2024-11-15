@@ -568,8 +568,8 @@ local Tab = Window:MakeTab({
 })
 
 local Tab = Window:MakeTab({
-	Name = "Scripts",
-	Icon = "rbxassetid://113927674495690",
+	Name = "Scripts PC",
+	Icon = "rbxassetid://131944028525380",
 	PremiumOnly = false
 })
 
