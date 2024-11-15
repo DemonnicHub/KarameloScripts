@@ -1,6 +1,6 @@
 --// Functions \\--
 
--- Função para expandir o torso --
+-- Function Expand Torso --
 local function ExpandTorso()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
@@ -13,7 +13,7 @@ local function ExpandTorso()
     torso.Size = torso.Size + expansionRate
 end
 
--- Função para resetar o personagem de forma segura --
+-- Function Reset Character --
 local function ResetCharacter()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
@@ -60,32 +60,6 @@ local function optimizeFpsPing()
     end
 end
 
--- Function Auto Race --
-local function ToggleAutoRaces(Value)
-    AutoRaces = Value
-    if AutoRaces then
-        spawn(function()
-            while AutoRaces do
-                pcall(function()
-                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
-                    task.wait()
-                    local part = Players.LocalPlayer.Character.HumanoidRootPart
-                    for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
-                        if v.Name == "Decal" and v.Parent then
-                            firetouchinterest(part, v.Parent, 0)
-                            wait()
-                            firetouchinterest(part, v.Parent, 1)
-                        end
-                    end
-                end)
-                task.wait()
-            end
-        end)
-    end
-end 
-
-local AutoRaces = false
-
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -99,6 +73,17 @@ local Tab = Window:MakeTab({
 
 local Section = Tab:AddSection({
 	Name = "Main"
+})
+
+Tab:AddButton({
+    Name = "Rejoin",  -- Nome do botão
+    Callback = function()  -- Função chamada quando o botão for pressionado
+        -- Teleporta o jogador de volta para o mesmo lugar onde ele está
+        local teleportService = game:GetService("TeleportService")
+        local player = game:GetService("Players").LocalPlayer
+        teleportService:Teleport(game.PlaceId, player)  -- Teleporta para o PlaceId atual
+        print("Trying to get into the game...")  -- Mensagem para confirmar que a ação foi executada
+    end
 })
 
 Tab:AddButton({
@@ -181,11 +166,35 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Races",
-    Default = false,
-    Callback = function(Value)
-        ToggleAutoRaces(Value)
-    end    
+    Name = "Auto Race",  -- Nome do toggle
+    Default = false,  -- Desligado por padrão
+    Callback = function(Value)  -- Função chamada quando o toggle é ativado/desativado
+        if Value then  -- Se o toggle estiver ativado
+            spawn(function()
+                while Value do  -- Enquanto o toggle estiver ativado
+                    pcall(function()
+                        -- Envia um evento para tentar entrar na corrida
+                        ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
+                        
+                        -- Espera um pequeno intervalo
+                        task.wait()
+
+                        -- Interage com os "Decals" no mapa de corridas
+                        local part = Players.LocalPlayer.Character.HumanoidRootPart
+                        for _, v in pairs(Workspace.raceMaps:GetDescendants()) do
+                            if v.Name == "Decal" and v.Parent then
+                                -- Realiza a interação tocando no Decal
+                                firetouchinterest(part, v.Parent, 0)
+                                task.wait(0.5)
+                                firetouchinterest(part, v.Parent, 1)
+                            end
+                        end
+                    end)
+                    task.wait()  -- Espera entre tentativas
+                end
+            end)
+        end
+    end
 })
 
 Tab:AddToggle({
