@@ -1,42 +1,5 @@
 --// Functions \\--
 
--- Função para Teleportar para o Baú Específico e Coletar o Baú com RemoteEvent
-local function TeleportToChestAndCollect(City)
-    local chestCoordinates = nil
-    local chestName = nil
-
-    -- Definir coordenadas e nome do baú baseado na cidade
-    if City == "Main City Chest" then
-        chestCoordinates = CFrame.new(-9682.98828, 74.8522873, 3099.03394)
-        chestName = "MainCityChest"
-    elseif City == "Snow City Chest" then
-        chestCoordinates = CFrame.new(-9676.13867, 74.8522873, 3782.69385)
-        chestName = "SnowCityChest"
-    elseif City == "Magma City Chest" then
-        chestCoordinates = CFrame.new(-11054.9688, 232.791656, 4898.62842)
-        chestName = "MagmaCityChest"
-    elseif City == "Legends Highway Chest" then
-        chestCoordinates = CFrame.new(-13098.8711, 232.791656, 5907.62793)
-        chestName = "LegendsHighwayChest"
-    end
-
-    -- Teleportando para as coordenadas do baú
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chestCoordinates
-
-    -- Verificar se o RemoteEvent existe no ReplicatedStorage
-    local replicatedStorage = game:GetService("ReplicatedStorage")
-    local collectChestRemote = replicatedStorage:WaitForChild("rEvents"):WaitForChild("collectCourseChestRemote")
-
-    -- Enviar o RemoteEvent para o servidor para "coletar" o baú
-    if collectChestRemote then
-        -- Disparando o RemoteEvent para o servidor com as informações do baú
-        collectChestRemote:FireServer(chestName)  -- Envia o nome do baú para o servidor
-        print("Coletando o baú: " .. chestName)
-    else
-        warn("RemoteEvent 'collectCourseChestRemote' não encontrado!")
-    end
-end
-
 -- Function Low Graphics
 local function optimizeFpsPing()
     for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
@@ -140,18 +103,6 @@ Tab:AddToggle({
         end
     end    
 })
-
-Tab:AddDropdown({
-    Name = "Select Chest12",  -- Nome do Dropdown
-    Default = "1",  -- Valor padrão do Dropdown
-    Options = {"Main City Chest", "Snow City Chest", "Magma City Chest", "Legends Highway Chest"},  -- Opções dos baús
-    Callback = function(Value)
-        -- Quando uma opção for selecionada, chama a função para teletransportar e coletar o baú
-        print("Baú selecionado: " .. Value)
-        TeleportToChestAndCollect(Value)  -- Teleporta para o baú e coleta automaticamente
-    end    
-})
-
 
 local Section = Tab:AddSection({
 	Name = "Auto Farm Android X Pc (Glitch Pets)"
