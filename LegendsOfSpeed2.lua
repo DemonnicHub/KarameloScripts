@@ -64,7 +64,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
--- Função para alternar o estado de AutoRaces
+-- Function Auto Race --
 local function ToggleAutoRaces(Value)
     AutoRaces = Value
     if AutoRaces then
@@ -88,24 +88,15 @@ local function ToggleAutoRaces(Value)
     end
 end 
 
-local function ToggleAutoRacesSolo(Value)
-    AutoRacesSolo = Value
-    if AutoRacesSolo then
-        spawn(function()
-            while AutoRacesSolo do
-                pcall(function()
-                    local playerHead = Players.LocalPlayer.Character.Head
-                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
-                    wait(0.00)
-                end)
-                task.wait()
-            end
-        end)
-    end
-end
-
 local AutoRaces = false
-local AutoRacesSolo = false
+
+-- Function Hip Height --
+local function setHipHeight(value)
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.HipHeight = value
+end
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -135,6 +126,49 @@ Tab:AddButton({
     Callback = function()
         ResetCharacter()  -- Chama a função para resetar o personagem
         print("The character has been reset to normal size!")
+    end    
+})
+
+local Section = Tab:AddSection({
+    Name = "Hip Height"
+})
+
+local HipHeightTextbox = Tab:AddTextbox({
+    Name = "2",
+    Default = "2",  -- valor inicial da caixa
+    TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
+    Callback = function(value)
+        -- Verifica se o valor inserido é um número válido
+        local newValue = tonumber(value)
+        if newValue then
+            setHipHeight(newValue)
+            print("Hip height adjusted for: " .. newValue)
+        else
+            print("Invalid value for HipHeight.")
+        end
+    end    
+})
+
+local AutoAdjustToggle = Tab:AddToggle({
+    Name = "Apply Height",
+    Default = false,
+    Callback = function(value)
+        if value then
+            -- Ativar ajuste automático
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+            humanoid:GetPropertyChangedSignal("HipHeight"):Connect(function()
+                -- Ajusta para 2 sempre que o valor for menor que 2
+                if humanoid.HipHeight < 2 then
+                    humanoid.HipHeight = 2
+                    print("HipHeight automatically adjusted to 2.")
+                end
+            end)
+        else
+            -- Desativar ajuste automático
+            print("Auto-adjustment disabled.")
+        end
     end    
 })
 
