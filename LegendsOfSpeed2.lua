@@ -316,15 +316,28 @@ local function sendChatMessage(message)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "All")
 end
 
-local function clickAndTeleport()
-	-- Simula um clique (substitua pelo evento do seu jogo, se necessário)
-	pcall(function()
-		game:GetService("ReplicatedStorage").ClickEvent:FireServer() -- Ajuste o evento, se necessário
-	end)
-	-- Teletransporte o jogador (substitua pelas coordenadas desejadas)
-	local targetPosition = CFrame.new(-100, 50, 200) -- Modifique para a posição desejada
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPosition
+-- Variável para controlar o estado do Toggle
+local teleportEnabled = false
+
+-- Função para detectar cliques e teleportar
+local function setupClickTeleport()
+    local player = game.Players.LocalPlayer
+    local mouse = player:GetMouse()
+
+    mouse.Button1Down:Connect(function()
+        if teleportEnabled then
+            local targetPosition = mouse.Hit.Position
+            if targetPosition then
+                pcall(function()
+                    player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
+                end)
+            end
+        end
+    end)
 end
+
+-- Inicializa o listener de cliques
+setupClickTeleport()
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -810,28 +823,11 @@ local Section = Tab:AddSection({
 	Name = "Misc"
 })
 
-Tab:AddButton({
-	Name = "Click + Teleport (Button)",
-	Callback = function()
-		clickAndTeleport()
-	end    
-})
-
--- **Toggle para ativar/desativar o click + teleport repetidamente**
-local isClickTPActive = false
 Tab:AddToggle({
-	Name = "Enable Auto Click + Teleport",
+	Name = "Enable Teleport By Click",
 	Default = false,
 	Callback = function(state)
-		isClickTPActive = state
-		if isClickTPActive then
-			spawn(function()
-				while isClickTPActive do
-					clickAndTeleport()
-					wait(1) -- Intervalo entre execuções (1 segundo por padrão)
-				end
-			end)
-		end
+		teleportEnabled = state
 	end
 })
 
