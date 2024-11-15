@@ -1,5 +1,41 @@
 --// Functions \\--
 
+-- Função para atualizar as labels com os valores das leaderstats
+local function UpdateStats()
+    local player = game.Players.LocalPlayer
+    local stats = player:WaitForChild("leaderstats")  -- Supondo que os dados do jogador estão em leaderstats
+
+    -- Verifica se as leaderstats existem e pega os valores
+    local steps = stats and stats:FindFirstChild("Steps") and stats.Steps.Value or 0
+    local rebirths = stats and stats:FindFirstChild("Rebirths") and stats.Rebirths.Value or 0
+    local rings = stats and stats:FindFirstChild("Rings") and stats.Rings.Value or 0
+    local races = stats and stats:FindFirstChild("Races") and stats.Races.Value or 0
+
+    -- Atualiza as labels com os valores
+    StepsLabel:Set("Passos: " .. tostring(steps))
+    RebirthsLabel:Set("Renascimentos: " .. tostring(rebirths))
+    RingsLabel:Set("Aros: " .. tostring(rings))
+    RacesLabel:Set("Corridas: " .. tostring(races))
+end
+
+-- Conectar o evento 'Changed' de cada leaderstat para atualizar os valores imediatamente
+local function ConnectStatChangeEvents()
+    local player = game.Players.LocalPlayer
+    local stats = player:WaitForChild("leaderstats")
+
+    -- Atualiza assim que qualquer valor nas leaderstats mudar
+    stats:WaitForChild("Steps").Changed:Connect(UpdateStats)
+    stats:WaitForChild("Rebirths").Changed:Connect(UpdateStats)
+    stats:WaitForChild("Rings").Changed:Connect(UpdateStats)
+    stats:WaitForChild("Races").Changed:Connect(UpdateStats)
+end
+
+-- Inicializa a interface e conecta os eventos
+local function InitStatsDisplay()
+    ConnectStatChangeEvents()  -- Conecta os eventos de mudança
+    UpdateStats()  -- Atualiza imediatamente ao iniciar
+end
+
 -- Função para expandir o torso --
 local function ExpandTorso()
     local player = game.Players.LocalPlayer
@@ -73,24 +109,57 @@ local Tab = Window:MakeTab({
 })
 
 local Section = Tab:AddSection({
-	Name = "English - US"
+	Name = "Main"
 })
 
-Tab:AddParagraph("ATTENTION!","All credits for the scripts below go to @KaramelodeCianuro,\nthe person responsible for all of them!")
+Tab:AddButton({
+    Name = "Expand Torso (Max 6x)",  -- Nome do botão que aparece na UI
+    Callback = function()
+        ExpandTorso()  -- Chama a função que expande o torso
+        print("Successfully expanded torso!")
+    end    
+})
 
+Tab:AddButton({
+    Name = "Reset Character",  -- Nome do botão que aparece na UI
+    Callback = function()
+        ResetCharacter()  -- Chama a função para resetar o personagem
+        print("The character has been reset to normal size!")
+    end    
+})
+
+local Tab = Window:MakeTab({
+	Name = "Teleports",
+	Icon = "rbxassetid://103168823763561",
+	PremiumOnly = false
+})
 
 local Section = Tab:AddSection({
-	Name = "Português - BR"
+	Name = "Teleports"
 })
 
-Tab:AddParagraph("ATENÇÃO!","Todos os créditos pelos scripts abaixo vão para @KaramelodeCianuro,\no responsável por todos eles!")
-
-
-local Section = Tab:AddSection({
-	Name = "Español - XX"
+Tab:AddDropdown({
+	Name = "Select City",
+	Default = nil,
+	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
+	Callback = function(Value)
+		SelectCity(Value)
+	end    
 })
 
-Tab:AddParagraph("ATENCIÓN!","Todos los créditos de los guiones a continuación son para @KaramelodeCianuro, \nresponsable de todos ellos!")
+local Tab = Window:MakeTab({
+	Name = "Auto Farm",
+	Icon = "rbxassetid://78744214847458",
+	PremiumOnly = false
+})
+
+Tab:AddLabel("Passos: 0")
+
+Tab:AddLabel("Renascimentos: 0")
+
+Tab:AddLabel("Aros: 0")
+
+Tab:AddLabel("Corridas: 0")
 
 local Tab = Window:MakeTab({
 	Name = "Scripts",
@@ -129,22 +198,6 @@ Tab:AddToggle({
     end    
 })
 
-Tab:AddButton({
-    Name = "Expand Torso",  -- Nome do botão que aparece na UI
-    Callback = function()
-        ExpandTorso()  -- Chama a função que expande o torso
-        print("O torso foi expandido.")
-    end    
-})
-
-Tab:AddButton({
-    Name = "Resetar Personagem",  -- Nome do botão que aparece na UI
-    Callback = function()
-        ResetCharacter()  -- Chama a função para resetar o personagem
-        print("O personagem foi resetado ao seu tamanho normal.")
-    end    
-})
-
 local Section = Tab:AddSection({
 	Name = "Auto Farm Android X Pc (Glitch Pets)"
 })
@@ -155,32 +208,6 @@ Tab:AddButton({
         -- Quando o botão for pressionado, o script será executado
         loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoFarmKaramelo.lua"))()
     end    
-})
-
-local Tab = Window:MakeTab({
-	Name = "Teleports",
-	Icon = "rbxassetid://103168823763561",
-	PremiumOnly = false
-})
-
-local Section = Tab:AddSection({
-	Name = "Teleports"
-})
-
-
-Tab:AddDropdown({
-	Name = "Select City",
-	Default = nil,
-	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
-	Callback = function(Value)
-		SelectCity(Value)
-	end    
-})
-
-local Tab = Window:MakeTab({
-	Name = "Auto Farm",
-	Icon = "rbxassetid://78744214847458",
-	PremiumOnly = false
 })
 
 local Tab = Window:MakeTab({
@@ -197,7 +224,7 @@ Tab:AddButton({
     Name = "Anti-Kick (Required)",
     Callback = function()
         AntiKick()
-        print("O script AntiKick foi ativado.")
+        print("Anti-kick activated!")
     end    
 })
 
@@ -205,7 +232,7 @@ Tab:AddButton({
     Name = "Low Graphics",
     Callback = function()
         optimizeFpsPing()  -- Chama a função de otimização
-        print("Gráficos otimizados para melhor desempenho.")
+        print("Optimized graphics for better performance!")
     end    
 })
 
