@@ -83,10 +83,10 @@ local function teleportToSpace()
     while _G.Farm do
         pcall(function()
             -- Teleporte para o ponto de início do Space
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 36.0000916, -4805.07861, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 27.9499989, -4805.07861, 9.21981302e-15, -1.21109977e-07, 1, 2.54206718e-08, 1, 1.21109977e-07, -1, 2.54206718e-08, 1.22985101e-14)
             wait(0.1)
             -- Teleporte para o ponto de vitória do Space
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4945.31689, 36.0000916, -4805.07861, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4380.63965, 27.9500256, -14049.4463, 0.00820607413, 1.20921328e-07, -0.999966323, 2.43418121e-08, 1, 1.21125154e-07, 0.999966323, -2.53349555e-08, 0.00820607413)
             wait(0.1)
         end)
     end
@@ -124,7 +124,7 @@ local function toggleAutoRaces(state)
         -- Chama o teleporte conforme o mapa selecionado
         if _G.SelectedTeleport == "Space" then
             teleportToSpace() -- Teleporte para o Space
-        elseif _G.SelectedTeleport == "Multiple Maps" then
+        elseif _G.SelectedTeleport == "Main City" then
             teleportToMaps() -- Teleporte para os 3 mapas originais
         end
     else
@@ -602,7 +602,7 @@ local Section = Tab:AddSection({
 local Dropdown = Tab:AddDropdown({
     Name = "Select Map",
     Default = "None",
-    Options = {"None","Multiple Maps", "Space"},
+    Options = {"None","Main City", "Space"},
     Callback = function(selectedOption)
         _G.SelectedTeleport = selectedOption
         print("Selected Teleport: " .. selectedOption)
