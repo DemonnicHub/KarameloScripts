@@ -39,7 +39,7 @@ local function SelectCity(City)
 end
 
 -- Function AutoRace Teleport Map --
-local selectedMap = "City"  -- Padrão para "City"
+local selectedMap = "None"  -- Padrão para "None"
 
 -- Função para teleportar o jogador dependendo do mapa escolhido
 local function teleportToMap(map)
@@ -56,12 +56,14 @@ end
 local function startAutoRace()
     _G.Farm = true
     while _G.Farm do
-        wait()
+        wait(0.3)  -- Tempo de espera ajustado para 0.1 segundo
         -- Enviar evento de entrar na corrida
         game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
-        wait()
+        wait(0.3)  -- Tempo de espera ajustado para 0.1 segundo
         -- Teleporta para o local correspondente ao mapa selecionado
-        teleportToMap(selectedMap)
+        if selectedMap ~= "None" then
+            teleportToMap(selectedMap)
+        end
     end
 end
 
@@ -445,23 +447,22 @@ local Section = Tab:AddSection({
 
 Tab:AddDropdown({
     Name = "Select Map",
-    Default = "City",  -- Valor padrão
-    Options = {"City", "Space", "Desert"},  -- Opções disponíveis
+    Default = "None",  -- Valor padrão agora é "None"
+    Options = {"None", "City", "Space", "Desert"},  -- Opções disponíveis incluindo "None"
     Callback = function(selected)
         selectedMap = selected  -- Atualiza a variável selectedMap com o mapa escolhido
         print("Selected map: " .. selectedMap)
     end    
 })
 
--- Adicionar o Toggle para iniciar/parar a corrida automática
 Tab:AddToggle({
     Name = "Auto Race V1",
     Default = false,
     Callback = function(state)
         if state then
-            startAutoRace()  -- Inicia a corrida automática
+            startAutoRace()  
         else
-            stopAutoRace()  -- Para a corrida automática
+            stopAutoRace()  
         end
     end    
 })
