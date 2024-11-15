@@ -58,6 +58,60 @@ local function stopAutoRace()
     _G.Farm = false
 end
 
+-- Function Race + Teleport --
+_G.Farm = false
+
+-- Função para teletransportar-se entre mapas
+local function teleportToMaps()
+    while _G.Farm do
+        pcall(function()
+            -- Teleporte para Grassland
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453)
+            wait(0.1)
+            -- Teleporte para Magma
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634)
+            wait(0.1)
+            -- Teleporte para Desert
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)
+            wait(0.1)
+        end)
+    end
+end
+
+-- Função para parar o auto farm
+local function stopAutoFarm()
+    _G.Farm = false
+end
+
+-- Função Auto Race
+local function toggleAutoRaces(state)
+    _G.Farm = state
+    if state then
+        spawn(function()
+            while _G.Farm do
+                pcall(function()
+                    -- Participar da corrida
+                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    wait(0.1)
+                    -- Interagir com checkpoints na corrida
+                    local part = game.Players.LocalPlayer.Character.HumanoidRootPart
+                    for _, v in pairs(game:GetService("Workspace").raceMaps:GetDescendants()) do
+                        if v.Name == "Decal" and v.Parent then
+                            firetouchinterest(part, v.Parent, 0)
+                            wait()
+                            firetouchinterest(part, v.Parent, 1)
+                        end
+                    end
+                end)
+                wait(0.1)
+            end
+        end)
+        teleportToMaps() -- Inicia o teleporte entre os mapas simultaneamente
+    else
+        stopAutoFarm()
+    end
+end
+
 -- Function Anti-Kick --
 local function AntiKick()
     local vu = game:GetService("VirtualUser")
@@ -444,17 +498,12 @@ Tab:AddToggle({
     end    
 })
 
--- Adicionar o Toggle para iniciar/parar a corrida automática
 Tab:AddToggle({
-    Name = "Auto Race",
+    Name = "Auto Race + Teleport",
     Default = false,
     Callback = function(state)
-        if state then
-            startAutoRace()  -- Inicia a corrida automática
-        else
-            stopAutoRace()  -- Para a corrida automática
-        end
-    end    
+        toggleAutoRaces(state)
+    end
 })
 
 Tab:AddToggle({
