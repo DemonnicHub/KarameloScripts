@@ -151,6 +151,24 @@ local function autoRebirth()
     end
 end
 
+-- Function Delete Barrier --
+local function deleteBarrier()
+    spawn(function()
+        local boundaries = {
+            game:GetService("Workspace").raceMaps.Grassland.boundaryParts,
+            game:GetService("Workspace").raceMaps.Desert.boundaryParts,
+            game:GetService("Workspace").raceMaps.Magma.boundaryParts
+        }
+
+        for _, boundary in ipairs(boundaries) do
+            for _, part in pairs(boundary:GetChildren()) do
+                part:Destroy()  -- Remove a barreira (parte)
+            end
+        end
+        print("Barriers removed!")
+    end)
+end
+
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -402,7 +420,7 @@ Tab:AddToggle({
 })
 
 local Section = Tab:AddSection({
-	Name = "Use in moderation"
+	Name = "Fast Races"
 })
 
 Tab:AddToggle({
@@ -421,6 +439,17 @@ Tab:AddToggle({
                 end
             end)
         end
+    end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Extra"
+})
+
+Tab:AddButton({
+    Name = "Delete Barriers",
+    Callback = function()
+        deleteBarrier() 
     end    
 })
 
