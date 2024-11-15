@@ -58,7 +58,7 @@ local function SelectChest(chest)
     end
 end
 
--- Função para teletransportar-se entre mapas, com opção de escolher o mapa
+-- Function Auto Race V1 --
 _G.Farm = false
 
 -- Função para teletransportar-se para os 3 mapas (exemplo original)
@@ -83,10 +83,24 @@ local function teleportToSpace()
     while _G.Farm do
         pcall(function()
             -- Teleporte para o ponto de início do Space
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 99.9738312, -4805.07861, -1.01599256e-14, -3.83957577e-08, 1, -4.42442927e-09, 1, 3.83957577e-08, -1, -4.42442927e-09, -1.03298048e-14)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 36.0000916, -4805.07861, 0, 0, 1, 0, 1, -0, -1, 0, 0)
             wait(0.1)
             -- Teleporte para o ponto de vitória do Space
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4375.76562, 99.7564468, -14049.7012, 0.0500898324, 1.20104261e-07, -0.998744726, -2.1001032e-08, 1, 1.19201957e-07, 0.998744726, 1.5003863e-08, 0.0500898324)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4945.31689, 36.0000916, -4805.07861, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            wait(0.1)
+        end)
+    end
+end
+
+-- Função para teletransportar-se para o Desert
+local function teleportToDesert()
+    while _G.Farm do
+        pcall(function()
+            -- Teleporte para o ponto de início do Desert
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(636.770996, 161.306763, 9718.75, -0.999040902, 0.000210345868, -0.043785546, 0.00021885868, 0.99999994, -0.000189627055, 0.043785505, -0.000199028043, -0.999040961)
+            wait(0.1)
+            -- Teleporte para o ponto de vitória do Desert
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2061.12476, 219.799164, 17953.8984, 0.949868321, -9.90087301e-09, 0.312650263, 5.16601206e-10, 1, 3.00980716e-08, -0.312650263, -2.84276886e-08, 0.949868321)
             wait(0.1)
         end)
     end
@@ -126,6 +140,8 @@ local function toggleAutoRaces(state)
             teleportToSpace() -- Teleporte para o Space
         elseif _G.SelectedTeleport == "Main City" then
             teleportToMaps() -- Teleporte para os 3 mapas originais
+        elseif _G.SelectedTeleport == "Desert" then
+            teleportToDesert() -- Teleporte para o Desert
         end
     else
         stopAutoFarm()
@@ -602,7 +618,7 @@ local Section = Tab:AddSection({
 local Dropdown = Tab:AddDropdown({
     Name = "Select Map",
     Default = "None",
-    Options = {"None","Main City", "Space"},
+    Options = {"None","Main City", "Space", "Desert"},
     Callback = function(selectedOption)
         _G.SelectedTeleport = selectedOption
         print("Selected Teleport: " .. selectedOption)
@@ -610,7 +626,7 @@ local Dropdown = Tab:AddDropdown({
 })
 
 Tab:AddToggle({
-    Name = "Auto Race V11",
+    Name = "Auto Race V1",
     Default = false,
     Callback = function(Value)
         toggleAutoRaces(Value)
