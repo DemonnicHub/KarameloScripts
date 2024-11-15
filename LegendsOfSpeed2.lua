@@ -44,11 +44,14 @@ local selectedMap = "None"  -- Padrão para "None"
 -- Função para teleportar o jogador dependendo do mapa escolhido
 local function teleportToMap(map)
     if map == "City" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453)
+        -- Corrida da Cidade
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453)  -- Corrida na Cidade
     elseif map == "Space" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634)
+        -- Corrida no Espaço
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634)  -- Corrida no Espaço
     elseif map == "Desert" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)
+        -- Corrida no Deserto
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)  -- Corrida no Deserto
     end
 end
 
@@ -56,10 +59,10 @@ end
 local function startAutoRace()
     _G.Farm = true
     while _G.Farm do
-        wait(0.3)  -- Tempo de espera ajustado para 0.1 segundo
+        wait(0.6)  -- Tempo de espera ajustado para 0.1 segundo
         -- Enviar evento de entrar na corrida
         game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
-        wait(0.3)  -- Tempo de espera ajustado para 0.1 segundo
+        wait(0.6)  -- Tempo de espera ajustado para 0.1 segundo
         -- Teleporta para o local correspondente ao mapa selecionado
         if selectedMap ~= "None" then
             teleportToMap(selectedMap)
@@ -446,23 +449,24 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddDropdown({
-    Name = "Select Map",
+    Name = "Escolha o Mapa",
     Default = "None",  -- Valor padrão agora é "None"
     Options = {"None", "City", "Space", "Desert"},  -- Opções disponíveis incluindo "None"
     Callback = function(selected)
         selectedMap = selected  -- Atualiza a variável selectedMap com o mapa escolhido
-        print("Selected map: " .. selectedMap)
+        print("Mapa selecionado: " .. selectedMap)
     end    
 })
 
+-- Adicionar o Toggle para iniciar/parar a corrida automática
 Tab:AddToggle({
-    Name = "Auto Race V1",
+    Name = "Auto Race",
     Default = false,
     Callback = function(state)
         if state then
-            startAutoRace()  
+            startAutoRace()  -- Inicia a corrida automática
         else
-            stopAutoRace()  
+            stopAutoRace()  -- Para a corrida automática
         end
     end    
 })
