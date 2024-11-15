@@ -133,37 +133,41 @@ local Section = Tab:AddSection({
     Name = "Hip Height"
 })
 
-local HipHeightSlider = Tab:AddSlider({
+local HipHeightTextbox = Tab:AddTextbox({
     Name = "Hip Height",
-    Min = 0,
-    Max = 10,
-    Default = 2,
-    Color = Color3.fromRGB(255, 255, 255),
-    Increment = 0.1,
-    ValueName = "Height",
+    Default = "3",  -- valor inicial da caixa
+    TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
     Callback = function(value)
-        setHipHeight(value)
-        print("Hip height adjusted for: " .. value)
+        -- Verifica se o valor inserido é um número válido
+        local newValue = tonumber(value)
+        if newValue then
+            setHipHeight(newValue)
+            print("Hip height adjusted for: " .. newValue)
+        else
+            print("Invalid value for HipHeight.")
+        end
     end    
 })
 
--- Toggle para habilitar/desabilitar ajuste automático
+-- Adicionar um Toggle para ativar/desativar o ajuste automático de HipHeight
 local AutoAdjustToggle = Tab:AddToggle({
     Name = "Apply Height",
     Default = false,
     Callback = function(value)
         if value then
-            -- Exemplo de ajuste automático (exemplo: ajustar baseado na velocidade)
+            -- Ativar ajuste automático
             local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             local humanoid = character:WaitForChild("Humanoid")
             humanoid:GetPropertyChangedSignal("HipHeight"):Connect(function()
-                if humanoid.HipHeight < 2 then
-                    humanoid.HipHeight = 2
+                -- Ajusta para 2 sempre que o valor for menor que 2
+                if humanoid.HipHeight < 3 then
+                    humanoid.HipHeight = 3
+                    print("HipHeight automatically adjusted to 2.")
                 end
             end)
         else
-            -- Parar o ajuste automático
+            -- Desativar ajuste automático
             print("Auto-adjustment disabled.")
         end
     end    
@@ -171,6 +175,22 @@ local AutoAdjustToggle = Tab:AddToggle({
 
 local Section = Tab:AddSection({
 	Name = "Game Options"
+})
+
+Tab:AddButton({
+    Name = "Anti-Kick (Required)",
+    Callback = function()
+        AntiKick()
+        print("Anti-kick activated!")
+    end    
+})
+
+Tab:AddButton({
+    Name = "Low Graphics (50%)",
+    Callback = function()
+        optimizeFpsPing()  -- Chama a função de otimização
+        print("Optimized graphics for better performance!")
+    end    
 })
 
 Tab:AddButton({
@@ -322,22 +342,6 @@ local Tab = Window:MakeTab({
 
 local Section = Tab:AddSection({
 	Name = "Extra"
-})
-
-Tab:AddButton({
-    Name = "Anti-Kick (Required)",
-    Callback = function()
-        AntiKick()
-        print("Anti-kick activated!")
-    end    
-})
-
-Tab:AddButton({
-    Name = "Low Graphics (50%)",
-    Callback = function()
-        optimizeFpsPing()  -- Chama a função de otimização
-        print("Optimized graphics for better performance!")
-    end    
 })
 
 local Tab = Window:MakeTab({
