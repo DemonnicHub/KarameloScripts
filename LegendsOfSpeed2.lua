@@ -1,35 +1,33 @@
 --// Functions \\--
 
--- Função para teletransportar o jogador para um baú específico
-local function teleportToChest(chestPosition)
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-    
-    -- Teleporta o jogador para a posição do baú (chestPosition)
-    humanoidRootPart.CFrame = CFrame.new(chestPosition)
-end
-
--- Função para coletar o baú
-local function collectChest()
-    -- O código para coletar o baú pode envolver a ativação de um evento de interação
-    raceEvent:FireServer("collectChest")  -- Isso é apenas um exemplo, depende de como a interação com o baú funciona
-    print("Baú coletado!")
-end
-
--- Função que busca os baús no mapa e coleta automaticamente
-local function autoCollectChests()
-    -- Lista de posições de baús (essas posições podem ser determinadas manualmente ou programaticamente)
-    local chests = {
-        Vector3.new(100, 10, 200),  -- Exemplo de posição de baú 1
-        Vector3.new(150, 10, 250),  -- Exemplo de posição de baú 2
-        Vector3.new(200, 10, 300),  -- Exemplo de posição de baú 3
-    }
-    
-    for _, chestPosition in ipairs(chests) do
-        teleportToChest(chestPosition)  -- Teleporta até o baú
-        wait(1)  -- Espera 1 segundo para garantir que o teleporte tenha sido realizado
-        collectChest()  -- Coleta o baú
-        wait(2)  -- Espera 2 segundos antes de ir para o próximo baú
+-- Função para Teleportar para o Baú e Simular Tocar
+local function TeleportToChestAndCollect(City)
+    if City == "Main City Chest" then
+        local chest = game.Workspace:FindFirstChild("MainCityChest")  -- Nome do baú no Workspace
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394)  -- Coordenadas do baú
+        if chest then
+            -- Simula o toque no baú
+            local touchEvent = chest.Touched
+            touchEvent:Fire(game.Players.LocalPlayer.Character.HumanoidRootPart)  -- Simula o toque
+        end
+    elseif City == "Snow City Chest" then
+        local chest = game.Workspace:FindFirstChild("SnowCityChest")
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9676.13867, 74.8522873, 3782.69385)
+        if chest then
+            chest.Touched:Fire(game.Players.LocalPlayer.Character.HumanoidRootPart)  -- Simula o toque
+        end
+    elseif City == "Magma City Chest" then
+        local chest = game.Workspace:FindFirstChild("MagmaCityChest")
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11054.9688, 232.791656, 4898.62842)
+        if chest then
+            chest.Touched:Fire(game.Players.LocalPlayer.Character.HumanoidRootPart)  -- Simula o toque
+        end
+    elseif City == "Legends Highway Chest" then
+        local chest = game.Workspace:FindFirstChild("LegendsHighwayChest")
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13098.8711, 232.791656, 5907.62793)
+        if chest then
+            chest.Touched:Fire(game.Players.LocalPlayer.Character.HumanoidRootPart)  -- Simula o toque
+        end
     end
 end
 
@@ -137,12 +135,15 @@ Tab:AddToggle({
     end    
 })
 
-Tab:AddButton({
-    Name = "Auto Collect Baús",
-    Callback = function()
-        print("Iniciando coleta automática de baús...")
-        autoCollectChests()  -- Inicia a coleta dos baús automaticamente
-    end
+Tab:AddDropdown({
+    Name = "Select Chest",  -- Nome do Dropdown
+    Default = "1",  -- Valor padrão do Dropdown
+    Options = {"Main City Chest", "Snow City Chest", "Magma City Chest", "Legends Highway Chest"},  -- Opções dos baús
+    Callback = function(Value)
+        -- Quando uma opção for selecionada, chama a função para teletransportar e coletar o baú
+        print("Baú selecionado: " .. Value)
+        TeleportToChestAndCollect(Value)  -- Teleporta para o baú e coleta automaticamente
+    end    
 })
 
 
