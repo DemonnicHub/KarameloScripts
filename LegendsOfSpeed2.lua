@@ -84,17 +84,6 @@ Tab:AddButton({
     end    
 })
 
-Tab:AddButton({
-    Name = "Auto Fill Race (Fixed)",  -- Nome do botão
-    Callback = function() 
-        -- Quando o botão for pressionado, o script será executado
-        -- Aqui, estamos adicionando o código diretamente no callback
-        while wait() do
-            game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
-        end
-    end    
-})
-
 Tab:AddToggle({
     Name = "Auto Fill Race",  -- Nome do botão
     Callback = function(value) 
@@ -113,6 +102,20 @@ Tab:AddToggle({
         end
     end    
 })
+
+Tab:AddButton({
+    Name = "Start Race in 20 seconds!",  -- Nome personalizado para o botão
+    Callback = function()
+        -- Manipula o tempo de 20 segundos e envia ao servidor
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local raceEvent = ReplicatedStorage:WaitForChild("rEvents"):WaitForChild("raceEvent")
+
+        -- Envia o comando para entrar na corrida e altera o tempo para 20 segundos
+        raceEvent:FireServer("joinRace", 20)  -- Envia o valor "20" como o novo tempo para o servidor
+        print("Botão pressionado! Corrida iniciará em 20 segundos.")
+    end    
+})
+
 
 local Section = Tab:AddSection({
 	Name = "Auto Farm Android X Pc (Glitch Pets)"
