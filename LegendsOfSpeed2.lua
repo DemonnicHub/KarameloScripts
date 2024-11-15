@@ -83,10 +83,10 @@ local function teleportToSpace()
     while _G.Farm do
         pcall(function()
             -- Teleporte para o ponto de início do Space
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 27.9499989, -4805.07861, 9.21981302e-15, -1.21109977e-07, 1, 2.54206718e-08, 1, 1.21109977e-07, -1, 2.54206718e-08, 1.22985101e-14)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 99.9738312, -4805.07861, -1.01599256e-14, -3.83957577e-08, 1, -4.42442927e-09, 1, 3.83957577e-08, -1, -4.42442927e-09, -1.03298048e-14)
             wait(0.1)
             -- Teleporte para o ponto de vitória do Space
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4380.63965, 27.9500256, -14049.4463, 0.00820607413, 1.20921328e-07, -0.999966323, 2.43418121e-08, 1, 1.21125154e-07, 0.999966323, -2.53349555e-08, 0.00820607413)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4375.76562, 99.7564468, -14049.7012, 0.0500898324, 1.20104261e-07, -0.998744726, -2.1001032e-08, 1, 1.19201957e-07, 0.998744726, 1.5003863e-08, 0.0500898324)
             wait(0.1)
         end)
     end
@@ -610,7 +610,7 @@ local Dropdown = Tab:AddDropdown({
 })
 
 Tab:AddToggle({
-    Name = "Auto Race V1",
+    Name = "Auto Race V11",
     Default = false,
     Callback = function(Value)
         toggleAutoRaces(Value)
