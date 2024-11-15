@@ -60,6 +60,31 @@ local function optimizeFpsPing()
     end
 end
 
+-- Function Auto Race --
+local function ToggleAutoRaces(Value)
+    AutoRaces = Value
+    if AutoRaces then
+        spawn(function()
+            while AutoRaces do
+                pcall(function()
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
+                    task.wait()
+                    local part = Players.LocalPlayer.Character.HumanoidRootPart
+                    for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
+                        if v.Name == "Decal" and v.Parent then
+                            firetouchinterest(part, v.Parent, 0)
+                            wait()
+                            firetouchinterest(part, v.Parent, 1)
+                        end
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end 
+
+local AutoRaces = false
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -155,13 +180,12 @@ local Section = Tab:AddSection({
 	Name = "Auto Race"
 })
 
-Tab:AddToggle({
-    Name = "Auto Race",  -- Nome do toggle
-    Default = false,     -- Valor inicial do toggle (desativado por padrão)
+FarmTab:AddToggle({
+    Name = "Auto Racer",
+    Default = false,
     Callback = function(Value)
-        AutoRaceToggle = Value  -- Atualiza o estado do AutoRace com o valor do toggle
-        print("Auto Race is now: " .. tostring(AutoRaceToggle))  -- Imprime o estado atual do AutoRace
-    end
+        ToggleAutoRaces(Value)
+    end    
 })
 
 Tab:AddToggle({
