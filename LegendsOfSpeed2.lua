@@ -98,6 +98,21 @@ local function setHipHeight(value)
     humanoid.HipHeight = value
 end
 
+-- Function WalkSpeed e JumpPower --
+local function setPlayerStats(walkSpeed, jumpPower)
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    -- Ajusta a velocidade
+    humanoid.WalkSpeed = walkSpeed
+    print("Velocidade ajustada para: " .. walkSpeed)
+    
+    -- Ajusta o poder de pulo
+    humanoid.JumpPower = jumpPower
+    print("Poder de Pulo ajustado para: " .. jumpPower)
+end
+
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -130,12 +145,49 @@ Tab:AddButton({
 })
 
 local Section = Tab:AddSection({
+	Name = "Player Settings"
+})
+
+local WalkSpeedTextbox = Tab:AddTextbox({
+    Name = "Walk Speed",  -- Nome antes do valor
+    Default = "100",  -- valor inicial da caixa
+    TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
+    Callback = function(value)
+        -- Verifica se o valor inserido é um número válido
+        local newWalkSpeed = tonumber(value)
+        if newWalkSpeed then
+            local currentJumpPower = game.Players.LocalPlayer.Character.Humanoid.JumpPower
+            setPlayerStats(newWalkSpeed, currentJumpPower)
+        else
+            print("Invalid value for WalkSpeed.")
+        end
+    end    
+})
+
+-- Adicionar um Textbox para digitar o JumpPower
+local JumpPowerTextbox = Tab:AddTextbox({
+    Name = "Jump Power",  -- Nome antes do valor
+    Default = "100",  -- valor inicial da caixa
+    TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
+    Callback = function(value)
+        -- Verifica se o valor inserido é um número válido
+        local newJumpPower = tonumber(value)
+        if newJumpPower then
+            local currentWalkSpeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
+            setPlayerStats(currentWalkSpeed, newJumpPower)
+        else
+            print("Invalid value for JumpPower.")
+        end
+    end    
+})
+
+local Section = Tab:AddSection({
     Name = "Hip Height"
 })
 
 local HipHeightTextbox = Tab:AddTextbox({
-    Name = "2",
-    Default = "2",  -- valor inicial da caixa
+    Name = "Hip Height",  -- Nome antes do valor
+    Default = "3",  -- valor inicial da caixa
     TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
     Callback = function(value)
         -- Verifica se o valor inserido é um número válido
@@ -160,8 +212,8 @@ local AutoAdjustToggle = Tab:AddToggle({
             local humanoid = character:WaitForChild("Humanoid")
             humanoid:GetPropertyChangedSignal("HipHeight"):Connect(function()
                 -- Ajusta para 2 sempre que o valor for menor que 2
-                if humanoid.HipHeight < 2 then
-                    humanoid.HipHeight = 2
+                if humanoid.HipHeight 3 then
+                    humanoid.HipHeight = 3
                     print("HipHeight automatically adjusted to 2.")
                 end
             end)
@@ -174,6 +226,22 @@ local AutoAdjustToggle = Tab:AddToggle({
 
 local Section = Tab:AddSection({
 	Name = "Game Options"
+})
+
+Tab:AddButton({
+    Name = "Anti-Kick (Required)",
+    Callback = function()
+        AntiKick()
+        print("Anti-kick activated!")
+    end    
+})
+
+Tab:AddButton({
+    Name = "Low Graphics (50%)",
+    Callback = function()
+        optimizeFpsPing()  -- Chama a função de otimização
+        print("Optimized graphics for better performance!")
+    end    
 })
 
 Tab:AddButton({
@@ -325,22 +393,6 @@ local Tab = Window:MakeTab({
 
 local Section = Tab:AddSection({
 	Name = "Extra"
-})
-
-Tab:AddButton({
-    Name = "Anti-Kick (Required)",
-    Callback = function()
-        AntiKick()
-        print("Anti-kick activated!")
-    end    
-})
-
-Tab:AddButton({
-    Name = "Low Graphics",
-    Callback = function()
-        optimizeFpsPing()  -- Chama a função de otimização
-        print("Optimized graphics for better performance!")
-    end    
 })
 
 local Tab = Window:MakeTab({
