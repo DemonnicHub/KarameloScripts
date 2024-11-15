@@ -4,23 +4,40 @@
 local AutoRaceToggle = false
 
 game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
-    if AutoRaceToggle == true then  -- Se o AutoRace estiver ativado
+    if AutoRaceToggle then  -- Se o AutoRace estiver ativado
         if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
-            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Entra na corrida
+            -- Envia o comando para o servidor se a corrida estiver em progresso
+            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")
+            print("Entrando na corrida automaticamente...")
         end
     end
 end)
 
--- Conectar ao evento `raceStarted` para ajustar a posição do jogador quando a corrida começa
+-- Função para ajustar a posição do jogador quando a corrida começar
 game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
-    if AutoRaceToggle == true then  -- Se o AutoRace estiver ativado
+    if AutoRaceToggle then  -- Se o AutoRace estiver ativado
         if game:GetService('ReplicatedStorage').raceStarted.Value == true then
+            -- Ajusta a posição do jogador para o ponto de término
             for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
                 local OldFinishPosition = v.finishPart.CFrame
-                v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame  -- Posiciona o finishPoint no jogador
-                wait()
-                v.finishPart.CFrame = OldFinishPosition  -- Restaura o finishPoint
+                -- Posiciona o ponto de chegada na posição do jogador
+                v.finishPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                wait(0.5)  -- Espera para garantir que o movimento foi aplicado
+                -- Restaura a posição original do ponto de chegada
+                v.finishPart.CFrame = OldFinishPosition
+                print("Posição ajustada para a linha de chegada...")
             end
+        end
+    end
+end)
+
+-- Monitorar o estado de "raceEnded" para desabilitar a corrida automática ao final
+game:GetService('ReplicatedStorage').raceEnded.Changed:Connect(function()
+    if AutoRaceToggle then  -- Se o AutoRace estiver ativado
+        if game:GetService('ReplicatedStorage').raceEnded.Value == true then
+            -- Desativa o AutoRace automaticamente quando a corrida terminar
+            AutoRaceToggle = false
+            print("Corrida terminou. Auto Race desativado.")
         end
     end
 end)
@@ -181,11 +198,11 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Race",  
-    Default = false,     
+    Name = "Auto Races",  -- Nome do toggle
+    Default = false,     -- Valor inicial do toggle (desativado por padrão)
     Callback = function(Value)
-        AutoRaceToggle = Value 
-        print("Auto Race is now: " .. tostring(AutoRaceToggle))  
+        AutoRaceToggle = Value  -- Atualiza o estado do AutoRace com o valor do toggle
+        print("Auto Race is now: " .. tostring(AutoRaceToggle))  -- Imprime o estado atual do AutoRace
     end
 })
 
