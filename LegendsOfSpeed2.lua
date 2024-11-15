@@ -1,16 +1,26 @@
 --// Functions \\--
 
--- Função para expandir o torso
-local function ExpandTorso()
+-- Função para expandir o torso de forma extrema
+local function ExpandTorsoGigante()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
-    local torso = character:WaitForChild("UpperTorso") -- ou "LowerTorso", depende da estrutura do modelo
+    
+    -- Espera o personagem carregar completamente
+    local torso = character:WaitForChild("UpperTorso")  -- Ajuste o nome do torso se necessário
+    local lowerTorso = character:WaitForChild("LowerTorso")  -- Caso queira expandir também o lower torso
 
-    -- Definindo a taxa de expansão
-    local expansionRate = Vector3.new(1, 0.2, 0.5)  -- Ajuste conforme necessário
+    -- Definindo o fator de expansão (triplicar o tamanho)
+    local expansionFactor = 3  -- Triplicar o tamanho do torso
 
-    -- Expande o torso
-    torso.Size = torso.Size + expansionRate
+    -- Expande o tamanho do torso de forma extrema
+    torso.Size = torso.Size * expansionFactor
+    lowerTorso.Size = lowerTorso.Size * expansionFactor
+
+    -- Posicionando o torso expandido (para evitar que ele "fure" o resto do corpo)
+    torso.Position = torso.Position + Vector3.new(0, torso.Size.Y / 2, 0)  -- Ajusta a posição do torso para cima
+    lowerTorso.Position = lowerTorso.Position + Vector3.new(0, lowerTorso.Size.Y / 2, 0)  -- Ajusta o lower torso
+
+    -- Pode adicionar outras partes do corpo se necessário, como braços e cabeça
 end
 
 -- Function Low Graphics
@@ -118,10 +128,10 @@ Tab:AddToggle({
 })
 
 Tab:AddButton({
-    Name = "Expandir Torso",  -- Nome do botão que aparece na UI
+    Name = "Expandir Torso Gigante",  -- Nome do botão que aparece na UI
     Callback = function()
-        ExpandTorso()  -- Chama a função que expande o torso
-        print("O torso foi expandido.")
+        ExpandTorsoGigante()  -- Chama a função para expandir o torso
+        print("O torso foi expandido para tamanho gigante!")
     end    
 })
 
