@@ -113,6 +113,44 @@ local function setPlayerStats(walkSpeed, jumpPower)
     print("Jump power adjusted to: " .. jumpPower)
 end
 
+-- Function Rebirths Stopping Point"
+local targetRebirth = 99999  -- Valor alvo de rebirths (inicialmente definido como 999)
+local currentRebirths = 0  -- Número atual de rebirths (vai ser atualizado com base no jogo)
+
+-- Função para realizar o rebirth
+local function Rebirth()
+    task.wait()
+    local ohString1 = "rebirthRequest"
+    game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer(ohString1)
+end
+
+-- Monitorando o número atual de renascimentos (rebirths)
+local function getCurrentRebirths()
+    -- Aqui você vai acessar a informação de rebirths do jogador
+    -- Como não tenho acesso exato à variável no seu jogo, vou simular com uma variável fictícia
+    return game.Players.LocalPlayer:WaitForChild("leaderstats"):WaitForChild("Rebirths").Value
+end
+
+-- Função que realiza o rebirth automaticamente enquanto o número de rebirths não atingir o alvo
+local function autoRebirth()
+    while true do
+        -- Atualiza o número atual de renascimentos
+        currentRebirths = getCurrentRebirths()
+        
+        -- Se atingiu o número alvo de rebirths, para a execução
+        if currentRebirths >= targetRebirth then
+            print("Rebirth target reached: " .. currentRebirths)
+            break
+        end
+        
+        -- Realiza o rebirth
+        Rebirth()
+        
+        -- Aguardar algum tempo entre os rebirths (ajuste conforme necessário)
+        task.wait(0.1)  -- Aguarda 2 segundos entre os rebirths
+    end
+end
+
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -150,7 +188,7 @@ local Section = Tab:AddSection({
 
 local WalkSpeedTextbox = Tab:AddTextbox({
     Name = "Walk Speed",  -- Nome antes do valor
-    Default = "200",  -- valor inicial da caixa
+    Default = "500",  -- valor inicial da caixa
     TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
     Callback = function(value)
         -- Verifica se o valor inserido é um número válido
@@ -159,7 +197,7 @@ local WalkSpeedTextbox = Tab:AddTextbox({
             local currentJumpPower = game.Players.LocalPlayer.Character.Humanoid.JumpPower
             setPlayerStats(newWalkSpeed, currentJumpPower)
         else
-            print("Valor inválido para WalkSpeed.")
+            print("Invalid value for WalkSpeed.")
         end
     end    
 })
@@ -167,7 +205,7 @@ local WalkSpeedTextbox = Tab:AddTextbox({
 -- Adicionar um Textbox para digitar o JumpPower
 local JumpPowerTextbox = Tab:AddTextbox({
     Name = "Jump Power",  -- Nome antes do valor
-    Default = "100",  -- valor inicial da caixa
+    Default = "200",  -- valor inicial da caixa
     TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
     Callback = function(value)
         -- Verifica se o valor inserido é um número válido
@@ -176,7 +214,7 @@ local JumpPowerTextbox = Tab:AddTextbox({
             local currentWalkSpeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
             setPlayerStats(currentWalkSpeed, newJumpPower)
         else
-            print("Valor inválido para JumpPower.")
+            print("Invalid value for JumpPower.")
         end
     end    
 })
@@ -299,6 +337,38 @@ local Tab = Window:MakeTab({
 
 local Section = Tab:AddSection({
 	Name = "Rebirth Stopping Point"
+})
+
+Tab:AddTextbox({
+    Name = "Put Rebirth",
+    Default = "0",  -- valor padrão
+    TextDisappear = true,
+    Callback = function(value)
+        -- Atualizar o valor do targetRebirth baseado no que o jogador digitou
+        local target = tonumber(value)
+        if target then
+            targetRebirth = target
+            print("Rebirth goal set to: " .. targetRebirth)
+        else
+            print("Invalid value!")
+        end
+    end
+})
+
+Tab:AddToggle({
+    Name = "Rebirth Stopping Point",
+    Default = false,
+    Callback = function(value)
+        if value then
+            autoRebirth()
+        else
+            print("Auto-rebirth disabled.")
+        end
+    end
+})
+
+local Section = Tab:AddSection({
+	Name = "Auto Rebirth"
 })
 
 Tab:AddToggle({
