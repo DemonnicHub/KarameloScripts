@@ -307,9 +307,14 @@ local function sendChatMessage(message)
 end
 
 -- Variáveis globais para controle
-_G.SendMessages = false  -- Controle do Toggle
-_G.Interval = 1          -- Intervalo entre mensagens (em segundos)
-_G.Message = ""          -- Mensagem a ser enviada
+_G.SendMessages = false  
+_G.Interval = 1          
+_G.Message = ""  
+
+-- Function Demonnic The Best Hub --
+local function sendChatMessage(message)
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "All")
+end
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -766,6 +771,22 @@ Tab:AddToggle({
                 end
             end)
         end
+    end
+})
+
+local Section = Tab:AddSection({
+	Name = "Demonnic Hub Spam"
+})
+
+Tab:AddButton({
+    Name = "Click Here To Help Us!",
+    Callback = function()
+        spawn(function()
+            for i = 1, 5 do
+                sendChatMessage("Demonnic The Best Hub!")  -- Envia a mensagem desejada
+                wait(0.2)  -- Aguarda 0.2 segundos antes de enviar a próxima mensagem
+            end
+        end)
     end
 })
 
