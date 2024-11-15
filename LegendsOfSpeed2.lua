@@ -133,40 +133,37 @@ local Section = Tab:AddSection({
     Name = "Hip Height"
 })
 
-local HipHeightTextbox = Tab:AddTextbox({
-    Name = "Hip Height",  -- Nome antes do valor
-    Default = "3",  -- valor inicial da caixa
-    TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
+local HipHeightSlider = Tab:AddSlider({
+    Name = "Hip Height",
+    Min = 0,
+    Max = 10,
+    Default = 2,
+    Color = Color3.fromRGB(255, 255, 255),
+    Increment = 0.1,
+    ValueName = "Height",
     Callback = function(value)
-        -- Verifica se o valor inserido é um número válido
-        local newValue = tonumber(value)
-        if newValue then
-            setHipHeight(newValue)
-            print("Hip height adjusted for: " .. newValue)
-        else
-            print("Invalid value for HipHeight.")
-        end
+        setHipHeight(value)
+        print("Hip height adjusted for: " .. value)
     end    
 })
 
+-- Toggle para habilitar/desabilitar ajuste automático
 local AutoAdjustToggle = Tab:AddToggle({
     Name = "Apply Height",
     Default = false,
     Callback = function(value)
         if value then
-            -- Ativar ajuste automático
+            -- Exemplo de ajuste automático (exemplo: ajustar baseado na velocidade)
             local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             local humanoid = character:WaitForChild("Humanoid")
             humanoid:GetPropertyChangedSignal("HipHeight"):Connect(function()
-                -- Ajusta para 2 sempre que o valor for menor que 2
-                if humanoid.HipHeight 2 then
+                if humanoid.HipHeight < 2 then
                     humanoid.HipHeight = 2
-                    print("HipHeight automatically adjusted to 2.")
                 end
             end)
         else
-            -- Desativar ajuste automático
+            -- Parar o ajuste automático
             print("Auto-adjustment disabled.")
         end
     end    
