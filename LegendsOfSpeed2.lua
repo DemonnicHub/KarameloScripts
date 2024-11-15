@@ -170,7 +170,7 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Races",  -- Nome do toggle
+    Name = "Auto Race",  -- Nome do toggle
     Callback = function(value) 
         autoRaceActive = value  -- Atualiza o estado do toggle
         
@@ -183,7 +183,7 @@ Tab:AddToggle({
                         -- Tenta entrar na corrida
                         game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
                         
-                        -- Interage com os "Decals" no mapa para "auto ganhar"
+                        -- Interage com os "Decals" no mapa para auto ganhar
                         local player = game:GetService("Players").LocalPlayer
                         local part = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
                         
@@ -198,6 +198,9 @@ Tab:AddToggle({
                             end
                         end
                     end)
+                    
+                    -- Intervalo muito curto para evitar crash
+                    wait(0.1)  -- Espera 0.1 segundos entre cada loop
                 end
             end)
         end
