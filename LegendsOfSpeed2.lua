@@ -76,17 +76,6 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddButton({
-    Name = "Rejoin",  -- Nome do botão
-    Callback = function()  -- Função chamada quando o botão for pressionado
-        -- Teleporta o jogador de volta para o mesmo lugar onde ele está
-        local teleportService = game:GetService("TeleportService")
-        local player = game:GetService("Players").LocalPlayer
-        teleportService:Teleport(game.PlaceId, player)  -- Teleporta para o PlaceId atual
-        print("Trying to get into the game...")  -- Mensagem para confirmar que a ação foi executada
-    end
-})
-
-Tab:AddButton({
     Name = "Expand Torso (Max 6x)",  -- Nome do botão que aparece na UI
     Callback = function()
         ExpandTorso()  -- Chama a função que expande o torso
@@ -100,6 +89,21 @@ Tab:AddButton({
         ResetCharacter()  -- Chama a função para resetar o personagem
         print("The character has been reset to normal size!")
     end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Game Options"
+})
+
+Tab:AddButton({
+    Name = "Re-join The Game",  -- Nome do botão
+    Callback = function()  -- Função chamada quando o botão for pressionado
+        -- Teleporta o jogador de volta para o mesmo lugar onde ele está
+        local teleportService = game:GetService("TeleportService")
+        local player = game:GetService("Players").LocalPlayer
+        teleportService:Teleport(game.PlaceId, player)  -- Teleporta para o PlaceId atual
+        print("Trying to get into the game...")  -- Mensagem para confirmar que a ação foi executada
+    end
 })
 
 local Tab = Window:MakeTab({
@@ -166,35 +170,38 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Race",  -- Nome do toggle
-    Default = false,  -- Desligado por padrão
-    Callback = function(Value)  -- Função chamada quando o toggle é ativado/desativado
-        if Value then  -- Se o toggle estiver ativado
+    Name = "Auto Races",  -- Nome do toggle
+    Callback = function(value) 
+        autoRaceActive = value  -- Atualiza o estado do toggle
+        
+        -- Se o toggle for ativado, começa a executar a função
+        if autoRaceActive then
+            -- Inicia a ação de entrar na corrida e interagir
             spawn(function()
-                while Value do  -- Enquanto o toggle estiver ativado
+                while autoRaceActive do  -- O loop continua enquanto o toggle estiver ativado
                     pcall(function()
-                        -- Envia um evento para tentar entrar na corrida
-                        ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
+                        -- Tenta entrar na corrida
+                        game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
                         
-                        -- Espera um pequeno intervalo
-                        task.wait()
-
-                        -- Interage com os "Decals" no mapa de corridas
-                        local part = Players.LocalPlayer.Character.HumanoidRootPart
-                        for _, v in pairs(Workspace.raceMaps:GetDescendants()) do
-                            if v.Name == "Decal" and v.Parent then
-                                -- Realiza a interação tocando no Decal
-                                firetouchinterest(part, v.Parent, 0)
-                                task.wait(0.5)
-                                firetouchinterest(part, v.Parent, 1)
+                        -- Interage com os "Decals" no mapa para "auto ganhar"
+                        local player = game:GetService("Players").LocalPlayer
+                        local part = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+                        
+                        -- Verifica se o jogador tem um "HumanoidRootPart" e realiza a interação
+                        if part then
+                            for _, v in pairs(game.Workspace.raceMaps:GetDescendants()) do
+                                if v.Name == "Decal" and v.Parent then
+                                    -- Interage com os "Decals" no mapa
+                                    firetouchinterest(part, v.Parent, 0)
+                                    firetouchinterest(part, v.Parent, 1)
+                                end
                             end
                         end
                     end)
-                    task.wait()  -- Espera entre tentativas
                 end
             end)
         end
-    end
+    end    
 })
 
 Tab:AddToggle({
