@@ -38,6 +38,19 @@ local function SelectCity(City)
     end
 end
 
+-- Function City Teleports --
+local function SelectCity(city)
+    if city == "Main City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9682.98828, 74.8522873, 3099.03394, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
+    elseif city == "Snow City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9676.13867, 74.8522873, 3782.69385, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    elseif city == "Magma City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11054.9688, 232.791656, 4898.62842, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
+    elseif city == "Legends Highway" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13098.8711, 232.791656, 5907.62793, -0.0872479677, 0.000158954252, -0.996186614, -0.00054083002, 0.999999821, 0.00020692969, 0.996186495, 0.000556821818, -0.0872478485)
+    end
+end
+
 -- Function Maps Teleports --
 local function SelectLocation(location)
     if location == "Desert" then
@@ -401,12 +414,12 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddDropdown({
-	Name = "Select City",
-	Default = nil,
-	Options = {"Main City", "Snow City", "Magma City", "Legends Highway"},
-	Callback = function(Value)
-		SelectCity(Value)
-	end    
+    Name = "Select City",
+    Default = "None",
+    Options = {"None","Main City", "Snow City", "Magma City", "Legends Highway"},
+    Callback = function(Value)
+        SelectCity(Value)
+    end    
 })
 
 local Section = Tab:AddSection({
@@ -418,7 +431,7 @@ Tab:AddDropdown({
     Default = "None",
     Options = {"None","Desert", "Space"},
     Callback = function(Value)
-        SelectLocation(Value) -- Teletransporta para o local selecionado
+        SelectLocation(Value) 
     end    
 })
 
@@ -431,7 +444,7 @@ Tab:AddDropdown({
     Default = "None",
     Options = {"None","Main City Chest", "Snow City Chest", "Magma City Chest"},
     Callback = function(Value)
-        SelectChest(Value) -- Teletransporta para o baú selecionado
+        SelectChest(Value) 
     end    
 })
 
