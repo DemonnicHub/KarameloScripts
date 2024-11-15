@@ -1,5 +1,39 @@
 --// Functions \\--
 
+-- Função para teletransportar o jogador para um baú específico
+local function teleportToChest(chestPosition)
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    
+    -- Teleporta o jogador para a posição do baú (chestPosition)
+    humanoidRootPart.CFrame = CFrame.new(chestPosition)
+end
+
+-- Função para coletar o baú
+local function collectChest()
+    -- O código para coletar o baú pode envolver a ativação de um evento de interação
+    raceEvent:FireServer("collectChest")  -- Isso é apenas um exemplo, depende de como a interação com o baú funciona
+    print("Baú coletado!")
+end
+
+-- Função que busca os baús no mapa e coleta automaticamente
+local function autoCollectChests()
+    -- Lista de posições de baús (essas posições podem ser determinadas manualmente ou programaticamente)
+    local chests = {
+        Vector3.new(100, 10, 200),  -- Exemplo de posição de baú 1
+        Vector3.new(150, 10, 250),  -- Exemplo de posição de baú 2
+        Vector3.new(200, 10, 300),  -- Exemplo de posição de baú 3
+    }
+    
+    for _, chestPosition in ipairs(chests) do
+        teleportToChest(chestPosition)  -- Teleporta até o baú
+        wait(1)  -- Espera 1 segundo para garantir que o teleporte tenha sido realizado
+        collectChest()  -- Coleta o baú
+        wait(2)  -- Espera 2 segundos antes de ir para o próximo baú
+    end
+end
+
+-- Function Low Graphics
 local function optimizeFpsPing()
     for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
         if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
@@ -104,16 +138,11 @@ Tab:AddToggle({
 })
 
 Tab:AddButton({
-    Name = "Start Race in 20 seconds!",  -- Nome personalizado para o botão
+    Name = "Auto Collect Baús",
     Callback = function()
-        -- Manipula o tempo de 20 segundos e envia ao servidor
-        local ReplicatedStorage = game:GetService("ReplicatedStorage")
-        local raceEvent = ReplicatedStorage:WaitForChild("rEvents"):WaitForChild("raceEvent")
-
-        -- Envia o comando para entrar na corrida e altera o tempo para 20 segundos
-        raceEvent:FireServer("joinRace", 20)  -- Envia o valor "20" como o novo tempo para o servidor
-        print("Botão pressionado! Corrida iniciará em 20 segundos.")
-    end    
+        print("Iniciando coleta automática de baús...")
+        autoCollectChests()  -- Inicia a coleta dos baús automaticamente
+    end
 })
 
 
