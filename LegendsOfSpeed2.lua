@@ -13,31 +13,16 @@ local function ExpandTorso()
     torso.Size = torso.Size + expansionRate
 end
 
--- Função para resetar o personagem
+-- Função para resetar o personagem de forma segura
 local function ResetCharacter()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
 
-    -- Espera as partes do corpo do personagem
-    local torso = character:WaitForChild("UpperTorso")  -- Ajuste o nome do torso se necessário
-    local lowerTorso = character:WaitForChild("LowerTorso")  -- Caso queira resetar o lower torso também
+    -- Destrói a estrutura atual do personagem (quebrando os joints)
+    character:BreakJoints()
 
-    -- Resetando o tamanho original do torso
-    local originalSize = Vector3.new(2, 2, 1)  -- Tamanho padrão do torso, ajuste conforme necessário
-    local originalLowerSize = Vector3.new(2, 1, 1)  -- Tamanho padrão do lower torso, ajuste conforme necessário
-
-    torso.Size = originalSize
-    lowerTorso.Size = originalLowerSize
-
-    -- Resetando a posição (se necessário)
-    torso.Position = character.HumanoidRootPart.Position + Vector3.new(0, torso.Size.Y / 2, 0)  -- Ajuste a posição para ficar no lugar correto
-    lowerTorso.Position = character.HumanoidRootPart.Position - Vector3.new(0, lowerTorso.Size.Y / 2, 0)  -- Ajuste a posição do lower torso
-
-    -- Resetando outras partes do corpo, se necessário (braços, cabeça, etc.)
-    -- Aqui você pode adicionar outras partes que quiser resetar, como os braços ou cabeça, conforme o modelo do personagem.
-
-    -- Restaurando o personagem para o estado inicial
-    print("O personagem foi resetado!")
+    -- O Roblox vai automaticamente gerar um novo personagem, retornando ao seu estado inicial
+    print("O personagem foi resetado ao seu estado original!")
 end
 
 -- Function Teleports --
@@ -147,13 +132,13 @@ Tab:AddToggle({
 Tab:AddButton({
     Name = "Expand Torso",  -- Nome do botão que aparece na UI
     Callback = function()
-        ExpandTorsoGigante()  -- Chama a função para expandir o torso
-        print("O torso foi expandido para tamanho gigante!")
+        ExpandTorso()  -- Chama a função que expande o torso
+        print("O torso foi expandido.")
     end    
 })
 
 Tab:AddButton({
-    Name = "Suicid",  -- Nome do botão que aparece na UI
+    Name = "Resetar Personagem",  -- Nome do botão que aparece na UI
     Callback = function()
         ResetCharacter()  -- Chama a função para resetar o personagem
         print("O personagem foi resetado ao seu tamanho normal.")
