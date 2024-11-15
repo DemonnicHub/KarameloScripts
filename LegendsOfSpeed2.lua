@@ -470,7 +470,7 @@ local Tab = Window:MakeTab({
 })
 
 local StatsSection = Tab:AddSection({
-    Name = "Player Stats"
+    Name = "Steps"
 })
 
 local StepsLabel = Tab:AddLabel("Steps: 0")
@@ -480,7 +480,17 @@ local StatsSection = Tab:AddSection({
 })
 
 local RebirthsLabel = Tab:AddLabel("Rebirths: 0")
+
+local StatsSection = Tab:AddSection({
+    Name = "Hoops"
+})
+
 local HoopsLabel = Tab:AddLabel("Hoops: 0")
+
+local StatsSection = Tab:AddSection({
+    Name = "Races"
+})
+
 local RacesLabel = Tab:AddLabel("Races: 0")
 
 -- Função para atualizar os valores das estatísticas
