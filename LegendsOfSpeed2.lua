@@ -38,27 +38,26 @@ local function SelectCity(City)
     end
 end
 
--- Auto Race V1 --
-local function teleportToMaps()
-    while _G.Farm do
-        -- Teleporte para Grassland
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453)
-        wait(0.1)  -- Atraso entre os teletransportes
-        -- Teleporte para Magma
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634)
-        wait(0.1)  -- Atraso entre os teletransportes
-        -- Teleporte para Desert
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)
-        wait(0.1)  -- Atraso entre os teletransportes
+-- Function Teleport Maps --
+local function teleportTo(location)
+    if location == "Desert" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
+            2508.94995, 14.74121, 4353.5166, 
+            -0.0638562664, 7.44120214e-08, 0.997959077, 
+            -5.29291349e-08, 1, -7.79509719e-08, 
+            -0.997959077, -5.7798772e-08, -0.0638562664
+        )
+    elseif location == "Space" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
+            -331.823395, 3.84380865, 581.689331, 
+            0.345898926, 0, 0.938271761, 
+            0, 1, 0, 
+            -0.938271761, 0, 0.345898926
+        )
     end
 end
 
--- Função para parar o auto race
-local function stopAutoRace()
-    _G.Farm = false
-end
-
--- Function Race + Teleport --
+-- Function Auto Race V1 --
 _G.Farm = false
 
 -- Função para teletransportar-se entre mapas
@@ -138,7 +137,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
--- Function Auto Race --
+-- Function Auto Race  V2 --
 local function ToggleAutoRaces(Value)
     AutoRaces = Value
     if AutoRaces then
@@ -409,6 +408,15 @@ Tab:AddDropdown({
 	end    
 })
 
+Tab:AddDropdown({
+    Name = "Selecione o local",
+    Default = "Deserto",
+    Options = {"Deserto", "Espaço"},
+    Callback = function(Value)
+        teleportTo(Value) -- Teletransporta para o local selecionado
+    end    
+})
+
 local Tab = Window:MakeTab({
 	Name = "Auto Farm",
 	Icon = "rbxassetid://78744214847458",
@@ -487,19 +495,6 @@ local Section = Tab:AddSection({
 
 Tab:AddToggle({
     Name = "Auto Race V1",
-    Default = false,
-    Callback = function(state)
-        if state then
-            _G.Farm = true
-            teleportToMaps()  -- Inicia o teleporte simultâneo para os 3 mapas
-        else
-            stopAutoRace()  -- Para o teleporte
-        end
-    end    
-})
-
-Tab:AddToggle({
-    Name = "Auto Race + Teleport",
     Default = false,
     Callback = function(state)
         toggleAutoRaces(state)
