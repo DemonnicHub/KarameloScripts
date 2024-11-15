@@ -148,9 +148,9 @@ local Section = Tab:AddSection({
 	Name = "Player Settings"
 })
 
-local WalkSpeedTextbox = Tab:AddTextbox({
-    Name = "Walk Speed",  -- Nome antes do valor
-    Default = "100",  -- valor inicial da caixa
+WalkSpeedTextbox = Tab:AddTextbox({
+    Name = "WalkSpeed",  -- Nome antes do valor
+    Default = "50",  -- valor inicial da caixa
     TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
     Callback = function(value)
         -- Verifica se o valor inserido é um número válido
@@ -165,9 +165,9 @@ local WalkSpeedTextbox = Tab:AddTextbox({
 })
 
 -- Adicionar um Textbox para digitar o JumpPower
-local JumpPowerTextbox = Tab:AddTextbox({
-    Name = "Jump Power",  -- Nome antes do valor
-    Default = "100",  -- valor inicial da caixa
+JumpPowerTextbox = Tab:AddTextbox({
+    Name = "JumpPower",  -- Nome antes do valor
+    Default = "50",  -- valor inicial da caixa
     TextDisappear = true,  -- faz o texto desaparecer quando o campo perde o foco
     Callback = function(value)
         -- Verifica se o valor inserido é um número válido
