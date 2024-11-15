@@ -7,7 +7,7 @@ local function ExpandTorso()
     local torso = character:WaitForChild("UpperTorso") -- ou "LowerTorso", depende da estrutura do modelo
 
     -- Definindo a taxa de expansão
-    local expansionRate = Vector3.new(1, 0.2, 0.5)  -- Ajuste conforme necessário
+    local expansionRate = Vector3.new(1, 0.2, 0.5) 
 
     -- Expande o torso
     torso.Size = torso.Size + expansionRate
