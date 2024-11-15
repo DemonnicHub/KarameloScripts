@@ -67,13 +67,13 @@ local function teleportToMaps()
         pcall(function()
             -- Teleporte para Grassland
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453)
-            wait(0.1)
+            wait(0.3)
             -- Teleporte para Magma
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634)
-            wait(0.1)
+            wait(0.3)
             -- Teleporte para Desert
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218)
-            wait(0.1)
+            wait(0.3)
         end)
     end
 end
@@ -84,10 +84,10 @@ local function teleportToSpace()
         pcall(function()
             -- Teleporte para o ponto de início do Space
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 36.0000916, -4805.07861, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            wait(0.1)
+            wait(0.3)
             -- Teleporte para o ponto de vitória do Space
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4945.31689, 36.0000916, -4805.07861, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-            wait(0.1)
+            wait(0.3)
         end)
     end
 end
@@ -98,10 +98,10 @@ local function teleportToDesert()
         pcall(function()
             -- Teleporte para o ponto de início do Desert
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(636.770996, 161.306763, 9718.75, -0.999040902, 0.000210345868, -0.043785546, 0.00021885868, 0.99999994, -0.000189627055, 0.043785505, -0.000199028043, -0.999040961)
-            wait(0.1)
+            wait(0.3)
             -- Teleporte para o ponto de vitória do Desert
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2061.12476, 219.799164, 17953.8984, 0.949868321, -9.90087301e-09, 0.312650263, 5.16601206e-10, 1, 3.00980716e-08, -0.312650263, -2.84276886e-08, 0.949868321)
-            wait(0.1)
+            wait(0.3)
         end)
     end
 end
@@ -300,6 +300,16 @@ end
 game:GetService("RunService").Heartbeat:Connect(function()
     UpdateStats()
 end)
+
+-- Function Chat Flood --
+local function sendChatMessage(message)
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "All")
+end
+
+-- Variáveis globais para controle
+_G.SendMessages = false  -- Controle do Toggle
+_G.Interval = 1          -- Intervalo entre mensagens (em segundos)
+_G.Message = ""          -- Mensagem a ser enviada
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -709,6 +719,54 @@ Tab:AddButton({
         -- Quando o botão for pressionado, o script será executado
         loadstring(game:HttpGet("https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/AutoFarmKaramelo.lua"))()
     end    
+})
+
+local Tab = Window:MakeTab({
+	Name = "Chat Spam",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "Chat Spam"
+})
+
+Tab:AddTextbox({
+    Name = "Chat Spam",
+    Default = "Here",
+    TextDisappear = false,
+    Callback = function(Value)
+        _G.Message = Value  -- Armazena a mensagem digitada
+    end
+})
+
+-- Adicionando um Textbox para o intervalo de envio
+Tab:AddTextbox({
+    Name = "Interval",
+    Default = "1",  -- Intervalo padrão de 1 segundo
+    TextDisappear = false,
+    Callback = function(Value)
+        _G.Interval = tonumber(Value) or 1  -- Armazena o intervalo, garantindo que seja um número
+    end
+})
+
+-- Adicionando o Toggle para ativar ou desativar o envio de mensagens
+Tab:AddToggle({
+    Name = "Send Spam",
+    Default = false,
+    Callback = function(Value)
+        _G.SendMessages = Value  -- Habilita ou desabilita o envio das mensagens
+        if Value then
+            spawn(function()  -- Usando spawn para rodar o envio de forma assíncrona
+                while _G.SendMessages do
+                    if _G.Message ~= "" then  -- Verifica se a mensagem não está vazia
+                        sendChatMessage(_G.Message)  -- Envia a mensagem
+                    end
+                    wait(_G.Interval)  -- Aguarda o intervalo antes de enviar novamente
+                end
+            end)
+        end
+    end
 })
 
 local Tab = Window:MakeTab({
