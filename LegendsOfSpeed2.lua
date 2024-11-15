@@ -1,6 +1,6 @@
 --// Functions \\--
 
--- Function Auto RAce
+-- Function Auto Race --
 local AutoRaceToggle = false
 
 game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
