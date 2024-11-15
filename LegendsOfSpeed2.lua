@@ -60,6 +60,53 @@ local function optimizeFpsPing()
     end
 end
 
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
+-- Função para alternar o estado de AutoRaces
+local function ToggleAutoRaces(Value)
+    AutoRaces = Value
+    if AutoRaces then
+        spawn(function()
+            while AutoRaces do
+                pcall(function()
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
+                    task.wait()
+                    local part = Players.LocalPlayer.Character.HumanoidRootPart
+                    for _, v in pairs(Workspace.raceMaps:GetDescendants()) do 
+                        if v.Name == "Decal" and v.Parent then
+                            firetouchinterest(part, v.Parent, 0)
+                            wait()
+                            firetouchinterest(part, v.Parent, 1)
+                        end
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end 
+
+local function ToggleAutoRacesSolo(Value)
+    AutoRacesSolo = Value
+    if AutoRacesSolo then
+        spawn(function()
+            while AutoRacesSolo do
+                pcall(function()
+                    local playerHead = Players.LocalPlayer.Character.Head
+                    ReplicatedStorage.rEvents.raceEvent:FireServer("joinRace")
+                    wait(0.00)
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+
+local AutoRaces = false
+local AutoRacesSolo = false
+
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -170,41 +217,15 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-    Name = "Auto Race",  -- Nome do toggle
-    Callback = function(value) 
-        autoRaceActive = value  -- Atualiza o estado do toggle
-        
-        -- Se o toggle for ativado, começa a executar a função
-        if autoRaceActive then
-            -- Inicia a ação de entrar na corrida e interagir
-            spawn(function()
-                while autoRaceActive do  -- O loop continua enquanto o toggle estiver ativado
-                    pcall(function()
-                        -- Tenta entrar na corrida
-                        game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
-                        
-                        -- Interage com os "Decals" no mapa para auto ganhar
-                        local player = game:GetService("Players").LocalPlayer
-                        local part = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-                        
-                        -- Verifica se o jogador tem um "HumanoidRootPart" e realiza a interação
-                        if part then
-                            for _, v in pairs(game.Workspace.raceMaps:GetDescendants()) do
-                                if v.Name == "Decal" and v.Parent then
-                                    -- Interage com os "Decals" no mapa
-                                    firetouchinterest(part, v.Parent, 0)
-                                    firetouchinterest(part, v.Parent, 1)
-                                end
-                            end
-                        end
-                    end)
-                    
-                    -- Intervalo muito curto para evitar crash
-                    wait(0.1)  -- Espera 0.1 segundos entre cada loop
-                end
-            end)
-        end
+    Name = "Auto Corridas",
+    Default = false,
+    Callback = function(Value)
+        ToggleAutoRaces(Value)
     end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Use in moderation"
 })
 
 Tab:AddToggle({
