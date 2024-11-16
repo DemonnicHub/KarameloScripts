@@ -350,7 +350,62 @@ end
 -- Inicializa o listener de cliques
 setupClickTeleport()
 
+-- Variáveis para armazenar as escolhas
+local selectedCity = "None"
+local selectedOrb = "None"
+local collectionSpeed = "x50"
 
+-- Função para selecionar a cidade
+local function SelectCity(city)
+    selectedCity = city
+    print("Cidade selecionada: " .. city)
+end
+
+-- Função para selecionar o Orb
+local function SelectOrb(orb)
+    selectedOrb = orb
+    print("Orb selecionado: " .. orb)
+end
+
+-- Função para selecionar a velocidade de coleta
+local function SelectCollectionSpeed(speed)
+    collectionSpeed = speed
+    print("Velocidade de coleta: " .. speed)
+end
+
+-- Função para ativar o "Red Orb" com ações específicas
+local function ActivateRedOrb()
+    if selectedCity == "Magma City" then
+        print("Ativando Red Orb na cidade Magma City")
+        for i = 1, 20 do
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+            wait(0.5)  -- Tempo entre as coletas
+        end
+    elseif selectedCity == "Main City" then
+        print("Ativando Red Orb na cidade Main City")
+        for i = 1, 20 do
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")
+            wait(0.5)
+        end
+    end
+end
+
+-- Função para ativar o "Yellow Orb" com ações específicas
+local function ActivateYellowOrb()
+    if selectedCity == "Magma City" then
+        print("Ativando Yellow Orb na cidade Magma City")
+        for i = 1, 20 do
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")
+            wait(0.5)  -- Tempo entre as coletas
+        end
+    elseif selectedCity == "Main City" then
+        print("Ativando Yellow Orb na cidade Main City")
+        for i = 1, 20 do
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")
+            wait(0.5)
+        end
+    end
+end
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -563,6 +618,58 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local StatsSection = Tab:AddSection({
+    Name = "Auto Farm"
+})
+
+Tab:AddDropdown({
+    Name = "City",
+    Default = "None",
+    Options = {"None", "Main City", "Magma City"},
+    Callback = function(Value)
+        SelectCity(Value)
+    end    
+})
+
+-- Dropdown para seleção de Orb
+Tab:AddDropdown({
+    Name = "Orb",
+    Default = "None",
+    Options = {"None", "Red Orb", "Yellow Orb"},
+    Callback = function(Value)
+        SelectOrb(Value)
+    end    
+})
+
+-- Dropdown para seleção de velocidade de coleta
+Tab:AddDropdown({
+    Name = "Collection Speed",
+    Default = "x50",
+    Options = {"x50", "x100", "x200", "x300", "x400", "x500", "x600", "x700", "x800", "x950"},
+    Callback = function(Value)
+        SelectCollectionSpeed(Value)
+    end    
+})
+
+-- Toggle para ativar a ação de coleta de orbs
+Tab:AddToggle({
+    Name = "Ativar Coleta de Orbs",
+    Default = false,
+    Callback = function(state)
+        _G.FarmAction = (state and true or false)
+        wait()
+        while _G.FarmAction == true do
+            -- Se "Red Orb" ou "Yellow Orb" for selecionado
+            if selectedOrb == "Red Orb" then
+                ActivateRedOrb()
+            elseif selectedOrb == "Yellow Orb" then
+                ActivateYellowOrb()
+            end
+            -- Espera entre as ações
+            wait(1)
+        end
+    end    
+})
 local Tab = Window:MakeTab({
 	Name = "Stats",
 	Icon = "rbxassetid://113927674495690",
