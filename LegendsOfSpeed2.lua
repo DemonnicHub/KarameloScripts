@@ -532,19 +532,6 @@ Tab:AddDropdown({
 })
 
 local Section = Tab:AddSection({
-	Name = "Chest Teleports"
-})
-
-Tab:AddDropdown({
-    Name = "Select Chest",
-    Default = "None",
-    Options = {"None","Main City Chest", "Snow City Chest", "Magma City Chest"},
-    Callback = function(Value)
-        SelectChest(Value) 
-    end    
-})
-
-local Section = Tab:AddSection({
 	Name = "Spawn Teleports"
 })
 
@@ -554,6 +541,19 @@ Tab:AddDropdown({
     Options = {"None", "Main City", "Desert", "Space"},
     Callback = function(Value)
         SelectLocation(Value) 
+    end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Chest Teleports"
+})
+
+Tab:AddDropdown({
+    Name = "Select Chest",
+    Default = "None",
+    Options = {"None","Main City Chest", "Snow City Chest", "Magma City Chest"},
+    Callback = function(Value)
+        SelectChest(Value) 
     end    
 })
 
