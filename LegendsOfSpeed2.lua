@@ -670,26 +670,8 @@ local StatsSection = Tab:AddSection({
     Name = "Auto Farm"
 })
 
-Tab:AddToggle({
-    Name = "Ativar Coleta de Orbs",
-    Default = false,
-    Callback = function(state)
-        _G.FarmAction = (state and true or false)
-        wait()
-        while _G.FarmAction == true do
-            if selectedOrb == "Red Orb" then
-                CollectRedOrb()
-            elseif selectedOrb == "Yellow Orb" then
-                CollectYellowOrb()
-            end
-            wait(1)
-        end
-    end    
-})
-
--- Dropdown para seleção de cidade ou localização
 Tab:AddDropdown({
-    Name = "Localização",
+    Name = "Select City",
     Default = "None",
     Options = {"None", "Main City", "Magma City"},
     Callback = function(Value)
@@ -699,7 +681,7 @@ Tab:AddDropdown({
 
 -- Dropdown para seleção de Orb
 Tab:AddDropdown({
-    Name = "Orb",
+    Name = "Select Orb",
     Default = "None",
     Options = {"None", "Red Orb", "Yellow Orb"},
     Callback = function(Value)
@@ -709,11 +691,28 @@ Tab:AddDropdown({
 
 -- Dropdown para seleção de velocidade de coleta
 Tab:AddDropdown({
-    Name = "Velocidade de Coleta",
+    Name = "Colletion Speed",
     Default = "x50",
     Options = {"x50", "x100", "x200", "x300", "x400", "x500", "x600", "x700", "x800", "x950"},
     Callback = function(Value)
         SetCollectionSpeed(Value)
+    end    
+})
+
+Tab:AddToggle({
+    Name = "Auto Farm",
+    Default = false,
+    Callback = function(state)
+        isCollecting = state  -- Atualiza o estado da coleta
+        print("Estado da coleta: " .. (isCollecting and "Ativado" or "Desativado"))
+        while isCollecting do
+            if selectedOrb == "Red Orb" then
+                CollectRedOrb()
+            elseif selectedOrb == "Yellow Orb" then
+                CollectYellowOrb()
+            end
+            wait(1)  -- Ajuste do tempo de espera entre as coletas
+        end
     end    
 })
 
