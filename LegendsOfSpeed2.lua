@@ -340,72 +340,76 @@ end
 setupClickTeleport()
 
 -- Function Fly --
-local flying = false
-local speed = 50
+-- Variáveis de controle do Fly
+local FLYING = false
+local SPEED = 50
+local CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+local BG, BV -- BodyGyro e BodyVelocity
+local HumanoidRootPart
 
--- Função de Controle do Fly
+-- Função para Iniciar o Fly
 local function startFly()
-    flying = true
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local rootPart = character:WaitForChild("HumanoidRootPart")
+    if FLYING then return end
+    FLYING = true
 
-    -- Criação de BodyGyro e BodyVelocity para controle livre
-    local bodyGyro = Instance.new("BodyGyro")
-    bodyGyro.MaxTorque = Vector3.new(1e9, 1e9, 1e9)
-    bodyGyro.P = 1e6
-    bodyGyro.CFrame = rootPart.CFrame
-    bodyGyro.Parent = rootPart
+    -- Configurar HumanoidRootPart
+    HumanoidRootPart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 
-    local bodyVelocity = Instance.new("BodyVelocity")
-    bodyVelocity.MaxForce = Vector3.new(1e9, 1e9, 1e9)
-    bodyVelocity.Velocity = Vector3.zero
-    bodyVelocity.Parent = rootPart
+    -- Criar BodyGyro e BodyVelocity
+    BG = Instance.new("BodyGyro", HumanoidRootPart)
+    BV = Instance.new("BodyVelocity", HumanoidRootPart)
 
-    -- Controle do Fly
+    BG.P = 9e4
+    BG.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
+    BG.CFrame = HumanoidRootPart.CFrame
+
+    BV.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+    BV.Velocity = Vector3.zero
+
+    -- Loop de Fly
     spawn(function()
-        while flying do
-            local moveDirection = Vector3.zero
-            local camera = workspace.CurrentCamera
-
-            -- Detecta movimento (WASD)
-            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.W) then
-                moveDirection = moveDirection + camera.CFrame.LookVector
-            end
-            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.S) then
-                moveDirection = moveDirection - camera.CFrame.LookVector
-            end
-            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.A) then
-                moveDirection = moveDirection - camera.CFrame.RightVector
-            end
-            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.D) then
-                moveDirection = moveDirection + camera.CFrame.RightVector
-            end
-
-            -- Controle de subir/descer
-            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
-                moveDirection = moveDirection + Vector3.new(0, 1, 0)
-            end
-            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
-                moveDirection = moveDirection - Vector3.new(0, 1, 0)
-            end
-
-            -- Aplica velocidade e mantém o personagem parado no ar
-            bodyVelocity.Velocity = moveDirection.Unit * speed
-            bodyGyro.CFrame = camera.CFrame
-            wait()
+        while FLYING do
+            game:GetService("RunService").Heartbeat:Wait()
+            local moveVector = Vector3.new(CONTROL.L + CONTROL.R, CONTROL.Q + CONTROL.E, CONTROL.F + CONTROL.B)
+            BV.Velocity = (workspace.CurrentCamera.CFrame:VectorToWorldSpace(moveVector.Unit) * SPEED) or Vector3.zero
+            BG.CFrame = workspace.CurrentCamera.CFrame
         end
-
-        -- Remove BodyGyro e BodyVelocity ao desativar o Fly
-        bodyGyro:Destroy()
-        bodyVelocity:Destroy()
     end)
 end
 
 -- Função para Parar o Fly
 local function stopFly()
-    flying = false
+    FLYING = false
+    if BG then BG:Destroy() end
+    if BV then BV:Destroy() end
+    CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
 end
+
+-- Função para controle de movimento (PC e Mobile)
+local UserInputService = game:GetService("UserInputService")
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    local key = input.KeyCode
+
+    if key == Enum.KeyCode.W then CONTROL.F = SPEED end
+    if key == Enum.KeyCode.S then CONTROL.B = -SPEED end
+    if key == Enum.KeyCode.A then CONTROL.L = -SPEED end
+    if key == Enum.KeyCode.D then CONTROL.R = SPEED end
+    if key == Enum.KeyCode.E then CONTROL.Q = SPEED end
+    if key == Enum.KeyCode.Q then CONTROL.E = -SPEED end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    local key = input.KeyCode
+
+    if key == Enum.KeyCode.W then CONTROL.F = 0 end
+    if key == Enum.KeyCode.S then CONTROL.B = 0 end
+    if key == Enum.KeyCode.A then CONTROL.L = 0 end
+    if key == Enum.KeyCode.D then CONTROL.R = 0 end
+    if key == Enum.KeyCode.E then CONTROL.Q = 0 end
+    if key == Enum.KeyCode.Q then CONTROL.E = 0 end
+end)
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -900,29 +904,24 @@ Tab:AddToggle({
 })
 
 Tab:AddToggle({
-    Name = "Fly",
+    Name = "Fly Toggle",
     Default = false,
-    Callback = function(state)
-        if state then
-            startFly()
+    Callback = function(Value)
+        if Value then
+            startFly() -- Inicia o voo
         else
-            stopFly()
+            stopFly() -- Para o voo
         end
     end
 })
 
--- Textbox para Ajustar Velocidade do Fly
+-- Textbox para ajustar a velocidade
 Tab:AddTextbox({
     Name = "Fly Speed",
-    Default = "50",
-    TextDisappear = true,
-    Callback = function(value)
-        local numValue = tonumber(value)
-        if numValue then
-            speed = math.clamp(numValue, 10, 300) -- Velocidade ajustável
-        else
-            warn("Insira um valor numérico válido para velocidade!")
-        end
+    Default = "50",  -- Valor inicial para a velocidade
+    TextDisappear = true, -- O texto desaparece após perder foco
+    Callback = function(Value)
+        SPEED = tonumber(Value) or 50  -- Atualiza a velocidade do voo com o valor digitado
     end
 })
 
