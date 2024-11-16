@@ -379,16 +379,7 @@ local function CollectRedOrb()
         print("Coletando Red Orb em Magma City")
         for i = 1, 200 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs			
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")		
-	
         end
     elseif selectedLocation == "Main City" then
         print("Coletando Red Orb em Main City")
@@ -629,7 +620,7 @@ local StatsSection = Tab:AddSection({
 })
 
 Tab:AddDropdown({
-    Name = "Select City",
+    Name = "Select City1",
     Default = "None",
     Options = {"None", "Main City", "Magma City"},
     Callback = function(Value)
