@@ -377,20 +377,17 @@ end
 local function CollectRedOrb()
     if selectedLocation == "Magma City" then
         print("Coletando Red Orb em Magma City")
-        for i = 1, 200 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs
-game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")				
+        for i = 1, 200 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs			
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")	
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City"			
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")		
 	
         end
     elseif selectedLocation == "Main City" then
@@ -652,7 +649,7 @@ Tab:AddDropdown({
 
 -- Dropdown para seleção de velocidade de coleta
 Tab:AddDropdown({
-    Name = "Colletion Speed2",
+    Name = "Colletion Speed",
     Default = "x50",
     Options = {"x50", "x100", "x200"},
     Callback = function(Value)
