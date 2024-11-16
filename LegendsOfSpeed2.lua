@@ -833,19 +833,6 @@ Tab:AddToggle({
 	end
 })
 
-Tab:AddButton({
-    Name = "Enviar Notificação",
-    Callback = function()
-        -- Envia a notificação ao clicar no botão
-        OrionLib:MakeNotification({
-            Name = "Notificação",
-            Content = "Você pressionou o botão!",
-            Image = "rbxassetid://4483345998",  -- Coloque o id de uma imagem ou ícone se quiser
-            Time = 5  -- Tempo de exibição da notificação
-        })
-    end
-})
-
 local Tab = Window:MakeTab({
 	Name = "Credits",
 	Icon = "rbxassetid://96062201354965",
@@ -856,27 +843,38 @@ local Section = Tab:AddSection({
 	Name = "Information"
 })
 
-Tab:AddParagraph("ABOUT DEMONNIC","The base of the Demonnic script was created by @Demonnic_Alexg (Alexg78909), join our community on Discord:")
+Tab:AddParagraph("DEMONNIC HUB","Script Made By Demonnic_HarixC (@Alexg78909). Join Our Discord Server:")
 
+Tab:AddButton({
+    Name = "Click Here To See Discord Notification",
+    Callback = function()
+        OrionLib:MakeNotification({
+            Name = "Demonnic",
+            Content = "discord.gg/uydz6pZWMk",
+            Image = "rbxassetid://101951842185056", 
+            Time = 30  
+        })
+    end
+})
 
 local Section = Tab:AddSection({
 	Name = "Collaborators"
 })
 
-Tab:AddParagraph("THANK YOU!","Collaboration by @Demonnic_Fast (ericklopes16)")
+Tab:AddParagraph("THANK YOU!","Collaboration By Demonnic_Fast (@ericklopes16)")
 
 OrionLib:MakeNotification({
 	Name = "Demonnic",
 	Content = "discord.gg/uydz6pZWMk",
 	Image = "rbxassetid://101951842185056",
-	Time = 20
+	Time = 30
 })
 
 OrionLib:MakeNotification({
 	Name = "Bypass",
-	Content = "Bypass activated... ✅",
+	Content = "Bypass Activated... ✅",
 	Image = "rbxassetid://71506531582407",
-	Time = 18
+	Time = 10
 })
 
 
