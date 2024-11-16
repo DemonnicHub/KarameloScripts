@@ -339,6 +339,55 @@ end
 -- Inicializa o listener de cliques
 setupClickTeleport()
 
+-- Function Fly --
+local flying = false
+local speed = 50
+local bodyGyro, bodyVelocity
+
+-- Função para ativar/desativar o Fly
+local function toggleFly(state)
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local rootPart = character:WaitForChild("HumanoidRootPart")
+
+    if state then
+        -- Ativar Fly
+        flying = true
+        bodyGyro = Instance.new("BodyGyro")
+        bodyGyro.P = 9e4
+        bodyGyro.MaxTorque = Vector3.new(9e4, 9e4, 9e4)
+        bodyGyro.CFrame = rootPart.CFrame
+        bodyGyro.Parent = rootPart
+
+        bodyVelocity = Instance.new("BodyVelocity")
+        bodyVelocity.Velocity = Vector3.zero
+        bodyVelocity.MaxForce = Vector3.new(9e4, 9e4, 9e4)
+        bodyVelocity.Parent = rootPart
+
+        spawn(function()
+            while flying do
+                pcall(function()
+                    local moveDirection = Vector3.zero
+                    local humanoid = character:FindFirstChildOfClass("Humanoid")
+                    if humanoid then
+                        moveDirection = humanoid.MoveDirection
+                    end
+
+                    -- Atualiza a velocidade com base na direção do movimento
+                    bodyGyro.CFrame = rootPart.CFrame
+                    bodyVelocity.Velocity = moveDirection * speed + Vector3.new(0, 2, 0) -- Mantém uma leve elevação
+                end)
+                wait()
+            end
+        end)
+    else
+        -- Desativar Fly
+        flying = false
+        if bodyGyro then bodyGyro:Destroy() end
+        if bodyVelocity then bodyVelocity:Destroy() end
+    end
+end
+
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
 local Window = OrionLib:MakeWindow({Name = "Demonnic Hub | Legends Of Speed ⚡", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -824,10 +873,33 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-	Name = "Enable Teleport By Click",
+	Name = "Click TP",
 	Default = false,
 	Callback = function(state)
 		teleportEnabled = state
+	end
+})
+
+Tab:AddToggle({
+	Name = "Fly",
+	Default = false,
+	Callback = function(state)
+		toggleFly(state)
+	end
+})
+
+-- Textbox para ajustar a velocidade
+Tab:AddTextbox({
+	Name = "Fly Speed",
+	Default = "30",
+	TextDisappear = true,
+	Callback = function(value)
+		local numValue = tonumber(value)
+		if numValue then
+			speed = math.clamp(numValue, 10, 200) -- Garante que o valor esteja entre 10 e 200
+		else
+			warn("Invalid value for speed. Please enter a number.")
+		end
 	end
 })
 
