@@ -379,14 +379,12 @@ local function CollectRedOrb()
         print("Coletando Red Orb em Magma City")
         for i = 1, 300 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs			
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")		
         end
     elseif selectedLocation == "Main City" then
         print("Coletando Red Orb em Main City")
         for i = 1, 300 do  -- Alterei para 50 também
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")		
         end
     end
@@ -398,15 +396,13 @@ local function CollectYellowOrb()
         print("Coletando Yellow Orb em Magma City")
         for i = 1, 300 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")		
         end
     elseif selectedLocation == "Main City" then
         print("Coletando Yellow Orb em Main City")
         for i = 1, 300 do  -- Alterei para 50 também
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")
-     	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")
-	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")		
+     	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")	
         end
     end
 end
@@ -663,7 +659,7 @@ Tab:AddDropdown({
 Tab:AddDropdown({
     Name = "Colletion Speed",
     Default = "x300",
-    Options = {"x200"},
+    Options = {"x300"},
     Callback = function(Value)
         SetCollectionSpeed(Value)
     end    
@@ -681,7 +677,7 @@ Tab:AddToggle({
             elseif selectedOrb == "Yellow Orb" then
                 CollectYellowOrb()
             end
-            wait(0.8)  -- Ajuste do tempo de espera entre as coletas
+            wait(1)  -- Ajuste do tempo de espera entre as coletas
         end
     end    
 })
