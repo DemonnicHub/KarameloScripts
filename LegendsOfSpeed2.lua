@@ -339,77 +339,7 @@ end
 -- Inicializa o listener de cliques
 setupClickTeleport()
 
--- Function Fly --
--- Variáveis de controle do Fly
-local FLYING = false
-local SPEED = 50
-local CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
-local BG, BV -- BodyGyro e BodyVelocity
-local HumanoidRootPart
 
--- Função para Iniciar o Fly
-local function startFly()
-    if FLYING then return end
-    FLYING = true
-
-    -- Configurar HumanoidRootPart
-    HumanoidRootPart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-
-    -- Criar BodyGyro e BodyVelocity
-    BG = Instance.new("BodyGyro", HumanoidRootPart)
-    BV = Instance.new("BodyVelocity", HumanoidRootPart)
-
-    BG.P = 9e4
-    BG.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
-    BG.CFrame = HumanoidRootPart.CFrame
-
-    BV.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-    BV.Velocity = Vector3.zero
-
-    -- Loop de Fly
-    spawn(function()
-        while FLYING do
-            game:GetService("RunService").Heartbeat:Wait()
-            local moveVector = Vector3.new(CONTROL.L + CONTROL.R, CONTROL.Q + CONTROL.E, CONTROL.F + CONTROL.B)
-            BV.Velocity = (workspace.CurrentCamera.CFrame:VectorToWorldSpace(moveVector.Unit) * SPEED) or Vector3.zero
-            BG.CFrame = workspace.CurrentCamera.CFrame
-        end
-    end)
-end
-
--- Função para Parar o Fly
-local function stopFly()
-    FLYING = false
-    if BG then BG:Destroy() end
-    if BV then BV:Destroy() end
-    CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
-end
-
--- Função para controle de movimento (PC e Mobile)
-local UserInputService = game:GetService("UserInputService")
-
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
-    local key = input.KeyCode
-
-    if key == Enum.KeyCode.W then CONTROL.F = SPEED end
-    if key == Enum.KeyCode.S then CONTROL.B = -SPEED end
-    if key == Enum.KeyCode.A then CONTROL.L = -SPEED end
-    if key == Enum.KeyCode.D then CONTROL.R = SPEED end
-    if key == Enum.KeyCode.E then CONTROL.Q = SPEED end
-    if key == Enum.KeyCode.Q then CONTROL.E = -SPEED end
-end)
-
-UserInputService.InputEnded:Connect(function(input)
-    local key = input.KeyCode
-
-    if key == Enum.KeyCode.W then CONTROL.F = 0 end
-    if key == Enum.KeyCode.S then CONTROL.B = 0 end
-    if key == Enum.KeyCode.A then CONTROL.L = 0 end
-    if key == Enum.KeyCode.D then CONTROL.R = 0 end
-    if key == Enum.KeyCode.E then CONTROL.Q = 0 end
-    if key == Enum.KeyCode.Q then CONTROL.E = 0 end
-end)
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -901,28 +831,6 @@ Tab:AddToggle({
 	Callback = function(state)
 		teleportEnabled = state
 	end
-})
-
-Tab:AddToggle({
-    Name = "Fly Toggle",
-    Default = false,
-    Callback = function(Value)
-        if Value then
-            startFly() -- Inicia o voo
-        else
-            stopFly() -- Para o voo
-        end
-    end
-})
-
--- Textbox para ajustar a velocidade
-Tab:AddTextbox({
-    Name = "Fly Speed",
-    Default = "50",  -- Valor inicial para a velocidade
-    TextDisappear = true, -- O texto desaparece após perder foco
-    Callback = function(Value)
-        SPEED = tonumber(Value) or 50  -- Atualiza a velocidade do voo com o valor digitado
-    end
 })
 
 local Tab = Window:MakeTab({
