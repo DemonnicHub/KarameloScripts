@@ -58,6 +58,17 @@ local function SelectChest(chest)
     end
 end
 
+-- Function Spawn Teleports --
+local function SelectLocation(location)
+    if location == "Main City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-555.846985, 3.80000067, 399.529388, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    elseif location == "Desert" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(262.487244, 645.934387, -180.146057, 0.999046028, 0, 0.043669384, 0, 1, 0, -0.043669384, 0, 0.999046028)
+    elseif location == "Space" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(247.883865, 73.0481033, -272.587677, 0.993579924, -8.65447536e-09, -0.113132581, -5.42947631e-10, 1, -8.12669327e-08, 0.113132581, 8.08066147e-08, 0.993579924)
+    end
+end
+
 -- Function Auto Race V1 --
 _G.Farm = false
 
@@ -530,6 +541,19 @@ Tab:AddDropdown({
     Options = {"None","Main City Chest", "Snow City Chest", "Magma City Chest"},
     Callback = function(Value)
         SelectChest(Value) 
+    end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Spawn Teleports"
+})
+
+Tab:AddDropdown({
+    Name = "Select Spawn",
+    Default = "None",
+    Options = {"None", "Main City", "Desert", "Space"},
+    Callback = function(Value)
+        SelectLocation(Value) 
     end    
 })
 
