@@ -340,28 +340,32 @@ end
 setupClickTeleport()
 
 -- Function Fly --
+-- Variáveis Globais
 local flying = false
 local speed = 50
-local bodyGyro, bodyVelocity
+local upSpeed = 50
+local downSpeed = 50
 
--- Função para ativar/desativar o Fly
+-- Função do Fly
 local function toggleFly(state)
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
     local rootPart = character:WaitForChild("HumanoidRootPart")
+    local camera = workspace.CurrentCamera
 
     if state then
-        -- Ativar Fly
         flying = true
-        bodyGyro = Instance.new("BodyGyro")
+
+        -- Criação dos controles
+        local bodyGyro = Instance.new("BodyGyro")
         bodyGyro.P = 9e4
         bodyGyro.MaxTorque = Vector3.new(9e4, 9e4, 9e4)
         bodyGyro.CFrame = rootPart.CFrame
         bodyGyro.Parent = rootPart
 
-        bodyVelocity = Instance.new("BodyVelocity")
-        bodyVelocity.Velocity = Vector3.zero
+        local bodyVelocity = Instance.new("BodyVelocity")
         bodyVelocity.MaxForce = Vector3.new(9e4, 9e4, 9e4)
+        bodyVelocity.Velocity = Vector3.zero
         bodyVelocity.Parent = rootPart
 
         spawn(function()
@@ -373,9 +377,21 @@ local function toggleFly(state)
                         moveDirection = humanoid.MoveDirection
                     end
 
-                    -- Atualiza a velocidade com base na direção do movimento
-                    bodyGyro.CFrame = rootPart.CFrame
-                    bodyVelocity.Velocity = moveDirection * speed + Vector3.new(0, 2, 0) -- Mantém uma leve elevação
+                    -- Controle do voo baseado na câmera
+                    local cameraCFrame = camera.CFrame
+                    local lookVector = cameraCFrame.LookVector
+
+                    -- Controle de subir/descer com teclas
+                    local velocity = lookVector * speed
+                    if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
+                        velocity = velocity + Vector3.new(0, upSpeed, 0)
+                    elseif game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
+                        velocity = velocity - Vector3.new(0, downSpeed, 0)
+                    end
+
+                    -- Atualiza velocidade e rotação
+                    bodyVelocity.Velocity = velocity
+                    bodyGyro.CFrame = cameraCFrame
                 end)
                 wait()
             end
@@ -383,8 +399,12 @@ local function toggleFly(state)
     else
         -- Desativar Fly
         flying = false
-        if bodyGyro then bodyGyro:Destroy() end
-        if bodyVelocity then bodyVelocity:Destroy() end
+        if rootPart:FindFirstChildOfClass("BodyGyro") then
+            rootPart:FindFirstChildOfClass("BodyGyro"):Destroy()
+        end
+        if rootPart:FindFirstChildOfClass("BodyVelocity") then
+            rootPart:FindFirstChildOfClass("BodyVelocity"):Destroy()
+        end
     end
 end
 
@@ -888,17 +908,47 @@ Tab:AddToggle({
 	end
 })
 
--- Textbox para ajustar a velocidade
+-- Textbox para ajustar a Velocidade de Movimento
 Tab:AddTextbox({
 	Name = "Fly Speed",
-	Default = "30",
+	Default = "50",
 	TextDisappear = true,
 	Callback = function(value)
 		local numValue = tonumber(value)
 		if numValue then
-			speed = math.clamp(numValue, 10, 200) -- Garante que o valor esteja entre 10 e 200
+			speed = math.clamp(numValue, 10, 200) -- Velocidade de movimento
 		else
-			warn("Invalid value for speed. Please enter a number.")
+			warn("Valor inválido para velocidade. Por favor, insira um número.")
+		end
+	end
+})
+
+-- Textbox para ajustar a Velocidade de Subir
+Tab:AddTextbox({
+	Name = "Ascend Speed",
+	Default = "50",
+	TextDisappear = true,
+	Callback = function(value)
+		local numValue = tonumber(value)
+		if numValue then
+			upSpeed = math.clamp(numValue, 10, 200) -- Velocidade de ascensão
+		else
+			warn("Valor inválido para velocidade. Por favor, insira um número.")
+		end
+	end
+})
+
+-- Textbox para ajustar a Velocidade de Descer
+Tab:AddTextbox({
+	Name = "Descend Speed",
+	Default = "50",
+	TextDisappear = true,
+	Callback = function(value)
+		local numValue = tonumber(value)
+		if numValue then
+			downSpeed = math.clamp(numValue, 10, 200) -- Velocidade de descida
+		else
+			warn("Valor inválido para velocidade. Por favor, insira um número.")
 		end
 	end
 })
