@@ -833,6 +833,19 @@ Tab:AddToggle({
 	end
 })
 
+Tab:AddButton({
+    Name = "Enviar Notificação",
+    Callback = function()
+        -- Envia a notificação ao clicar no botão
+        OrionLib:MakeNotification({
+            Name = "Notificação",
+            Content = "Você pressionou o botão!",
+            Image = "rbxassetid://4483345998",  -- Coloque o id de uma imagem ou ícone se quiser
+            Time = 5  -- Tempo de exibição da notificação
+        })
+    end
+})
+
 local Tab = Window:MakeTab({
 	Name = "Credits",
 	Icon = "rbxassetid://96062201354965",
