@@ -620,7 +620,7 @@ local StatsSection = Tab:AddSection({
 })
 
 Tab:AddDropdown({
-    Name = "Select City1",
+    Name = "Select City",
     Default = "None",
     Options = {"None", "Main City", "Magma City"},
     Callback = function(Value)
@@ -660,7 +660,7 @@ Tab:AddToggle({
             elseif selectedOrb == "Yellow Orb" then
                 CollectYellowOrb()
             end
-            wait(1)  -- Ajuste do tempo de espera entre as coletas
+            wait(0.5)  -- Ajuste do tempo de espera entre as coletas
         end
     end    
 })
