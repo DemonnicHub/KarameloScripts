@@ -350,10 +350,9 @@ end
 -- Inicializa o listener de cliques
 setupClickTeleport()
 
--- Variáveis para armazenar as escolhas
 local selectedLocation = "None"
 local selectedOrb = "None"
-local collectionSpeed = "x50"
+local collectionSpeed = "x1000"
 
 -- Função para selecionar a localização (cidade ou orb)
 local function SetLocation(location)
@@ -373,25 +372,86 @@ local function SetCollectionSpeed(speed)
     print("Velocidade de coleta: " .. speed)
 end
 
--- Função para ativar a coleta de Red Orb
-local function ActivateRedOrb()
+-- Função para ativar a coleta de Red Orb em Magma City ou Main City
+local function CollectRedOrb()
     if selectedLocation == "Magma City" then
-        print("Ativando Red Orb na cidade Magma City")
-        -- Adicione a lógica específica para coletar o Red Orb em Magma City
+        print("Coletando Red Orb em Magma City")
+        for i = 1, 1000 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs
+game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")			
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")	
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")			
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")	
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")	
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
+game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")			
+        end
     elseif selectedLocation == "Main City" then
-        print("Ativando Red Orb na cidade Main City")
-        -- Adicione a lógica específica para coletar o Red Orb em Main City
+        print("Coletando Red Orb em Main City")
+        for i = 1, 1000 do  -- Alterei para 50 também
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")
+        end
     end
 end
 
--- Função para ativar a coleta de Yellow Orb
-local function ActivateYellowOrb()
+-- Função para ativar a coleta de Yellow Orb em Magma City ou Main City
+local function CollectYellowOrb()
     if selectedLocation == "Magma City" then
-        print("Ativando Yellow Orb na cidade Magma City")
-        -- Adicione a lógica específica para coletar o Yellow Orb em Magma City
+        print("Coletando Yellow Orb em Magma City")
+        for i = 1, 1000 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")
+        end
     elseif selectedLocation == "Main City" then
-        print("Ativando Yellow Orb na cidade Main City")
-        -- Adicione a lógica específica para coletar o Yellow Orb em Main City
+        print("Coletando Yellow Orb em Main City")
+        for i = 1, 1000 do  -- Alterei para 50 também
+            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")
+        end
     end
 end
 
@@ -610,8 +670,26 @@ local StatsSection = Tab:AddSection({
     Name = "Auto Farm"
 })
 
+Tab:AddToggle({
+    Name = "Ativar Coleta de Orbs",
+    Default = false,
+    Callback = function(state)
+        _G.FarmAction = (state and true or false)
+        wait()
+        while _G.FarmAction == true do
+            if selectedOrb == "Red Orb" then
+                CollectRedOrb()
+            elseif selectedOrb == "Yellow Orb" then
+                CollectYellowOrb()
+            end
+            wait(1)
+        end
+    end    
+})
+
+-- Dropdown para seleção de cidade ou localização
 Tab:AddDropdown({
-    Name = "Loc",
+    Name = "Localização",
     Default = "None",
     Options = {"None", "Main City", "Magma City"},
     Callback = function(Value)
@@ -639,25 +717,6 @@ Tab:AddDropdown({
     end    
 })
 
--- Toggle para ativar a ação de coleta de orbs
-Tab:AddToggle({
-    Name = "Ativar Coleta de Orbs",
-    Default = false,
-    Callback = function(state)
-        _G.FarmAction = (state and true or false)
-        wait()
-        while _G.FarmAction == true do
-            -- Se "Red Orb" ou "Yellow Orb" for selecionado
-            if selectedOrb == "Red Orb" then
-                ActivateRedOrb()
-            elseif selectedOrb == "Yellow Orb" then
-                ActivateYellowOrb()
-            end
-            -- Espera entre as ações
-            wait(1)
-        end
-    end    
-})
 local Tab = Window:MakeTab({
 	Name = "Stats",
 	Icon = "rbxassetid://113927674495690",
