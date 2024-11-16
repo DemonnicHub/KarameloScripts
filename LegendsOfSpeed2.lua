@@ -352,7 +352,7 @@ setupClickTeleport()
 
 local selectedLocation = "None"
 local selectedOrb = "None"
-local collectionSpeed = "x200"
+local collectionSpeed = "x300"
 local isCollecting = false  -- Variável para controlar o estado de coleta
 
 -- Função para selecionar a localização (cidade ou orb)
@@ -377,14 +377,17 @@ end
 local function CollectRedOrb()
     if selectedLocation == "Magma City" then
         print("Coletando Red Orb em Magma City")
-        for i = 1, 200 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs			
+        for i = 1, 300 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs			
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")
 	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb","Red Orb","Magma City")		
         end
     elseif selectedLocation == "Main City" then
         print("Coletando Red Orb em Main City")
-        for i = 1, 200 do  -- Alterei para 50 também
+        for i = 1, 300 do  -- Alterei para 50 também
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")		
         end
     end
 end
@@ -393,16 +396,34 @@ end
 local function CollectYellowOrb()
     if selectedLocation == "Magma City" then
         print("Coletando Yellow Orb em Magma City")
-        for i = 1, 200 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs
+        for i = 1, 300 do  -- Alterei o número para 50 para exemplificar como você quer muitos orbs
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")		
         end
     elseif selectedLocation == "Main City" then
         print("Coletando Yellow Orb em Main City")
-        for i = 1, 200 do  -- Alterei para 50 também
+        for i = 1, 300 do  -- Alterei para 50 também
             game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")
+     	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")
+	    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")		
         end
     end
 end
+
+
+local noPingEnabled = false  -- Variável para controle do noPing
+
+-- Função para ativar o "noPing"
+local function NoPing()
+    while noPingEnabled do
+        -- Enviar um evento para o servidor para tentar estabilizar o ping
+        game:GetService("ReplicatedStorage").rEvents.someEvent:FireServer("pingCheck")  -- Aqui você envia um evento fictício
+        wait(0.1)  -- Espera de 100ms, pode ajustar conforme necessário
+    end
+end
+
+
 
 --// Demonnic Hub UI \\--
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/DemonnicHub/KarameloScripts/refs/heads/main/OrionUI.lua')))()
@@ -641,8 +662,8 @@ Tab:AddDropdown({
 -- Dropdown para seleção de velocidade de coleta
 Tab:AddDropdown({
     Name = "Colletion Speed",
-    Default = "x50",
-    Options = {"x50", "x100", "x200"},
+    Default = "x300",
+    Options = {"x200"},
     Callback = function(Value)
         SetCollectionSpeed(Value)
     end    
@@ -660,7 +681,21 @@ Tab:AddToggle({
             elseif selectedOrb == "Yellow Orb" then
                 CollectYellowOrb()
             end
-            wait(0.5)  -- Ajuste do tempo de espera entre as coletas
+            wait(0.8)  -- Ajuste do tempo de espera entre as coletas
+        end
+    end    
+})
+
+Tab:AddToggle({
+    Name = "No Ping (Required)",
+    Default = false,
+    Callback = function(state)
+        noPingEnabled = state  -- Atualiza o estado de noPing
+        print("No Ping " .. (noPingEnabled and "Ativado" or "Desativado"))
+        
+        -- Inicia o NoPing ou para dependendo do toggle
+        if noPingEnabled then
+            NoPing()  -- Inicia o noPing
         end
     end    
 })
