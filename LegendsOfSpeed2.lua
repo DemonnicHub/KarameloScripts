@@ -351,59 +351,47 @@ end
 setupClickTeleport()
 
 -- Variáveis para armazenar as escolhas
-local selectedCity = "None"
+local selectedLocation = "None"
 local selectedOrb = "None"
 local collectionSpeed = "x50"
 
--- Função para selecionar a cidade
-local function SelectCity(city)
-    selectedCity = city
-    print("Cidade selecionada: " .. city)
+-- Função para selecionar a localização (cidade ou orb)
+local function SetLocation(location)
+    selectedLocation = location
+    print("Local selecionado: " .. location)
 end
 
 -- Função para selecionar o Orb
-local function SelectOrb(orb)
+local function SetOrb(orb)
     selectedOrb = orb
     print("Orb selecionado: " .. orb)
 end
 
 -- Função para selecionar a velocidade de coleta
-local function SelectCollectionSpeed(speed)
+local function SetCollectionSpeed(speed)
     collectionSpeed = speed
     print("Velocidade de coleta: " .. speed)
 end
 
--- Função para ativar o "Red Orb" com ações específicas
+-- Função para ativar a coleta de Red Orb
 local function ActivateRedOrb()
-    if selectedCity == "Magma City" then
+    if selectedLocation == "Magma City" then
         print("Ativando Red Orb na cidade Magma City")
-        for i = 1, 20 do
-            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Magma City")
-            wait(0.5)  -- Tempo entre as coletas
-        end
-    elseif selectedCity == "Main City" then
+        -- Adicione a lógica específica para coletar o Red Orb em Magma City
+    elseif selectedLocation == "Main City" then
         print("Ativando Red Orb na cidade Main City")
-        for i = 1, 20 do
-            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", "Main City")
-            wait(0.5)
-        end
+        -- Adicione a lógica específica para coletar o Red Orb em Main City
     end
 end
 
--- Função para ativar o "Yellow Orb" com ações específicas
+-- Função para ativar a coleta de Yellow Orb
 local function ActivateYellowOrb()
-    if selectedCity == "Magma City" then
+    if selectedLocation == "Magma City" then
         print("Ativando Yellow Orb na cidade Magma City")
-        for i = 1, 20 do
-            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Magma City")
-            wait(0.5)  -- Tempo entre as coletas
-        end
-    elseif selectedCity == "Main City" then
+        -- Adicione a lógica específica para coletar o Yellow Orb em Magma City
+    elseif selectedLocation == "Main City" then
         print("Ativando Yellow Orb na cidade Main City")
-        for i = 1, 20 do
-            game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", "Main City")
-            wait(0.5)
-        end
+        -- Adicione a lógica específica para coletar o Yellow Orb em Main City
     end
 end
 
@@ -623,11 +611,11 @@ local StatsSection = Tab:AddSection({
 })
 
 Tab:AddDropdown({
-    Name = "City",
+    Name = "Loc",
     Default = "None",
     Options = {"None", "Main City", "Magma City"},
     Callback = function(Value)
-        SelectCity(Value)
+        SetLocation(Value)
     end    
 })
 
@@ -637,17 +625,17 @@ Tab:AddDropdown({
     Default = "None",
     Options = {"None", "Red Orb", "Yellow Orb"},
     Callback = function(Value)
-        SelectOrb(Value)
+        SetOrb(Value)
     end    
 })
 
 -- Dropdown para seleção de velocidade de coleta
 Tab:AddDropdown({
-    Name = "Collection Speed",
+    Name = "Velocidade de Coleta",
     Default = "x50",
     Options = {"x50", "x100", "x200", "x300", "x400", "x500", "x600", "x700", "x800", "x950"},
     Callback = function(Value)
-        SelectCollectionSpeed(Value)
+        SetCollectionSpeed(Value)
     end    
 })
 
